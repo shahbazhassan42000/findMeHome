@@ -75,7 +75,4 @@ class DBHandler():
                 session.close()
                 return False,'Error with database'
 
-
 db=DBHandler()
-use=Shelter('asd','asdas','asdas','asdas','4etg4','rtgr','sd','asdef','wef','asd')
-print(db.add(use))

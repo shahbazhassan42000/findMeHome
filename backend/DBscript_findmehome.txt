@@ -4,14 +4,11 @@ CREATE TABLE breed (
 	PRIMARY KEY (bid)
 )
 
-
-
 CREATE TABLE disease (
 	disid INTEGER NOT NULL AUTO_INCREMENT, 
 	name VARCHAR(60), 
 	PRIMARY KEY (disid)
 )
-
 
 CREATE TABLE shelter (
 	sid INTEGER NOT NULL AUTO_INCREMENT, 
@@ -28,7 +25,6 @@ CREATE TABLE shelter (
 	PRIMARY KEY (sid)
 )
 
-
 CREATE TABLE user (
 	uid INTEGER NOT NULL AUTO_INCREMENT, 
 	fname VARCHAR(60), 
@@ -43,7 +39,6 @@ CREATE TABLE user (
 	PRIMARY KEY (uid)
 )
 
-
 CREATE TABLE admin (
 	aid INTEGER NOT NULL AUTO_INCREMENT, 
 	name VARCHAR(100), 
@@ -52,7 +47,6 @@ CREATE TABLE admin (
 	PRIMARY KEY (aid)
 )
 
-
 CREATE TABLE dog (
 	did INTEGER NOT NULL AUTO_INCREMENT, 
 	sid INTEGER NOT NULL, 
@@ -60,11 +54,9 @@ CREATE TABLE dog (
 	age INTEGER, 
 	bid INTEGER, 
 	PRIMARY KEY (did, sid), 
-	FOREIGN KEY(sid) REFERENCES shelter (sid), 
-	FOREIGN KEY(bid) REFERENCES breed (bid)
+	FOREIGN KEY(sid) REFERENCES shelter (sid) ON DELETE CASCADE, 
+	FOREIGN KEY(bid) REFERENCES breed (bid) ON DELETE CASCADE
 )
-
-
 
 CREATE TABLE blog (
 	blid INTEGER NOT NULL AUTO_INCREMENT, 
@@ -75,14 +67,13 @@ CREATE TABLE blog (
 )
 
 
- 
 CREATE TABLE diseasedog (
 	description VARCHAR(400), 
 	did INTEGER NOT NULL, 
 	disid INTEGER NOT NULL, 
 	PRIMARY KEY (did, disid), 
-	FOREIGN KEY(did) REFERENCES dog (did), 
-	FOREIGN KEY(disid) REFERENCES disease (disid)
+	FOREIGN KEY(did) REFERENCES dog (did) ON DELETE CASCADE, 
+	FOREIGN KEY(disid) REFERENCES disease (disid) ON DELETE CASCADE
 )
 
 
@@ -91,6 +82,6 @@ CREATE TABLE list (
 	uid INTEGER NOT NULL, 
 	did INTEGER NOT NULL, 
 	PRIMARY KEY (lid, uid, did), 
-	FOREIGN KEY(uid) REFERENCES user (uid), 
-	FOREIGN KEY(did) REFERENCES dog (did)
+	FOREIGN KEY(uid) REFERENCES user (uid) ON DELETE CASCADE, 
+	FOREIGN KEY(did) REFERENCES dog (did) ON DELETE CASCADE
 )
