@@ -7,7 +7,7 @@ class Dog(Base):
     did=Column(Integer,primary_key=True,autoincrement=True)
     sid=Column(Integer,ForeignKey('shelter.sid',ondelete='CASCADE'),primary_key=True)
     dname=Column(String(MAX_LENGTH))
-    age=Column(Integer)
+    age=Column(String(MAX_LENGTH))
     bid=Column(Integer,ForeignKey('breed.bid',ondelete='CASCADE'))
     dog=relationship('List',backref='Dog')
     dog=relationship('Diseasedog',backref='Dog')

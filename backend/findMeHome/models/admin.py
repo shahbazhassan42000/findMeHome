@@ -8,8 +8,10 @@ class Admin(Base):
     name=Column(String(MAX_LENGTH))
     username=Column(String(MAX_LENGTH))
     password=Column(String(MAX_LENGTH))
+    email=Column(String(MAX_LENGTH))
     admin=relationship('Blog',backref='Admin')
-    def __int__(self,name,username,password):
+    def __init__(self,name,username,password,email):
         self.username=username
         self.name=name
         self.password=password
+        self.email=email

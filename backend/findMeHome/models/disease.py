@@ -8,4 +8,4 @@ class Disease(Base):
     name=Column(String(MAX_LENGTH))
     disease=relationship('Diseasedog',backref='Disease')
     def __init__(self,disease):
-        self.disease=disease
+        self.name=disease
