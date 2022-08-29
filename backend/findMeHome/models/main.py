@@ -50,14 +50,7 @@ class DBHandler():
 
     # -----------------------------------------------Checker Functions-----------------------------------------------
     def actorExists(self,user,session):
-        results=session.query(User).filter(or_(User.username==user.username,User.email==user.email)).one_or_none()
-        if (results != None):
-            return True
-        results=session.query(Shelter).filter(or_(Shelter.username==user.username,Shelter.email==user.email)).one_or_none()
-        if (results != None):
-            return True
-        results=session.query(Admin).filter(Admin.username==user.username).one_or_none()
-        if (results != None):
+        if self.isUsernameAvailable(user,session) and self.isEmailAvailable(user,session):
             return True
         return False
 
@@ -98,8 +91,28 @@ class DBHandler():
         if (results == None):
             return False
         return True
-
-
+    def isEmailAvailable(self,user,session):
+        results=session.query(Admin).filter(Admin.email==user.email).one_or_none()
+        if results!=None:
+            return False
+        results = session.query(User).filter(User.email == user.email).one_or_none()
+        if results!=None:
+            return False
+        results = session.query(Shelter).filter(Shelter.email == user.email).one_or_none()
+        if results!=None:
+            return False
+        return True
+    def isUsernameAvailable(self,user,session):
+        results=session.query(Admin).filter(Admin.username==user.username).one_or_none()
+        if results!=None:
+            return False
+        results = session.query(User).filter(User.username == user.username).one_or_none()
+        if results!=None:
+            return False
+        results = session.query(Shelter).filter(Shelter.username == user.username).one_or_none()
+        if results!=None:
+            return False
+        return True
     #---------------------------------------Adder function---------------------------------------
     def add(self,obj):
         flag,session=self.createSession()
@@ -154,6 +167,80 @@ class DBHandler():
             session.rollback()
             session.close()
             return False,'Error with database'
+
+# ---------------------------------------Updater function---------------------------------------
+    def update(self,obj):
+        flag,session=self.createSession()
+        if flag==False:
+            return flag,session
+        results=None
+        if isinstance(obj,Blog):
+            results=session.query(Blog).filter(Blog.blid==obj.blid).one_or_none()
+            if results==None:
+                session.close()
+                return False,'Blog Doesn\'t exist'
+            if not self.actorExistsByID('admin',obj.aid,session):
+                return False,'Admin Doesn\'t exist'
+        elif isinstance(obj,Breed):
+            results=session.query(Breed).filter(Breed.bid == obj.bid).one_or_none()
+            if results==None:
+                session.close()
+                return False,'Breed Does\'t exist'
+        elif isinstance(obj,Disease):
+            results=session.query(Disease).filter(Disease.disid == obj.disid).one_or_none()
+            if results==None:
+                session.close()
+                return False,'Disease Does\'t exist'
+        elif isinstance(obj,Diseasedog):
+            results=session.query(Diseasedog).filter(and_(Diseasedog.did==obj.did,Diseasedog.disid==obj.disid)).one_or_none()
+            if results==None:
+                session.close()
+                return False,'This disease for this dog doesn\'t exist'
+        elif isinstance(obj,Dog):
+            results=session.query(Dog).filter(and_(Dog.did==obj.did,Dog.sid==obj.sid)).one_or_none()
+            if results==None:
+                return False,'Dog not found'
+        elif isinstance(obj,User):
+            results=session.query(User).filter(User.uid==obj.uid).one_or_none()
+            if results==None:
+                return False,'User not found'
+            if obj.email!=results.email:
+                if not self.isEmailAvailable(obj,session):
+                    return False,'Choose a unique email'
+            if obj.username!=results.username:
+                if not self.isUsernameAvailable(obj,session):
+                    return False,'Choose a unique username'
+        elif isinstance(obj,Shelter):
+            results=session.query(Shelter).filter(Shelter.sid==obj.sid).one_or_none()
+            if results==None:
+                return False,'Shelter not found'
+            if obj.email != results.email:
+                if not self.isEmailAvailable(obj, session):
+                    return False, 'Choose a unique email'
+            if obj.username != results.username:
+                if not self.isUsernameAvailable(obj, session):
+                    return False, 'Choose a unique username'
+        elif isinstance(obj,Admin):
+            results=session.query(Admin).filter(Admin.aid==obj.aid).one_or_none()
+            if results==None:
+                return False,'Admin not found'
+            if obj.email!=results.email:
+                if not self.isEmailAvailable(obj,session):
+                    return False,'Choose a unique email'
+            if not obj.username!=results.username:
+                if self.isUsernameAvailable(obj,session):
+                    return False,'Choose a unique username'
+        else:
+            return False,'Are you sure you can update this?'
+        try:
+            results.update(obj)
+            session.commit()
+            session.close()
+            return True, 'Changed Successfully'
+        except:
+            return False,'Error changing'
+
+
 #---------------------------------------Getter functions---------------------------------------
     def getUser(self,id=None,username=None,email=None):
         flag,session=self.createSession()
@@ -240,24 +327,33 @@ class DBHandler():
         if results==None:
             return False,'Not found'
         return True,results
+    def getBlog(self,id):
+        flag,session=self.createSession()
+        if flag==False:
+            return flag,session
+        results = session.query(Blog).filter(Blog.blid == id).one_or_none()
+        session.close()
+        if results==None:
+            return False,'Not found'
+        return True,results
 
 
 
 
 #------------------------------------------------------Testing---------------------------------------------------------------
 db=DBHandler()
-print(db.add(User('asd','asd','asd','asd','asd','asd','asd','efwe','fwe')))
-print(db.add(User('aefv','aevfrd','agrbsd','aytnsd','athnsd','atnsd','aaersd','etnfwe','frtgwe')))
-print(db.add(Shelter('rv','sdc','sdc','sdcsdc','wefwe','ddfv','dfvfdv','efv','ev','erv')))
-print(db.add(Shelter('rv','sdc','sdc','sdcswfedc','wefwwefe','ddfwedfv','dwffvfdv','efwefv','fweev','erv')))
-print(db.add(Disease('hepatitis')))
-print(db.add(Disease('captitus')))
-print(db.add(Breed('adssew')))
-print(db.add(Breed('adservfer')))
-print(db.add(Dog(1,'asd','34',1)))
-print(db.add(Dog(2,'asasdcwd','214',2)))
-print(db.add(List(1,1,1)))
-print(db.add(List(2,1,1)))
-print(db.add(Admin('wef','asfwed','asdas','aasdas')))
-print(db.add(Blog('asdas',1)))
-print(db.add(Diseasedog('bad',1,2)))
+# print(db.add(User('asd','asd','asd','asd','asd','asd','asd','efwe','fwe')))
+# print(db.add(User('aefv','aevfrd','agrbsd','aytnsd','athnsd','atnsd','aaersd','etnfwe','frtgwe')))
+# print(db.add(Shelter('rv','sdc','sdc','sdcsdc','wefwe','ddfv','dfvfdv','efv','ev','erv')))
+# print(db.add(Shelter('rv','sdc','sdc','sdcswfedc','wefwwefe','ddfwedfv','dwffvfdv','efwefv','fweev','erv')))
+# print(db.add(Disease('hepatitis')))
+# print(db.add(Disease('captitus')))
+# print(db.add(Breed('adssew')))
+# print(db.add(Breed('adservfer')))
+# print(db.add(Dog(1,'asd','34',1)))
+# print(db.add(Dog(2,'asasdcwd','214',2)))
+# print(db.add(List(1,1,1)))
+# print(db.add(List(2,1,1)))
+# print(db.add(Admin('wef','asfwed','asdas','aasdas')))
+# print(db.add(Blog('asdas',1)))
+# print(db.add(Diseasedog('bad',1,2)))
