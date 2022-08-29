@@ -25,3 +25,13 @@ class User(Base):
         self.password=password
         self.picture=picture
         self.phone=phone
+    def update(self,user):
+        self.fname=user.fname
+        self.lname=user.lname
+        self.city=user.city
+        self.country=user.country
+        self.email=user.email
+        self.username=user.username
+        self.password=user.password
+        self.picture=user.picture
+        self.phone=user.phone

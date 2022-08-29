@@ -16,5 +16,10 @@ class Dog(Base):
         self.dname=dname
         self.age=age
         self.bid=bid
+    def update(self,dog):
+        self.sid=dog.sid
+        self.dname=dog.dname
+        self.age=dog.age
+        self.bid=dog.bid
 
 

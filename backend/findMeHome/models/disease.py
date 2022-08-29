@@ -9,3 +9,6 @@ class Disease(Base):
     disease=relationship('Diseasedog',backref='Disease')
     def __init__(self,disease):
         self.name=disease
+
+    def update(self,disease):
+        self.name=disease.name

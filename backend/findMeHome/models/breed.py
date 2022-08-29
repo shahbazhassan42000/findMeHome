@@ -9,3 +9,5 @@ class Breed(Base):
     breed = relationship('Dog',backref='Breed')
     def __init__(self,name):
         self.bname=name
+    def update(self,breed):
+        self.bname=breed.bname

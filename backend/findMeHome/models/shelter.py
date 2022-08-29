@@ -27,3 +27,14 @@ class Shelter(Base):
         self.picture=picture
         self.phone=phone
         self.proof=proof
+    def update(self,shelter):
+        self.name=shelter.name
+        self.street=shelter.street
+        self.city=shelter.city
+        self.country=shelter.country
+        self.email=shelter.email
+        self.username=shelter.username
+        self.password=shelter.password
+        self.picture=shelter.picture
+        self.phone=shelter.phone
+        self.proof=shelter.proof
