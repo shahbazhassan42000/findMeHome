@@ -7,6 +7,7 @@ import SignupAdopter from "./components/Auth/SignupAdopter";
 import ellipseUp from "./assets/icons/Ellipse uppper.png"
 import ellipseDown from "./assets/icons/Ellipse down.png"
 import vector from "./assets/icons/Vector 1.png"
+import SignupShelter from "./components/Auth/SignupShelter";
 
 
 function App() {
@@ -20,7 +21,7 @@ function App() {
                     <Route exact path="/br" element={<BreedResult/>}/>
                     <Route exact path="/signup" element={<Signup/>}/>
                     <Route exact path="/signup/a" element={<SignupAdopter/>}/>
-                    <Route exact path="/auth" element={<Signup/>}/>
+                    <Route exact path="/signup/s" element={<SignupShelter/>}/>
                 </Routes>
             </Router>
         </div>

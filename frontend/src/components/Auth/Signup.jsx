@@ -58,9 +58,9 @@ const Signup = () => {
                                 It's free and easy to use
                             </p>
                         </div>
-                        <button className="bg-[#3E665C] hover:bg-[#5A8081] py-[5px] px-[50px] mx-auto text-white rounded-[14px]">
+                        <a href="/signup/s" className="bg-[#3E665C] hover:bg-[#5A8081] py-[5px] px-[50px] mx-auto text-white rounded-[14px]">
                             Sign up
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>

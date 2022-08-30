@@ -1,10 +1,43 @@
 import logo from "../../assets/images/find_me_home_logo.png";
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import Loading from "../Loading";
+import {CountryDropdown} from 'react-country-region-selector'
+import {onTogglePasswd} from "./SignupAdopter";
+import axios from "axios";
 
 const SignupAdopter = () => {
     const [msg, setMsg] = useState({show: false, msg: "", type: "general"});
     const [loading, setLoading] = useState(false);
+    const [country, setCountry] = useState("");
+    const [state, setState] = useState(null);
+    const [cities, setCities] = useState(null);
+    const [city, setCity] = useState(null);
+    const [states, setStates] = useState(null);
+    useEffect(() => {
+        if (country) {
+            axios.post('https://countriesnow.space/api/v0.1/countries/states', {
+                country,
+            }).then(res => {
+                setStates(res.data.data.states);
+            }).catch(err => {
+                console.log("ERROR");
+                console.log(err);
+            })
+        }
+    }, [country]);
+    useEffect(() => {
+        if (state) {
+            axios.post('https://countriesnow.space/api/v0.1/countries/state/cities', {
+                country,
+                state
+            }).then(res => {
+                setCities(res.data.data);
+            }).catch(err => {
+                console.log("ERROR");
+                console.log(err);
+            })
+        }
+    }, [state]);
     const passwdRef = useRef(null);
     return (
         <div>
@@ -27,9 +60,33 @@ const SignupAdopter = () => {
                             <input
                                 className="p-[5px] w-full border border-[#7F99A2] bg-transparent outline-0 placeholder:text-[#7F99A2] active:placeholder:text-white hover:placeholder:text-[#5A8081] rounded-[5px]"
                                 type="email" name="email" placeholder="Email*" required/>
-                            {msg.show && msg.type === "email" && <p className="absolute text-[14px] text-[#EB5A46]">{msg.msg}</p>}
+                            {msg.show && msg.type === "email" &&
+                                <p className="absolute text-[14px] text-[#EB5A46]">{msg.msg}</p>}
                         </div>
-                        <div>
+
+
+                        <CountryDropdown
+                            name="country"
+                            classes="p-[5px] w-full border border-[#7F99A2] rounded-[5px]"
+                            value={country}
+                            onChange={(val) => setCountry(val)}/>
+
+                        <select
+                            onChange={(e) =>onStateChange(e.target.value,setState,setCity,setCities)}
+                            name="state" className="p-[5px] w-full border border-[#7F99A2] rounded-[5px]">
+                            <option value="Select State">Select State</option>
+                            {states && states.map((state, index) => <option key={index}
+                                                                            value={state.name}>{state.name}</option>)}
+                        </select>
+                        <select onChange={(e) => e.target.value === "Select City" ?setCity(null): setCity(e.target.value)}
+                                name="city"
+                                className="p-[5px] w-full border border-[#7F99A2] rounded-[5px]">
+                            <option value="Select City">Select City</option>
+                            {cities && cities.map((city, index) => <option key={index}
+                                                                           value={city}>{city}</option>)}
+                        </select>
+
+
                         <div className="relative flex items-center w-full">
                             <input
                                 ref={passwdRef}
@@ -38,10 +95,10 @@ const SignupAdopter = () => {
                             <span onClick={(e) => onTogglePasswd(e)}
                                   className="text-[#7F99A2] absolute right-2 cursor-pointer fa-solid fa-eye"></span>
                         </div>
-                            {msg.show && msg.type === "password" && <p className="text-[14px] text-[#EB5A46] absolute">{msg.msg}</p>}
-                            {msg.show && msg.type === "general" &&
-                                <p className={`-mb-[18px] text-[14px] ${msg.msg === "Your account created successfully" ? "green" : "red"} !mt-0`}>{msg.msg}</p>}
-                        </div>
+                        {msg.show && msg.type === "password" &&
+                            <p className="text-[14px] text-[#EB5A46] absolute">{msg.msg}</p>}
+                        {msg.show && msg.type === "general" &&
+                            <p className={`-mb-[18px] text-[14px] ${msg.msg === "Your account created successfully" ? "green" : "red"} !mt-0`}>{msg.msg}</p>}
                         <button type="submit"
                                 className="w-full bg-[#3E665C] hover:bg-[#5A8081] py-[5px] px-[50px] text-white rounded-[14px]">
                             Sign up
@@ -61,19 +118,13 @@ const SignupAdopter = () => {
         </div>
     );
 }
-
-export const onTogglePasswd = (e) => {
-    const btn = e.target;
-    const passwd = e.target.previousSibling;
-    if (passwd.type === "password") {
-        passwd.type = "text";
-        btn.classList.remove("fa-eye");
-        btn.classList.add("fa-eye-slash");
-    } else {
-        passwd.type = "password";
-        btn.classList.remove("fa-eye-slash");
-        btn.classList.add("fa-eye");
-
+const onStateChange = (state,setState,setCity,setCities) => {
+    if(state==="Select State"){
+        setState(null);
+        setCity(null);
+        setCities(null);
+    }else{
+        setState(state);
     }
 }
 
@@ -81,8 +132,9 @@ const onFormSubmit = async (e, setLoading, setMsg) => {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
-    formData.set("role", "adopter");
+    formData.set("role", "shelter");
     const formObject = Object.fromEntries(formData);
+    console.log(formObject);
     const {username, email, password} = formObject;
     if (!username.match("^[a-zA-z\\d]+$")) setMsg({
         show: true,
