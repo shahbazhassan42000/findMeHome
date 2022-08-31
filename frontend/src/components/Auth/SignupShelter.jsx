@@ -27,6 +27,7 @@ const SignupAdopter = () => {
     }, [country]);
     useEffect(() => {
         if (state) {
+            setMsg({show: false, msg: "", type: "general"});
             axios.post('https://countriesnow.space/api/v0.1/countries/state/cities', {
                 country,
                 state
@@ -38,6 +39,11 @@ const SignupAdopter = () => {
             })
         }
     }, [state]);
+    useEffect(() => {
+        if (city) {
+            setMsg({show: false, msg: "", type: "general"});
+        }
+    },[city]);
     const passwdRef = useRef(null);
     return (
         <div>
@@ -48,68 +54,81 @@ const SignupAdopter = () => {
                 <div className="font-['Montserrat'] flex flex-col space-y-10">
                     <h1 className="text-[#3E665C] text-[30px] font-[900] mx-auto">Sign up</h1>
                     <form onSubmit={(e) => onFormSubmit(e, setLoading, setMsg)}
-                          className="flex flex-col space-y-7 w-[295px]">
-                        <div className="relative">
-                            <input
-                                className="p-[5px] w-full border border-[#7F99A2] bg-transparent outline-0 placeholder:text-[#7F99A2] active:placeholder:text-white hover:placeholder:text-[#5A8081] rounded-[5px]"
-                                type="text" name="username" placeholder="Username*" required/>
-                            {msg.show && msg.type === "username" &&
-                                <p className="text-[14px] text-[#EB5A46] absolute">{msg.msg}</p>}
+                          className="flex flex-col space-y-7 w-[599px]">
+                        <div className="flex space-x-5">
+                            <div className="relative w-full">
+                                <input
+                                    className="p-[5px] w-full border border-[#7F99A2] bg-transparent outline-0 placeholder:text-[#7F99A2] active:placeholder:text-white hover:placeholder:text-[#5A8081] rounded-[5px]"
+                                    type="text" name="username" placeholder="Username*" required/>
+                                {msg.show && msg.type === "username" &&
+                                    <p className="text-[14px] text-[#EB5A46] absolute">{msg.msg}</p>}
+                            </div>
+                            <div className="relative w-full">
+                                <input
+                                    className="p-[5px] w-full border border-[#7F99A2] bg-transparent outline-0 placeholder:text-[#7F99A2] active:placeholder:text-white hover:placeholder:text-[#5A8081] rounded-[5px]"
+                                    type="email" name="email" placeholder="Email*" required/>
+                                {msg.show && msg.type === "email" &&
+                                    <p className="absolute text-[14px] text-[#EB5A46]">{msg.msg}</p>}
+                            </div>
                         </div>
-                        <div className="relative">
-                            <input
-                                className="p-[5px] w-full border border-[#7F99A2] bg-transparent outline-0 placeholder:text-[#7F99A2] active:placeholder:text-white hover:placeholder:text-[#5A8081] rounded-[5px]"
-                                type="email" name="email" placeholder="Email*" required/>
-                            {msg.show && msg.type === "email" &&
-                                <p className="absolute text-[14px] text-[#EB5A46]">{msg.msg}</p>}
-                        </div>
+                        <textarea required className="p-[5px] text-[14px] w-full border border-[#7F99A2] outline-0 placeholder:text-[#7F99A2] active:placeholder:text-white hover:placeholder:text-[#5A8081] rounded-[5px]" placeholder="Street Address*">
 
-
-                        <CountryDropdown
-                            name="country"
-                            classes="p-[5px] w-full border border-[#7F99A2] rounded-[5px]"
-                            value={country}
-                            onChange={(val) => setCountry(val)}/>
-
-                        <select
-                            onChange={(e) =>onStateChange(e.target.value,setState,setCity,setCities)}
-                            name="state" className="p-[5px] w-full border border-[#7F99A2] rounded-[5px]">
-                            <option value="Select State">Select State</option>
-                            {states && states.map((state, index) => <option key={index}
-                                                                            value={state.name}>{state.name}</option>)}
-                        </select>
-                        <select onChange={(e) => e.target.value === "Select City" ?setCity(null): setCity(e.target.value)}
-                                name="city"
+                        </textarea>
+                        <div className="flex space-x-5">
+                            <CountryDropdown
+                                required
+                                name="country"
+                                classes="p-[5px] w-full border border-[#7F99A2] rounded-[5px]"
+                                value={country}
+                                onChange={(val) => setCountry(val)}/>
+                            <select
+                                onChange={(e) => onStateChange(e.target.value, setState, setCity, setCities)}
+                                required={true} name="state"
                                 className="p-[5px] w-full border border-[#7F99A2] rounded-[5px]">
-                            <option value="Select City">Select City</option>
-                            {cities && cities.map((city, index) => <option key={index}
-                                                                           value={city}>{city}</option>)}
-                        </select>
-
-
-                        <div className="relative flex items-center w-full">
-                            <input
-                                ref={passwdRef}
-                                className="p-[5px] w-full border border-[#7F99A2] bg-transparent outline-0 placeholder:text-[#7F99A2] active:placeholder:text-white hover:placeholder:text-[#5A8081] rounded-[5px]"
-                                type="password" minLength="8" name="password" placeholder="Password*" required/>
-                            <span onClick={(e) => onTogglePasswd(e)}
-                                  className="text-[#7F99A2] absolute right-2 cursor-pointer fa-solid fa-eye"></span>
+                                <option value="Select State">Select State</option>
+                                {states && states.map((state, index) => <option key={index}
+                                                                                value={state.name}>{state.name}</option>)}
+                            </select>
                         </div>
-                        {msg.show && msg.type === "password" &&
-                            <p className="text-[14px] text-[#EB5A46] absolute">{msg.msg}</p>}
-                        {msg.show && msg.type === "general" &&
-                            <p className={`-mb-[18px] text-[14px] ${msg.msg === "Your account created successfully" ? "green" : "red"} !mt-0`}>{msg.msg}</p>}
-                        <button type="submit"
-                                className="w-full bg-[#3E665C] hover:bg-[#5A8081] py-[5px] px-[50px] text-white rounded-[14px]">
-                            Sign up
-                        </button>
-                        <div className="w-full flex flex-col -space-y-1 text-center text-[14px] italic">
-                            <p className="text-[#7F99A2]">
-                                Already have an account?
-                            </p>
-                            <a href="/login"
-                               className="text-[#5A8081] font-[600] hover:text-[#3E665C]">Login</a>
+                        <div className="relative">
+                            <div className="flex space-x-5">
+                                <select
+                                    onChange={(e) => e.target.value === "Select City" ? setCity(null) : setCity(e.target.value)}
+                                    required={true} name="city"
+                                    className="p-[5px] w-full border border-[#7F99A2] rounded-[5px]">
+                                    <option value="Select City">Select City</option>
+                                    {cities && cities.map((city, index) => <option key={index}
+                                                                                   value={city}>{city}</option>)}
+                                </select>
+                                <div className="relative w-full">
+                                    <div className="relative flex items-center w-full">
+                                        <input
+                                            ref={passwdRef}
+                                            className="w-full p-[5px] w-full border border-[#7F99A2] bg-transparent outline-0 placeholder:text-[#7F99A2] active:placeholder:text-white hover:placeholder:text-[#5A8081] rounded-[5px]"
+                                            type="password" minLength="8" name="password" placeholder="Password*" required/>
+                                        <span onClick={(e) => onTogglePasswd(e)}
+                                              className="text-[#7F99A2] absolute right-2 cursor-pointer fa-solid fa-eye"></span>
+                                    </div>
+                                    {msg.show && msg.type === "password" &&
+                                        <p className="text-[14px] text-[#EB5A46] absolute">{msg.msg}</p>}
+                                </div>
+                            </div>
+                            {msg.show && msg.type === "general" &&
+                                <p className={`-mb-[18px] text-center text-[14px] ${msg.msg === "Your account created successfully" ? "green" : "red"} !mt-0`}>{msg.msg}</p>}
                         </div>
+                       <div className="flex space-x-5">
+                           <button type="submit"
+                                   className="w-full block bg-[#3E665C] hover:bg-[#5A8081] py-[5px] text-white rounded-[14px]">
+                               Sign up
+                           </button>
+                           <div className="w-full flex flex-col -space-y-1 text-center text-[14px] italic">
+                               <p className="text-[#7F99A2]">
+                                   Already have an account?
+                               </p>
+                               <a href="/login"
+                                  className="text-[#5A8081] font-[600] hover:text-[#3E665C]">Login</a>
+                           </div>
+                       </div>
 
                     </form>
                 </div>
@@ -118,12 +137,12 @@ const SignupAdopter = () => {
         </div>
     );
 }
-const onStateChange = (state,setState,setCity,setCities) => {
-    if(state==="Select State"){
+const onStateChange = (state, setState, setCity, setCities) => {
+    if (state === "Select State") {
         setState(null);
         setCity(null);
         setCities(null);
-    }else{
+    } else {
         setState(state);
     }
 }
@@ -134,6 +153,10 @@ const onFormSubmit = async (e, setLoading, setMsg) => {
     const formData = new FormData(form);
     formData.set("role", "shelter");
     const formObject = Object.fromEntries(formData);
+    if (formObject.city === "Select City" || formObject.state === "Select State") {
+        setMsg({show: true, msg: "Please select City and State", type: "general"});
+        return;
+    }
     console.log(formObject);
     const {username, email, password} = formObject;
     if (!username.match("^[a-zA-z\\d]+$")) setMsg({
@@ -155,7 +178,7 @@ const onFormSubmit = async (e, setLoading, setMsg) => {
         setLoading(true);
         const reqBody = JSON.stringify({user: formObject});
         console.log("Req Body: ", reqBody);
-        const url = "http://localhost:8080/api/v1/user";
+        const url = "http://localhost:8080/api/v0.1/user";
         await fetch(url, {
             method: 'post',
             body: reqBody,

@@ -103,7 +103,7 @@ const onFormSubmit = async (e, setLoading, setMsg) => {
         setLoading(true);
         const reqBody = JSON.stringify({user: formObject});
         console.log("Req Body: ", reqBody);
-        const url = "http://localhost:8080/api/v1/user";
+        const url = "http://localhost:8080/api/v0.1/user";
         await fetch(url, {
             method: 'post',
             body: reqBody,
