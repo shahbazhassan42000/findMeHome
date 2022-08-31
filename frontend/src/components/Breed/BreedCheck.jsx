@@ -49,8 +49,7 @@ const BreedCheck = () => {
                             </div>
                             <span className="ml-[10px] fa fa-arrow-up-from-bracket text-[24.4px]"></span>
                         </button>
-                        <p style={{color: msg === "ERROR! while uploading, Please try again" ? '#ff0033' : '#567a0d'}}
-                           className="mt-3 -mb-3 text-center">
+                        <p className={`${msg === "ERROR! while uploading, Please try again" ? '#ff0033' : '#567a0d'} mt-3 -mb-3 text-center`}>
                             {msg}
                         </p>
                         <button
