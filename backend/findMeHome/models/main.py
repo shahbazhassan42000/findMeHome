@@ -238,6 +238,8 @@ class DBHandler():
             session.close()
             return True, 'Changed Successfully'
         except:
+            session.rollback()
+            session.close()
             return False,'Error changing'
 
 
@@ -272,6 +274,22 @@ class DBHandler():
         session.close()
         if results==None:
             return False,'No User found'
+        return True,results
+
+    def getAdmin(self,id=None,username=None,email=None):
+        flag,session=self.createSession()
+        results=None
+        if flag==False:
+            return flag,session
+        if id!=None:
+            results=session.query(Admin).filter(Admin.uid == id).one_or_none()
+        if username!=None:
+            results=session.query(Admin).filter(Admin.username == username).one_or_none()
+        if email!=None:
+            results=session.query(Admin).filter(Admin.email==email).one_or_none()
+        session.close()
+        if results==None:
+            return False,'No Admin found'
         return True,results
 
     def getDog(self,id=None,breed=None,age=None):
@@ -318,26 +336,122 @@ class DBHandler():
             return False,'Not found'
         return True,results
 
-    def getDiseasesOfDog(self,id):
+    def getDiseasesOfDog(self,did=None,dsid=None):
         flag,session=self.createSession()
+        results=None
         if flag==False:
             return flag,session
-        results = session.query(Diseasedog).filter(Diseasedog.did == id).all()
+        if did!=None and dsid!=None:
+            results=session.query(Diseasedog).filter(and_(Diseasedog.disid == dsid,Diseasedog.did == did)).one_or_none()
+        elif did!=None:
+            results = session.query(Diseasedog).filter(Diseasedog.did == did).all()
+        elif dsid!=None:
+            results = session.query(Diseasedog).filter(Diseasedog.disid == dsid).all()
         session.close()
         if results==None:
             return False,'Not found'
         return True,results
-    def getBlog(self,id):
+    def getBlog(self,id=None,all=False,aid=None):
         flag,session=self.createSession()
         if flag==False:
             return flag,session
-        results = session.query(Blog).filter(Blog.blid == id).one_or_none()
+        results=None
+        if id!=None:
+            results = session.query(Blog).filter(Blog.blid == id).one_or_none()
+        elif all!=False:
+            results = session.query(Blog).all()
+        elif aid!=None:
+            results = session.query(Blog).filter(Blog.aid == aid).all()
+        session.close()
+        if results==None:
+            return False,'Not found'
+        return True,results
+    def getList(self,uid=None,lid=None,did=None):
+        flag,session=self.createSession()
+        if flag==False:
+            return flag,session
+        results=None
+        if uid!=None and lid!=None and did!=None:
+            results = session.query(List).filter(and_(List.uid == uid,List.lid == lid,List.did == did)).one_or_none()
+        if uid!=None:
+            results = session.query(List).filter(List.uid == uid).all()
+        elif lid!=None:
+            results = session.query(List).filter(List.lid == lid).all()
+        elif did!=None:
+            results = session.query(List).filter(List.did == did).all()
         session.close()
         if results==None:
             return False,'Not found'
         return True,results
 
 
+#------------------------------------------------------Delete object---------------------------------------------------------------
+    def deleteWholeList(self,lid):
+        flag, session = self.createSession()
+        result=None
+        if flag == False:
+            return flag, session
+        flag,result=self.getList(lid=lid)
+        if flag==False:
+            return False,'This list doesn\'t exist'
+        try:
+            session.delete(result)
+            session.commit()
+            session.close()
+            return True,'List deleted successfully'
+        except:
+            session.rollback()
+            session.close()
+            return False,'List cannot be deleted'
+    def delete(self,obj):
+        flag, session = self.createSession()
+        if flag == False:
+            return flag, session
+        if isinstance(obj,Admin):
+            if not self.actorExistsByID('admin',obj.aid,session):
+                return False,'This admin doesn\'t exist'
+        elif isinstance(obj,User):
+            if not self.actorExistsByID('user',obj.uid,session):
+                return False,'This user doesn\'t exist'
+        elif isinstance(obj,Shelter):
+            if not self.actorExistsByID('shelter',obj.sid,session):
+                return False,'This Shelter doesn\'t exist'
+        elif isinstance(obj,Blog):
+            flag,result=self.getBlog(id=obj.blid)
+            if flag==False:
+                return flag,'This blog is not in database'
+        elif isinstance(obj,Breed):
+            flag,result=self.getBreed(obj.bid)
+            if flag == False:
+                return flag, 'This Breed is not in database'
+        elif isinstance(obj,Disease):
+            flag,result=self.getDisease(obj.disid)
+            if flag == False:
+                return flag, 'This Disease is not in database'
+        elif isinstance(obj,Dog):
+            flag,result=self.getDog(obj.bid)
+            if flag == False:
+                return flag, 'This Dog is not in database'
+        elif isinstance(obj,Diseasedog):
+            flag,result=self.getDiseasesOfDog(obj.did,obj.disid)
+            if flag==False:
+                return flag,'This disease is not in database for this dog'
+        elif isinstance(obj,List):
+            flag,result=self.getList(obj.uid,obj.lid,obj.did)
+            if flag==False:
+                return flag,'This element in list doesn\'t exist'
+        else:
+            return False,'Input a right object'
+        try:
+            session.delete(obj)
+            session.commit()
+            session.close()
+            return True,'Object Deleted successfully'
+        except Exception as e:
+            session.rollback()
+            session.close()
+            print(e)
+            return False,'Unable to delete object'
 
 
 #------------------------------------------------------Testing---------------------------------------------------------------
@@ -357,3 +471,7 @@ db=DBHandler()
 # print(db.add(Admin('wef','asfwed','asdas','aasdas')))
 # print(db.add(Blog('asdas',1)))
 # print(db.add(Diseasedog('bad',1,2)))
+
+flag,res=db.getBreed(id=2)
+print(flag)
+print(db.delete(res))

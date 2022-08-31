@@ -15,7 +15,7 @@ class Shelter(Base):
     picture=Column(String(MAX_LENGTH))
     phone=Column(String(MAX_LENGTH))
     proof=Column(String(MAX_LENGTH))
-    shelter=relationship('Dog',backref='Shelter')
+    shelter=relationship('Dog', cascade="all,delete",backref='Shelter')
     def __init__(self,name,street,city,country,email,username,password,picture,phone,proof):
         self.name=name
         self.street=street

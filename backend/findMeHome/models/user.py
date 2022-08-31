@@ -14,7 +14,7 @@ class User(Base):
     password=Column(String(MAX_LENGTH))
     picture=Column(String(MAX_LENGTH))
     phone=Column(String(MAX_LENGTH))
-    user=relationship('List',backref='User')
+    user=relationship('List', cascade="all,delete",backref='User')
     def __init__(self,fname,lname,city,country,email,username,password,picture,phone):
         self.fname=fname
         self.lname=lname
