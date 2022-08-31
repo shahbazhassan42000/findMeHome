@@ -6,4 +6,5 @@ app = Flask('cms')
 app.config['SECRET_KEY'] = 'random'
 app.debug = True
 
-from cms.controllers import *
+# from fineMeHome.controllers import *
+from backend.findMeHome.controllers import *
