@@ -1,7 +1,7 @@
 from sqlalchemy import and_, or_
 from Base import Base, engine
 from Base import Session
-from modelClases import *
+from backend.findMeHome.models.modelClasses import *
 
 
 class DBHandler():
