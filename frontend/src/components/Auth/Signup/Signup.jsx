@@ -1,10 +1,10 @@
-import logo from "../../assets/images/find_me_home_logo.png";
-import heart from "../../assets/icons/heart.png"
-import dogMini from "../../assets/icons/dog2.png"
-import msg from "../../assets/icons/email-forward.png"
-import people from "../../assets/icons/people.png"
-import pc from "../../assets/icons/pc.png"
-import free from "../../assets/icons/free.png"
+import logo from "../../../assets/images/find_me_home_logo.png";
+import heart from "../../../assets/icons/heart.png"
+import dogMini from "../../../assets/icons/dog2.png"
+import msg from "../../../assets/icons/email-forward.png"
+import people from "../../../assets/icons/people.png"
+import pc from "../../../assets/icons/pc.png"
+import free from "../../../assets/icons/free.png"
 
 const Signup = () => {
     return (

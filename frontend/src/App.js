@@ -2,12 +2,13 @@ import './App.css';
 import {BrowserRouter as Router,Route, Routes} from "react-router-dom";
 import BreedCheck from "./components/Breed/BreedCheck";
 import BreedResult from "./components/Breed/BreedResult";
-import Signup from "./components/Auth/Signup";
-import SignupAdopter from "./components/Auth/SignupAdopter";
+import Signup from "./components/Auth/Signup/Signup";
+import SignupAdopter from "./components/Auth/Signup/SignupAdopter";
 import ellipseUp from "./assets/icons/Ellipse uppper.png"
 import ellipseDown from "./assets/icons/Ellipse down.png"
 import vector from "./assets/icons/Vector 1.png"
-import SignupShelter from "./components/Auth/SignupShelter";
+import SignupShelter from "./components/Auth/Signup/SignupShelter";
+import Login from "./components/Auth/Login";
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
                 <Routes>
                     <Route exact path="/" element={<BreedCheck/>}/>
                     <Route exact path="/br" element={<BreedResult/>}/>
+                    <Route exact path="/login" element={<Login/>}/>
                     <Route exact path="/signup" element={<Signup/>}/>
                     <Route exact path="/signup/a" element={<SignupAdopter/>}/>
                     <Route exact path="/signup/s" element={<SignupShelter/>}/>

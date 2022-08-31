@@ -1,6 +1,6 @@
-import logo from "../../assets/images/find_me_home_logo.png";
+import logo from "../../../assets/images/find_me_home_logo.png";
 import {useEffect, useRef, useState} from "react";
-import Loading from "../Loading";
+import Loading from "../../Loading";
 import {CountryDropdown} from 'react-country-region-selector'
 import {onTogglePasswd} from "./SignupAdopter";
 import axios from "axios";

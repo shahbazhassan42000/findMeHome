@@ -1,6 +1,6 @@
-import logo from "../../assets/images/find_me_home_logo.png";
+import logo from "../../../assets/images/find_me_home_logo.png";
 import {useRef, useState} from "react";
-import Loading from "../Loading";
+import Loading from "../../Loading";
 
 const SignupAdopter = () => {
     const [msg, setMsg] = useState({show: false, msg: "", type: "general"});
