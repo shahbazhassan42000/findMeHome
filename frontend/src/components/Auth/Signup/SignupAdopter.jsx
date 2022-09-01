@@ -81,7 +81,7 @@ const onFormSubmit = async (e, setLoading, setMsg) => {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
-    formData.set("role", "adopter");
+    formData.set("type", "adopter");
     const formObject = Object.fromEntries(formData);
     const {username, email, password} = formObject;
     if (!username.match("^[a-zA-z\\d]+$")) setMsg({
