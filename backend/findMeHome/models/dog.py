@@ -9,12 +9,17 @@ class Dog(Base):
     dname=Column(String(MAX_LENGTH))
     age=Column(String(MAX_LENGTH))
     bid=Column(Integer,ForeignKey('breed.bid',ondelete='CASCADE'))
-    dog=relationship('List',backref='Dog')
-    dog=relationship('Diseasedog',backref='Dog')
+    dog=relationship('List', cascade="all,delete",backref='Dog')
+    dog=relationship('Diseasedog', cascade="all,delete",backref='Dog')
     def __init__(self,sid,dname,age,bid):
         self.sid=sid
         self.dname=dname
         self.age=age
         self.bid=bid
+    def update(self,dog):
+        self.sid=dog.sid
+        self.dname=dog.dname
+        self.age=dog.age
+        self.bid=dog.bid
 
 

@@ -5,8 +5,7 @@ body {
     sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background: #FFFFFF url("https://i.ibb.co/XzfHM4N/bg-fing-me-home.png") no-repeat;
-    background-size: cover;
+    background: #FFFFFF;
 }
 
 code {

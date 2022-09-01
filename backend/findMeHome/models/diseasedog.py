@@ -10,3 +10,7 @@ class Diseasedog(Base):
         self.description=description
         self.did=did
         self.disid=disid
+    def update(self,diseasedog):
+        self.description=diseasedog.description
+        self.did=diseasedog.did
+        self.disid=diseasedog.disid

@@ -10,3 +10,6 @@ class Blog(Base):
     def __init__(self,url,aid):
         self.url=url
         self.aid=aid
+    def update(self,blog):
+        self.url=blog.url
+        self.aid=blog.aid

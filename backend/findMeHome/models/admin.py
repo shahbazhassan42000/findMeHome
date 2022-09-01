@@ -15,3 +15,8 @@ class Admin(Base):
         self.name=name
         self.password=password
         self.email=email
+    def update(self,name,username,password,email):
+        self.username=username
+        self.name=name
+        self.password=password
+        self.email=email

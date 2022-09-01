@@ -49,8 +49,7 @@ const BreedCheck = () => {
                             </div>
                             <span className="ml-[10px] fa fa-arrow-up-from-bracket text-[24.4px]"></span>
                         </button>
-                        <p style={{color: msg === "ERROR! while uploading, Please try again" ? '#ff0033' : '#567a0d'}}
-                           className="mt-3 -mb-3 text-center">
+                        <p className={`${msg === "ERROR! while uploading, Please try again" ? '#ff0033' : '#567a0d'} mt-3 -mb-3 text-center`}>
                             {msg}
                         </p>
                         <button
@@ -62,7 +61,7 @@ const BreedCheck = () => {
                     <div className="mt-[25px] italic text-center">
                         <div>
                             <span className="text-[#7F99A2] text-[14px] mr-2">Be our member to adopt Dog</span>
-                            <a href="/register" className="text-[#5A8081] font-bold hover:text-[#3E665C]">Register</a>
+                            <a href="/signup" className="text-[#5A8081] font-bold hover:text-[#3E665C]">Register</a>
                         </div>
                         <a href="/login" className="text-[#5A8081] font-bold hover:text-[#3E665C]">Login</a>
                     </div>
@@ -87,7 +86,7 @@ const onFormSubmit = (e, setMsg, setLoading, setFileName) => {
     const formData = Object.fromEntries(form.entries());
     console.log(formData);
     const imgBBURL = "https://api.imgbb.com/1/upload";
-    const expiry = 600;
+    const expiry = 600; //TODO
     const apiKey = "4d0eff80cd1cea3d5f1f524ac3a0808a";
     axios.post(imgBBURL + "?expiration=" + expiry + "&key=" + apiKey, form)
         .then(res => {
