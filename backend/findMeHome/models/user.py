@@ -1,4 +1,4 @@
-from Base import Base
+from backend.findMeHome.models.Base import Base
 from sqlalchemy import Column, String,Integer,ForeignKey
 from sqlalchemy.orm import relationship
 MAX_LENGTH=60
