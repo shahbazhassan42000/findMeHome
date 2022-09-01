@@ -50,8 +50,8 @@ class DBHandler():
     # -----------------------------------------------Checker Functions-----------------------------------------------
     def actorExists(self,user,session):
         if self.isUsernameAvailable(user,session) and self.isEmailAvailable(user,session):
-            return True
-        return False
+            return False
+        return True
 
     def checkDogInList(self,list,session):
         results=session.query(List).filter(and_(List.lid==list.lid,List.did==list.did,List.uid==list.uid)).one_or_none()
