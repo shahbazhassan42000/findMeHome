@@ -13,8 +13,8 @@ api=Api(app)
 
 db_handler = DBHandler()
 
-db.initialize_db(app)
-routes.initialize_routes(api)
+# db.initialize_db(app)
+# routes.initialize_routes(api)
 
 # from fineMeHome.controllers import *
 from backend.findMeHome.controllers import *

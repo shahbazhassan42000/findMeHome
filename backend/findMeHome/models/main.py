@@ -1,15 +1,14 @@
 from sqlalchemy import and_,or_
-from Base import Base, engine
-from Base import Session
-from breed import Breed
-from disease import Disease
-from diseasedog import Diseasedog
-from shelter import Shelter
-from user import User
-from dog import Dog
-from list import List
-from admin import Admin
-from blog import Blog
+from backend.findMeHome.models.Base import Base, engine, Session
+from backend.findMeHome.models.breed import Breed
+from backend.findMeHome.models.disease import Disease
+from backend.findMeHome.models.diseasedog import Diseasedog
+from backend.findMeHome.models.shelter import Shelter
+from backend.findMeHome.models.user import User
+from backend.findMeHome.models.dog import Dog
+from backend.findMeHome.models.list import List
+from backend.findMeHome.models.admin import Admin
+from backend.findMeHome.models.blog import Blog
 
 class DBHandler():
 
@@ -51,8 +50,8 @@ class DBHandler():
     # -----------------------------------------------Checker Functions-----------------------------------------------
     def actorExists(self,user,session):
         if self.isUsernameAvailable(user,session) and self.isEmailAvailable(user,session):
-            return True
-        return False
+            return False
+        return True
 
     def checkDogInList(self,list,session):
         results=session.query(List).filter(and_(List.lid==list.lid,List.did==list.did,List.uid==list.uid)).one_or_none()

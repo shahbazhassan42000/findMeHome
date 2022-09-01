@@ -24,11 +24,16 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+<<<<<<< HEAD
   <component name="ProjectId" id="2DcE4rXce7Nq2hMBrx7bdKwJU4Q" />
+=======
+  <component name="ProjectId" id="2EA0lxwfJZuCt5KxJrELWGSejpk" />
+>>>>>>> origin/main
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+<<<<<<< HEAD
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
@@ -152,11 +157,32 @@
       <updated>1662009456711</updated>
     </task>
     <option name="localTasksCounter" value="14" />
+=======
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/rafay/OneDrive/Documents/GitHub/findMeHome"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="79053667-691c-4d1c-a183-6edb9809e191" name="Changes" comment="" />
+      <created>1662023235725</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1662023235725</updated>
+      <workItem from="1662023241290" duration="36000" />
+    </task>
+>>>>>>> origin/main
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+<<<<<<< HEAD
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
@@ -177,4 +203,6 @@
     <MESSAGE value="added uncomited data" />
     <option name="LAST_COMMIT_MESSAGE" value="added uncomited data" />
   </component>
+=======
+>>>>>>> origin/main
 </project>
