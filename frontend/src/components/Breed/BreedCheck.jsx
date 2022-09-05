@@ -105,6 +105,7 @@ const onFormSubmit = (e, setMsg, setLoading, setFileName) => {
                 console.log(response);
                 console.log("successfully get the dog breed data");
                 console.log(response.data);
+                window.location.pathname = "/br/?breed="+response.data;
             }).catch(error=>{
                 console.log("Error while getting dog breed data");
                 console.log(error);

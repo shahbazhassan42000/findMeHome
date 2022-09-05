@@ -1,8 +1,13 @@
 import logo from "../../assets/images/find_me_home_logo.png";
 import {useRef} from "react";
+import {useSearchParams} from "react-router-dom";
 
 
 const BreedResult = () => {
+    const [searchParams, setSearchParams] = useSearchParams();
+    const breed=searchParams.get("breed");
+    console.log(breed);
+
     const breedData = useRef(null);
     return (
         <div className="flex flex-col w-[70%] mx-auto items-center">
@@ -31,7 +36,7 @@ const BreedResult = () => {
                         </div>
                         <div className="text-[22px]  flex space-x-5">
                             <span className="text-[#7F99A2] pr-[1px]">Breed:</span>
-                            <span className="text-[#3E665C]">Lagotto Romagnolo</span>
+                            <span className="text-[#3E665C]">{breed}</span>
                         </div>
                     </div>
                     <div className="mb-4">
@@ -39,7 +44,6 @@ const BreedResult = () => {
                             <span className="text-[18px] italic text-[#7F99A2]">Download<br></br>Details?</span>
                             <span
                                 className="fa fa-arrow-up-from-bracket text-[48px] text-[#7F99A2] cursor-pointer hover:text-[#3E665C]"
-
                                 onClick={() => generatePDF(breedData.current)}
                             >
                             </span>
