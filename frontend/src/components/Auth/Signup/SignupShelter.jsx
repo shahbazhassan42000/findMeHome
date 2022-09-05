@@ -2,7 +2,7 @@ import logo from "../../../assets/images/find_me_home_logo.png";
 import {useEffect, useRef, useState} from "react";
 import Loading from "../../Loading";
 import {CountryDropdown} from 'react-country-region-selector'
-import {onTogglePasswd} from "./SignupAdopter";
+import {baseURL, onTogglePasswd} from "./SignupAdopter";
 import axios from "axios";
 
 const SignupAdopter = () => {
@@ -43,7 +43,7 @@ const SignupAdopter = () => {
         if (city) {
             setMsg({show: false, msg: "", type: "general"});
         }
-    },[city]);
+    }, [city]);
     const passwdRef = useRef(null);
     return (
         <div>
@@ -71,7 +71,9 @@ const SignupAdopter = () => {
                                     <p className="absolute text-[14px] text-[#EB5A46]">{msg.msg}</p>}
                             </div>
                         </div>
-                        <textarea required className="p-[5px] text-[14px] w-full border border-[#7F99A2] outline-0 placeholder:text-[#7F99A2] active:placeholder:text-white hover:placeholder:text-[#5A8081] rounded-[5px]" placeholder="Street Address*">
+                        <textarea name="street" required
+                                  className="p-[5px] text-[14px] w-full border border-[#7F99A2] outline-0 placeholder:text-[#7F99A2] active:placeholder:text-white hover:placeholder:text-[#5A8081] rounded-[5px]"
+                                  placeholder="Street Address*">
 
                         </textarea>
                         <div className="flex space-x-5">
@@ -105,7 +107,8 @@ const SignupAdopter = () => {
                                         <input
                                             ref={passwdRef}
                                             className="w-full p-[5px] w-full border border-[#7F99A2] bg-transparent outline-0 placeholder:text-[#7F99A2] active:placeholder:text-white hover:placeholder:text-[#5A8081] rounded-[5px]"
-                                            type="password" minLength="8" name="password" placeholder="Password*" required/>
+                                            type="password" minLength="8" name="password" placeholder="Password*"
+                                            required/>
                                         <span onClick={(e) => onTogglePasswd(e)}
                                               className="text-[#7F99A2] absolute right-2 cursor-pointer fa-solid fa-eye"></span>
                                     </div>
@@ -116,19 +119,19 @@ const SignupAdopter = () => {
                             {msg.show && msg.type === "general" &&
                                 <p className={`-mb-[18px] text-center text-[14px] ${msg.msg === "Your account created successfully" ? "green" : "red"} !mt-0`}>{msg.msg}</p>}
                         </div>
-                       <div className="flex space-x-5">
-                           <button type="submit"
-                                   className="w-full block bg-[#3E665C] hover:bg-[#5A8081] py-[5px] text-white rounded-[14px]">
-                               Sign up
-                           </button>
-                           <div className="w-full flex flex-col -space-y-1 text-center text-[14px] italic">
-                               <p className="text-[#7F99A2]">
-                                   Already have an account?
-                               </p>
-                               <a href="/login"
-                                  className="text-[#5A8081] font-[600] hover:text-[#3E665C]">Login</a>
-                           </div>
-                       </div>
+                        <div className="flex space-x-5">
+                            <button type="submit"
+                                    className="w-full block bg-[#3E665C] hover:bg-[#5A8081] py-[5px] text-white rounded-[14px]">
+                                Sign up
+                            </button>
+                            <div className="w-full flex flex-col -space-y-1 text-center text-[14px] italic">
+                                <p className="text-[#7F99A2]">
+                                    Already have an account?
+                                </p>
+                                <a href="/login"
+                                   className="text-[#5A8081] font-[600] hover:text-[#3E665C]">Login</a>
+                            </div>
+                        </div>
 
                     </form>
                 </div>
@@ -151,7 +154,7 @@ const onFormSubmit = async (e, setLoading, setMsg) => {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
-    formData.set("role", "shelter");
+    formData.set("type", "shelter");
     const formObject = Object.fromEntries(formData);
     if (formObject.city === "Select City" || formObject.state === "Select State") {
         setMsg({show: true, msg: "Please select City and State", type: "general"});
@@ -178,37 +181,42 @@ const onFormSubmit = async (e, setLoading, setMsg) => {
         setLoading(true);
         const reqBody = JSON.stringify({user: formObject});
         console.log("Req Body: ", reqBody);
-        const url = "http://localhost:8080/api/v0.1/user";
+        const url = baseURL + "/api/v0.1/user";
         await fetch(url, {
+            mode:"no-cors",
             method: 'post',
             body: reqBody,
             headers: {
                 'Content-Type': 'application/json',
             },
         }).then((res) => {
-            res.json().then(resBody => {
-                    setLoading(false);
-                    if (res.status === 201) {
-                        setMsg({show: true, msg: "Your account created successfully", type: "general"});
-                        form.reset();
-                        window.location.pathname = "/login";
-                    } else if (resBody.type === "username") setMsg({
-                        show: true,
-                        msg: "Username not available",
-                        type: "username"
-                    });
-                    else if (resBody.type === "email") setMsg({
-                        show: true,
-                        msg: "An account already exists against this email",
-                        type: "email"
-                    });
-                    else setMsg({show: true, msg: "An error occurred while signup, please try again", type: "general"});
-                }
-            ).catch(err => {
-                setMsg({show: true, msg: "An error occurred while signup, please try again", type: "general"});
-                console.log(err);
-                setLoading(false);
-            });
+            console.log(res);
+            console.log(typeof res);
+            // res.json().then(resBody => {
+            //         setLoading(false);
+            //     console.log(resBody);
+            //         // if (res.status === 201) {
+            //         //     setMsg({show: true, msg: "Your account created successfully", type: "general"});
+            //         //     form.reset();
+            //         //     window.location.pathname = "/login";
+            //         // } else if (resBody.type === "username") setMsg({
+            //         //     show: true,
+            //         //     msg: "Username not available",
+            //         //     type: "username"
+            //         // });
+            //         // else if (resBody.type === "email") setMsg({
+            //         //     show: true,
+            //         //     msg: "An account already exists against this email",
+            //         //     type: "email"
+            //         // });
+            //         // else setMsg({show: true, msg: "An error occurred while signup, please try again", type: "general"});
+            //         // setMsg({show: true, msg: "An error occurred while signup, please try again", type: "general"});
+            //     }
+            // ).catch(err => {
+            //     setMsg({show: true, msg: "An error occurred while signup, please try again", type: "general"});
+            //     console.log(err);
+            //     setLoading(false);
+            // });
         }).catch((err) => {
             setMsg({show: true, msg: "An error occurred while signup, please try again", type: "general"});
             console.log(err);

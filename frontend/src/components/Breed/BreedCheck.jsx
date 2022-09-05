@@ -3,6 +3,7 @@ import dog from "../../assets/icons/dog.png"
 import {useRef, useState} from "react";
 import axios from "axios";
 import Loading from "../Loading";
+import {baseURL} from "../Auth/Signup/SignupAdopter";
 
 const BreedCheck = () => {
     const [fileName, setFileName] = useState({name: "Upload Picture of Dog"});
@@ -92,7 +93,22 @@ const onFormSubmit = (e, setMsg, setLoading, setFileName) => {
         .then(res => {
             setMsg("Data uploaded successfully, now under processing.\nPlease Wait!");
             console.log('response', res)
-            console.log('response URL', res.data.data.image.url)
+            const dogURL = res.data.data.image.url;
+            console.log(dogURL);
+            console.log('response URL',);
+            const reqBody = JSON.stringify({dogURL});
+            axios.post(baseURL + "/api/dog_model",reqBody, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(response=>{
+                console.log(response);
+                console.log("successfully get the dog breed data");
+                console.log(response.data);
+            }).catch(error=>{
+                console.log("Error while getting dog breed data");
+                console.log(error);
+            })
             console.log('success')
             e.target.reset();
             setFileName({name: "Upload Picture of Dog"});
