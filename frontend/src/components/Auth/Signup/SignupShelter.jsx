@@ -183,46 +183,26 @@ const onFormSubmit = async (e, setLoading, setMsg) => {
         const reqBody = JSON.stringify({user: formObject});
         console.log("Req Body: ", reqBody);
         const url = baseURL + "/api/v0.1/user";
-        await fetch(url, {
-            mode: "no-cors",
-            method: 'post',
-            body: reqBody,
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        }).then((res) => {
-            console.log(res);
-            console.log(typeof res);
-            // res.json().then(resBody => {
-            //         setLoading(false);
-            //     console.log(resBody);
-            //         // if (res.status === 201) {
-            //         //     setMsg({show: true, msg: "Your account created successfully", type: "general"});
-            //         //     form.reset();
-            //         //     window.location.pathname = "/login";
-            //         // } else if (resBody.type === "username") setMsg({
-            //         //     show: true,
-            //         //     msg: "Username not available",
-            //         //     type: "username"
-            //         // });
-            //         // else if (resBody.type === "email") setMsg({
-            //         //     show: true,
-            //         //     msg: "An account already exists against this email",
-            //         //     type: "email"
-            //         // });
-            //         // else setMsg({show: true, msg: "An error occurred while signup, please try again", type: "general"});
-            //         // setMsg({show: true, msg: "An error occurred while signup, please try again", type: "general"});
-            //     }
-            // ).catch(err => {
-            //     setMsg({show: true, msg: "An error occurred while signup, please try again", type: "general"});
-            //     console.log(err);
-            //     setLoading(false);
-            // });
+
+        axios.post(url,reqBody,{
+            headers:{
+                'Content-Type':'application/json'
+            }
+        }).then(res=>{
+            console.log(res.data);
+            if (res.status === 201) {
+                setMsg({show: true, msg: "Your account created successfully", type: "general"});
+                form.reset();
+                window.location.pathname = "/login";
+            }
+            else setMsg({show: true, msg: "An error occurred while signup, please try again", type: "general"});
+            setLoading(false);
         }).catch((err) => {
             setMsg({show: true, msg: "An error occurred while signup, please try again", type: "general"});
             console.log(err);
             setLoading(false);
         });
+
     }
 }
 
