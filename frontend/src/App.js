@@ -19,7 +19,7 @@ function App() {
             <Router>
                 <Routes>
                     <Route exact path="/" element={<BreedCheck/>}/>
-                    <Route exact path="/br/*" element={<BreedResult/>}/>
+                    <Route exact path="/br" element={<BreedResult/>}/>
                     <Route exact path="/login" element={<Login/>}/>
                     <Route exact path="/signup" element={<Signup/>}/>
                     <Route exact path="/signup/a" element={<SignupAdopter/>}/>

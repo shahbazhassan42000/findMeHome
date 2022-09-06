@@ -1,15 +1,27 @@
 import logo from "../../assets/images/find_me_home_logo.png"
-import dog from "../../assets/icons/dog.png"
-import {useRef, useState} from "react";
+import dogImg from "../../assets/icons/dog.png"
+import {useEffect, useRef, useState} from "react";
 import axios from "axios";
 import Loading from "../Loading";
-import {baseURL} from "../Auth/Signup/SignupAdopter";
+import {useDispatch} from "react-redux";
+import {breedResult} from "../../store/dogs/dogSlice";
+import {baseURL} from "../../store/middleware/api";
 
 const BreedCheck = () => {
+    const dispatch = useDispatch();
+    const [dog, setDog] = useState(null);
     const [fileName, setFileName] = useState({name: "Upload Picture of Dog"});
     const [msg, setMsg] = useState(null);
     const [loading, setLoading] = useState(false);
     const imgUpload = useRef(null);
+    useEffect(() => {
+        if (dog) {
+            dispatch(breedResult({...dog}));
+            window.location.pathname = "/br";
+        }
+    }, [dog]);
+
+
     return (
         <div className="flex flex-col w-[50%] mx-auto items-center">
             <div className="w-[220px] mt-[20px]">
@@ -24,11 +36,11 @@ const BreedCheck = () => {
                         Please write the name and add the picture of Dog to find out its Breed
                     </p>
                     <form
-                        onSubmit={(e) => onFormSubmit(e, setMsg, setLoading, setFileName)}
+                        onSubmit={(e) => onFormSubmit(e, setMsg, setLoading, setFileName, setDog)}
                         className="flex flex-col mt-[25px] w-full px-[33px] ml-1 justify-center items-center">
                         <label
                             className="border border-[#7F99A2] active:border-[#A7B4BF] hover:border-[#5A8081] active:bg-[#5A8081] active:text-white px-[12px] py-[4px] rounded-[7px] w-full flex items-center mb-5">
-                            <div className="w-[28px] mr-[10px]"><img src={dog} alt="dog icon"/></div>
+                            <div className="w-[28px] mr-[10px]"><img src={dogImg} alt="dog icon"/></div>
                             <input
                                 className="w-full bg-transparent outline-0 placeholder:text-[#7F99A2] active:placeholder:text-white hover:placeholder:text-[#5A8081]"
                                 type="text" name="dogName" placeholder="Dog Name" required/>
@@ -80,40 +92,43 @@ const onFileChange = (e, imgUpload) => {
     imgUpload.click();
 }
 
-const onFormSubmit = (e, setMsg, setLoading, setFileName) => {
+const onFormSubmit = (e, setMsg, setLoading, setFileName, setDog) => {
+    // e.preventDefault();
+    // setDog({name: "abc", breed:"jadoo", image: "xyz", age: "23"});
+    // return;
+
+
     setLoading(true);
     e.preventDefault();
     const form = new FormData(e.target);
     const formData = Object.fromEntries(form.entries());
-    console.log(formData);
+    const dogName = formData.dogName;
     const imgBBURL = "https://api.imgbb.com/1/upload";
-    const expiry = 600; //TODO
+    const expiry = 600; //TODO change it to 86400
     const apiKey = "4d0eff80cd1cea3d5f1f524ac3a0808a";
     axios.post(imgBBURL + "?expiration=" + expiry + "&key=" + apiKey, form)
         .then(res => {
             setMsg("Data uploaded successfully, now under processing.\nPlease Wait!");
             console.log('response', res)
-            const dogURL = res.data.data.image.url;
-            console.log(dogURL);
-            console.log('response URL',);
-            const reqBody = JSON.stringify({dogURL});
-            axios.post(baseURL + "/api/dog_model",reqBody, {
+            const dogImgURL = res.data.data.image.url;
+            console.log('response URL: ', dogImgURL);
+            const reqBody = JSON.stringify({dogURL: dogImgURL});
+            axios.post(baseURL + "/api/dog_model", reqBody, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
-            }).then(response=>{
-                console.log(response);
-                console.log("successfully get the dog breed data");
-                console.log(response.data);
-                window.location.pathname = "/br/?breed="+response.data;
-            }).catch(error=>{
-                console.log("Error while getting dog breed data");
+            }).then(response => {
+                const breed = response.data;
+                console.log("successfully got the dog breed: ", breed);
+                setDog({name: dogName, breed, image: dogImgURL, age: ""});
+                e.target.reset();
+                setFileName({name: "Upload Picture of Dog"});
+                setLoading(false);
+            }).catch(error => {
+                setMsg = ("ERROR! while getting dog breed data, Please try again");
+                setLoading(false);
                 console.log(error);
             })
-            console.log('success')
-            e.target.reset();
-            setFileName({name: "Upload Picture of Dog"});
-            setLoading(false);
         }).catch(err => {
         console.log("ERROR: ", err);
         setMsg = ("ERROR! while uploading, Please try again");

@@ -2,8 +2,8 @@ import logo from "../../../assets/images/find_me_home_logo.png";
 import {useRef, useState} from "react";
 import Loading from "../../Loading";
 import axios from "axios";
+import {baseURL} from "../../../store/middleware/api";
 
-export const baseURL = "http://localhost:5000";
 
 const SignupAdopter = () => {
     const [msg, setMsg] = useState({show: false, msg: "", type: "general"});
@@ -119,7 +119,7 @@ const onFormSubmit = async (e, setLoading, setMsg) => {
             if (res.status === 201) {
                 setMsg({show: true, msg: "Your account created successfully", type: "general"});
                 form.reset();
-                // window.location.pathname = "/login";
+                window.location.pathname = "/login";
             }
             else setMsg({show: true, msg: "An error occurred while signup, please try again", type: "general"});
             setLoading(false);
@@ -128,42 +128,6 @@ const onFormSubmit = async (e, setLoading, setMsg) => {
             console.log(err);
             setLoading(false);
         });
-        // fetch(url, {
-        //     method: 'POST',
-        //     body:reqBody,
-        //     headers: {
-        //         'Content-Type':'application/json'
-        //     },
-        // }).then((res) => {
-        //     res.json().then(resBody => {
-        //         console.log(resBody)
-        //             setLoading(false);
-        //             if (res.status === 201) {
-        //                 setMsg({show: true, msg: "Your account created successfully", type: "general"});
-        //                 form.reset();
-        //                 window.location.pathname = "/login";
-        //             } else if (resBody.type === "username") setMsg({
-        //                 show: true,
-        //                 msg: "Username not available",
-        //                 type: "username"
-        //             });
-        //             else if (resBody.type === "email") setMsg({
-        //                 show: true,
-        //                 msg: "An account already exists against this email",
-        //                 type: "email"
-        //             });
-        //             else setMsg({show: true, msg: "An error occurred while signup, please try again", type: "general"});
-        //         }
-        //     ).catch(err => {
-        //         setMsg({show: true, msg: "An error occurred while signup, please try again", type: "general"});
-        //         console.log(err);
-        //         setLoading(false);
-        //     });
-        // }).catch((err) => {
-        //     setMsg({show: true, msg: "An error occurred while signup, please try again", type: "general"});
-        //     console.log(err);
-        //     setLoading(false);
-        // });
     }
 }
 

@@ -2,8 +2,9 @@ import logo from "../../../assets/images/find_me_home_logo.png";
 import {useEffect, useRef, useState} from "react";
 import Loading from "../../Loading";
 import {CountryDropdown} from 'react-country-region-selector'
-import {baseURL, onTogglePasswd} from "./SignupAdopter";
+import {onTogglePasswd} from "./SignupAdopter";
 import axios from "axios";
+import {baseURL} from "../../../store/middleware/api";
 
 const SignupAdopter = () => {
     const [msg, setMsg] = useState({show: false, msg: "", type: "general"});
@@ -183,7 +184,7 @@ const onFormSubmit = async (e, setLoading, setMsg) => {
         console.log("Req Body: ", reqBody);
         const url = baseURL + "/api/v0.1/user";
         await fetch(url, {
-            mode:"no-cors",
+            mode: "no-cors",
             method: 'post',
             body: reqBody,
             headers: {
