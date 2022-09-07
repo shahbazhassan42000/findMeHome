@@ -59,6 +59,8 @@ class signInApi(Resource):
         except:
             return "Couldn't login. Please try again", 412
 
+#adds a dog to the data base
+#Requires following arguments
 #user.username
 #dog.name
 #dog.age
@@ -96,7 +98,32 @@ class dogApi(Resource):
            return make_response(jsonify("Dog added Successfully"), 200)
         except:
             return "Couldn't add dog. Please try again", 412
-#
+
+#Returns list of all the breads in database.
+#Requires no arguments
+class getBreedsApi(Resource):
+    @staticmethod
+    def get():
+        try:
+            status, breeds = db.getBreed(all=True)
+            if status is True:
+                return make_response(jsonify(breeds)),200
+            return make_response(jsonify("Couldn't load breeds")), 502
+        except:
+            return make_response(jsonify("Couldn't load breeds")), 500
+
+#Returns list of all the diseases in the database
+#Requires no arguments
+def getDiseasesApi(Resource):
+    @staticmethod
+    def get():
+        try:
+            status, diseases = db.getDisease(all=True)
+            if status is True:
+                return make_response(jsonify(diseases)), 200
+            return make_response(jsonify("Couldn't load breeds")), 502
+        except:
+            return make_response(jsonify("Couldn't load breeds")), 500
 
 class ModelApi(Resource):
     @staticmethod
@@ -106,3 +133,4 @@ class ModelApi(Resource):
             return "Invalid Data posted", 412
         res = breedPredict(url['dogURL'], model)
         return make_response(jsonify(res), 200)
+
