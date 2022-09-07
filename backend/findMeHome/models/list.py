@@ -11,3 +11,7 @@ class List(Base):
         self.lid=lid
         self.uid=uid
         self.did=did
+    def jsonify(self):
+        return {'lid':self.lid,
+                'uid':self.uid,
+                'did':self.did}

@@ -24,5 +24,12 @@ class Dog(Base):
         self.age=dog.age
         self.bid=dog.bid
         self.imageurl=dog.imageurl
+    def jsonify(self):
+        return {'did':self.did,
+                'sid':self.sid,
+                'dname':self.dname,
+                'age':self.age,
+                'bid':self.bid,
+                'imageurl':self.imageurl}
 
 

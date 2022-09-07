@@ -11,3 +11,7 @@ class Breed(Base):
         self.bname=name
     def update(self,breed):
         self.bname=breed.bname
+
+    def jsonify(self):
+        return {'bid':self.bid,
+                'bname':self.bname}

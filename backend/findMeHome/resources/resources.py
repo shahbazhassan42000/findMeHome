@@ -107,10 +107,10 @@ class getBreedsApi(Resource):
         try:
             status, breeds = db.getBreed(all=True)
             if status is True:
-                return make_response(jsonify(breeds)),200
-            return make_response(jsonify("Couldn't load breeds")), 502
+                return make_response(jsonify([b.jsonify() for b in breeds]),200)
+            return make_response(jsonify("Couldn't load breeds"), 502)
         except:
-            return make_response(jsonify("Couldn't load breeds")), 500
+            return make_response(jsonify("Couldn't load breeds"), 500)
 
 #Returns list of all the diseases in the database
 #Requires no arguments
@@ -120,10 +120,10 @@ class getDiseasesApi(Resource):
         try:
             status, diseases = db.getDisease(all=True)
             if status is True:
-                return make_response(jsonify(diseases)), 200
-            return make_response(jsonify("Couldn't load breeds")), 502
+                return make_response(jsonify([d.jsonify() for d in diseases]), 200)
+            return make_response(jsonify("Couldn't load breeds"), 502)
         except:
-            return make_response(jsonify("Couldn't load breeds")), 500
+            return make_response(jsonify("Couldn't load breeds"), 500)
 
 class ModelApi(Resource):
     @staticmethod
