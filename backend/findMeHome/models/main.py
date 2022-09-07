@@ -32,8 +32,8 @@ class DBHandler():
         return User(fname,lname,city,country,email,username,password,picture,phone)
     def createObjShelter(self,name,street,city,country,email,username,password,picture,phone,proof):
         return Shelter(name,street,city,country,email,username,password,picture,phone,proof)
-    def createObjDog(self,sid,dname,age,bid):
-        return Dog(sid,dname,age,bid)
+    def createObjDog(self,sid,dname,age,bid,image):
+        return Dog(sid,dname,age,bid,image)
     def createObjBlog(self,url,aid):
         return Blog(url,aid)
     def createObjList(self,uid,did):
@@ -161,7 +161,7 @@ class DBHandler():
             session.add(obj)
             session.commit()
             session.close()
-            return True,'Operation Success'
+            return True,obj
         except:
             session.rollback()
             session.close()
@@ -235,7 +235,7 @@ class DBHandler():
             results.update(obj)
             session.commit()
             session.close()
-            return True, 'Changed Successfully'
+            return True,obj
         except:
             session.rollback()
             session.close()
