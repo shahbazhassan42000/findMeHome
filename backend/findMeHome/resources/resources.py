@@ -114,7 +114,7 @@ class getBreedsApi(Resource):
 
 #Returns list of all the diseases in the database
 #Requires no arguments
-def getDiseasesApi(Resource):
+class getDiseasesApi(Resource):
     @staticmethod
     def get():
         try:

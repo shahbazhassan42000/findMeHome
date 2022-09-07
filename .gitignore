@@ -14,3 +14,10 @@ backend/findMeHome/models/__pycache__/user.cpython-39.pyc
 backend/findMeHome/resources/__pycache__/routes.cpython-39.pyc
 backend/findMeHome/resources/__pycache__/resources.cpython-39.pyc
 backend/server.py
+*.pyc
+.idea/dataSources.local.xml
+.idea/findMeHome.iml
+.idea/misc.xml
+.idea/shelf/Uncommitted_changes_before_Update_at_01_09_2022_10_12_AM__Changes_.xml
+.idea/shelf/Uncommitted_changes_before_Update_at_01_09_2022_10_13_AM__Changes_.xml
+*.xml
