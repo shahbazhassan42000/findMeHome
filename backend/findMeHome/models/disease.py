@@ -12,3 +12,6 @@ class Disease(Base):
 
     def update(self,disease):
         self.name=disease.name
+    def jsonify(self):
+        return {'disid':self.disid,
+                'name':self.name}

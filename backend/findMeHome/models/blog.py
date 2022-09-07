@@ -13,3 +13,7 @@ class Blog(Base):
     def update(self,blog):
         self.url=blog.url
         self.aid=blog.aid
+    def jsonify(self):
+        return {'blid':self.blid,
+                'url':self.url,
+                'aid':self.aid}

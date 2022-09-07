@@ -14,3 +14,7 @@ class Diseasedog(Base):
         self.description=diseasedog.description
         self.did=diseasedog.did
         self.disid=diseasedog.disid
+    def jsonify(self):
+        return {'did':self.did,
+                'disid':self.disid,
+                'description':self.description}

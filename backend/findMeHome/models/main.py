@@ -32,8 +32,8 @@ class DBHandler():
         return User(fname,lname,city,country,email,username,password,picture,phone)
     def createObjShelter(self,name,street,city,country,email,username,password,picture,phone,proof):
         return Shelter(name,street,city,country,email,username,password,picture,phone,proof)
-    def createObjDog(self,sid,dname,age,bid):
-        return Dog(sid,dname,age,bid)
+    def createObjDog(self,sid,dname,age,bid,image):
+        return Dog(sid,dname,age,bid,image)
     def createObjBlog(self,url,aid):
         return Blog(url,aid)
     def createObjList(self,uid,did):
@@ -161,7 +161,7 @@ class DBHandler():
             session.add(obj)
             session.commit()
             session.close()
-            return True,'Operation Success'
+            return True,obj
         except:
             session.rollback()
             session.close()
@@ -235,7 +235,7 @@ class DBHandler():
             results.update(obj)
             session.commit()
             session.close()
-            return True, 'Changed Successfully'
+            return True,obj
         except:
             session.rollback()
             session.close()
@@ -243,48 +243,73 @@ class DBHandler():
 
 
 #---------------------------------------Getter functions---------------------------------------
-    def getUser(self,id=None,username=None,email=None):
+
+    def signIn(self,username,password):
+        flag,results=self.getUser(username=username,password=password)
+        if flag==False:
+            return False,'User doesn\'t exist'
+        flag,results=self.getShelter(username=username,password=password)
+        if flag==False:
+            return False,'Shelter doesn\'t exist'
+        flag,results=self.getAdmin(username=username,password=password)
+        if flag==False:
+            return False,'Admin doesn\'t exist'
+        return True, results
+
+    def getUser(self,id=None,username=None,email=None,password=None):
         flag,session=self.createSession()
         results=None
         if flag==False:
             return flag,session
-        if id!=None:
+        if username!=None and password!=None:
+            results = session.query(User).filter(and_(User.username == username,User.password==password)).one_or_none()
+        elif email != None and password != None:
+            results = session.query(User).filter(and_(User.email == email, User.password == password)).one_or_none()
+        elif id!=None:
             results=session.query(User).filter(User.uid == id).one_or_none()
-        if username!=None:
+        elif username!=None:
             results=session.query(User).filter(User.username == username).one_or_none()
-        if email!=None:
+        elif email!=None:
             results=session.query(User).filter(User.email==email).one_or_none()
         session.close()
         if results==None:
             return False,'No User found'
         return True,results
 
-    def getShelter(self,id=None,username=None,email=None):
+    def getShelter(self,id=None,username=None,email=None,password=None):
         flag,session=self.createSession()
         results=None
         if flag==False:
             return flag,session
-        if id!=None:
+        if username!=None and password!=None:
+            results = session.query(Shelter).filter(and_(Shelter.username == username,Shelter.password==password)).one_or_none()
+        elif email != None and password != None:
+            results = session.query(Shelter).filter(and_(Shelter.email == email, Shelter.password == password)).one_or_none()
+        elif id!=None:
             results=session.query(Shelter).filter(Shelter.sid == id).one_or_none()
-        if username!=None:
+        elif username!=None:
             results=session.query(Shelter).filter(Shelter.username == username).one_or_none()
-        if email!=None:
+        elif email!=None:
             results=session.query(Shelter).filter(Shelter.email == email).one_or_none()
         session.close()
         if results==None:
             return False,'No User found'
         return True,results
 
-    def getAdmin(self,id=None,username=None,email=None):
+    def getAdmin(self,id=None,username=None,email=None,password=None):
         flag,session=self.createSession()
         results=None
         if flag==False:
             return flag,session
-        if id!=None:
+        if username!=None and password!=None:
+            results = session.query(Admin).filter(and_(Admin.username == username,Admin.password==password)).one_or_none()
+        elif email != None and password != None:
+            results = session.query(Admin).filter(and_(Admin.email == email, Admin.password == password)).one_or_none()
+        elif id!=None:
             results=session.query(Admin).filter(Admin.uid == id).one_or_none()
-        if username!=None:
+        elif username!=None:
             results=session.query(Admin).filter(Admin.username == username).one_or_none()
-        if email!=None:
+        elif email!=None:
             results=session.query(Admin).filter(Admin.email==email).one_or_none()
         session.close()
         if results==None:
@@ -454,7 +479,7 @@ class DBHandler():
 
 
 #------------------------------------------------------Testing---------------------------------------------------------------
-db=DBHandler()
+#db=DBHandler()
 # print(db.add(User('asd','asd','asd','asd','asd','asd','asd','efwe','fwe')))
 # print(db.add(User('aefv','aevfrd','agrbsd','aytnsd','athnsd','atnsd','aaersd','etnfwe','frtgwe')))
 # print(db.add(Shelter('rv','sdc','sdc','sdcsdc','wefwe','ddfv','dfvfdv','efv','ev','erv')))
