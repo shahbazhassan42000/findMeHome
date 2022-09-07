@@ -9,13 +9,14 @@ import ellipseDown from "./assets/icons/Ellipse down.png"
 import vector from "./assets/icons/Vector 1.png"
 import SignupShelter from "./components/Auth/Signup/SignupShelter";
 import Login from "./components/Auth/Login";
+import AddDog from "./components/Shelter/AddDog";
 
 
 function App() {
     return (<div>
-            <img className="fixed h-[280px]" src={ellipseUp} alt="ellipse upper" />
-            <img className="fixed h-[180px] bottom-0" src={ellipseDown} alt="ellipse down" />
-            <img className="fixed h-[430px] bottom-0 right-0" src={vector} alt="vector" />
+            <img className="-z-10 fixed h-[280px]" src={ellipseUp} alt="ellipse upper" />
+            <img className="-z-10 fixed h-[180px] bottom-0" src={ellipseDown} alt="ellipse down" />
+            <img className="-z-10 fixed h-[430px] bottom-0 right-0" src={vector} alt="vector" />
             <Router>
                 <Routes>
                     <Route exact path="/" element={<BreedCheck/>}/>
@@ -24,6 +25,7 @@ function App() {
                     <Route exact path="/signup" element={<Signup/>}/>
                     <Route exact path="/signup/a" element={<SignupAdopter/>}/>
                     <Route exact path="/signup/s" element={<SignupShelter/>}/>
+                    <Route exact path="/ad" element={<AddDog/>}/>
                 </Routes>
             </Router>
         </div>
