@@ -243,6 +243,19 @@ class DBHandler():
 
 
 #---------------------------------------Getter functions---------------------------------------
+
+    def signIn(self,username,password):
+        flag,results=self.getUser(username=username,password=password)
+        if flag==False:
+            return False,'User doesn\'t exist'
+        flag,results=self.getShelter(username=username,password=password)
+        if flag==False:
+            return False,'Shelter doesn\'t exist'
+        flag,results=self.getAdmin(username=username,password=password)
+        if flag==False:
+            return False,'Admin doesn\'t exist'
+        return True, results
+
     def getUser(self,id=None,username=None,email=None,password=None):
         flag,session=self.createSession()
         results=None
@@ -466,7 +479,7 @@ class DBHandler():
 
 
 #------------------------------------------------------Testing---------------------------------------------------------------
-db=DBHandler()
+#db=DBHandler()
 # print(db.add(User('asd','asd','asd','asd','asd','asd','asd','efwe','fwe')))
 # print(db.add(User('aefv','aevfrd','agrbsd','aytnsd','athnsd','atnsd','aaersd','etnfwe','frtgwe')))
 # print(db.add(Shelter('rv','sdc','sdc','sdcsdc','wefwe','ddfv','dfvfdv','efv','ev','erv')))
