@@ -35,3 +35,15 @@ class User(Base):
         self.password=user.password
         self.picture=user.picture
         self.phone=user.phone
+
+    def jsonify(self):
+        return {'type':'adopter',
+                'uid':self.uid,
+                'fname':self.fname,
+                'lname':self.lname,
+                'city':self.city,
+                'country':self.country,
+                'email':self.email,
+                'username':self.username,
+                'picture':self.picture,
+                'phone':self.phone}

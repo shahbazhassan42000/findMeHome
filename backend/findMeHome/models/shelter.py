@@ -38,3 +38,16 @@ class Shelter(Base):
         self.picture=shelter.picture
         self.phone=shelter.phone
         self.proof=shelter.proof
+
+    def jsonify(self):
+        return {'type':'shelter',
+                'sid':self.sid,
+                'name':self.name,
+                'street':self.street,
+                'city':self.city,
+                'country':self.country,
+                'email':self.email,
+                'username':self.username,
+                'picture':self.picture,
+                'phone':self.phone,
+                'proof':self.proof}

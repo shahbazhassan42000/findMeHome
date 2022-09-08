@@ -143,3 +143,23 @@ class ModelApi(Resource):
             return "Invalid Data posted", 412
         res = breedPredict(url['dogURL'], model)
         return make_response(jsonify(res), 200)
+
+class UsersApi(Resource):
+    @staticmethod
+    def post():
+        data=request.get_json()
+        if data.get('user') is None:
+            return make_response(jsonify('Wrong format'),412)
+        if data.get('user').get('username') is None:
+            return make_response(jsonify('Wrong format'),412)
+        try:
+            flag, userData = db.getUser(username=data.get('user').get('username'))
+            if flag is True:
+                return make_response(userData.jsonify(), 200)
+            flag, userData = db.getShelter(username=data.get('user').get('username'))
+            if flag is True:
+                return make_response(userData.jsonify(), 200)
+            return make_response(jsonify('User not found'), 412)
+        except:
+            return make_response(jsonify('Error in database'), 512)
+
