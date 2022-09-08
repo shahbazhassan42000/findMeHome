@@ -125,13 +125,13 @@ const onFormSubmit = (e, setMsg, setLoading, setFileName, setDog) => {
                 setFileName({name: "Upload Picture of Dog"});
                 setLoading(false);
             }).catch(error => {
-                setMsg = ("ERROR! while getting dog breed data, Please try again");
+                setMsg("ERROR! while getting dog breed data, Please try again");
                 setLoading(false);
                 console.log(error);
             })
         }).catch(err => {
         console.log("ERROR: ", err);
-        setMsg = ("ERROR! while uploading, Please try again");
+        setMsg("ERROR! while uploading, Please try again");
         setLoading(false);
     })
 }

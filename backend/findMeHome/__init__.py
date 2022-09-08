@@ -9,7 +9,7 @@ from backend.findMeHome.resources import routes
 # from fineMeHome.controllers import *
 # from backend.findMeHome.controllers import *
 
-app = Flask('cms')
+app = Flask('fmh')
 app.config['SECRET_KEY'] = 'random'
 app.debug = True
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
