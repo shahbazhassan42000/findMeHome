@@ -30,7 +30,6 @@ def breedPredict(url, model):
                    'Cardigan', 'Toy poodle', 'Miniature poodle', 'Standard poodle', 'Mexican hairless', 'Dingo',
                    'Dhole', 'African hunting dog']
     img =  np.array(Image.open(requests.get(url, stream=True).raw))
-    print('asdasdasdadasdasdadas')
     img = tf.image.resize(img, [360, 360])
     pred = model.predict(tf.expand_dims(img, axis=0),verbose=0)
     pred = tf.argmax(tf.squeeze(pred))
