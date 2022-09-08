@@ -246,15 +246,16 @@ class DBHandler():
 
     def signIn(self,username,password):
         flag,results=self.getUser(username=username,password=password)
-        if flag==False:
-            return False,'User doesn\'t exist'
+        if flag==True:
+            return True, results
+
         flag,results=self.getShelter(username=username,password=password)
-        if flag==False:
-            return False,'Shelter doesn\'t exist'
+        if flag==True:
+            return True, results
         flag,results=self.getAdmin(username=username,password=password)
-        if flag==False:
-            return False,'Admin doesn\'t exist'
-        return True, results
+        if flag==True:
+            return True, results
+        return False,'User doesn\'t exist'
 
     def getUser(self,id=None,username=None,email=None,password=None):
         flag,session=self.createSession()

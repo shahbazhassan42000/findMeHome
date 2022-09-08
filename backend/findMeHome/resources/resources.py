@@ -54,16 +54,16 @@ class SignInApi(Resource):
         try:
             user = data["user"]
             if user.get("username") is None or user.get("password") is None:
-                return "Couldn't login. Please try again", 412
+                return "Couldn't login. Please try again 1", 412
             # call sign in function of db
             status, user = db.signIn(user.get("username"), user.get("password"))
             if status is True:
                 session["userName"] = user.username
-                return make_response(jsonify(user.username)), 200
+                return make_response(jsonify(user.username), 201)
             else:
-                return "Couldn't login. Please try again", 412
+                return "Couldn't login. Please try again 2", 412
         except:
-            return "Couldn't login. Please try again", 412
+            return "Couldn't login. Please try again 3", 412
 
 
 # adds a dog to the data base
