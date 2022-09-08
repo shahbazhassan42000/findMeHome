@@ -9,8 +9,9 @@ from flask import request, Response, jsonify, make_response, session
 
 db = DBHandler()
 
-#Performs the sign up operation for adopter, shelter or admin
-#returns failuer message if operation failed, and success message otherwise.
+
+# Performs the sign-up operation for adopter, shelter or admin
+# returns failure message if operation failed, and success message otherwise.
 class SignUpApi(Resource):
     @staticmethod
     def post():
@@ -24,8 +25,9 @@ class SignUpApi(Resource):
                            user.get("password"), user.get("picture"), user.get("phone"))
                 status, msg = db.add(adp)
             elif data["user"].get("type") == "shelter":
-                shelter = Shelter(user.get("name"), user.get("street"), user.get("city"), user.get("country"), user.get("email")
-                                  , user.get("username"),user.get("password"), user.get("picture"),
+                shelter = Shelter(user.get("name"), user.get("street"), user.get("city"), user.get("country"),
+                                  user.get("email")
+                                  , user.get("username"), user.get("password"), user.get("picture"),
                                   user.get("phone"), user.get("proof"))
                 status, msg = db.add(shelter)
             if data["user"].get("type") == "adopter" or data["user"].get("type") == "shelter":

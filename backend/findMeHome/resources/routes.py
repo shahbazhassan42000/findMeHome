@@ -6,8 +6,8 @@ signUpURL = '/api/v0.1/user'
 modelURL = "/api/dog_model"
 signInURL = '/api/v0.1/userLogin'
 dogApiURL = '/api/v0.1/dogApi'
-breedsURL = '/api/v0.1/breedsapi'
-diseasesURL = '/api/v0.1/diseasesapi'
+getAllBreedsURL = '/api/v0.1/breeds'
+getAllDiseasesURL = '/api/v0.1/diseases'
 
 
 def initialize_routes(api):
@@ -15,5 +15,5 @@ def initialize_routes(api):
     api.add_resource(ModelApi, modelURL)
     api.add_resource(SignInApi, signInURL)
     api.add_resource(DogApi, dogApiURL)
-    api.add_resource(BreedsApi, breedsURL)
-    api.add_resource(DiseasesApi, diseasesURL)
+    api.add_resource(BreedsApi, getAllBreedsURL)
+    api.add_resource(DiseasesApi, getAllDiseasesURL)
