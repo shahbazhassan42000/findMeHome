@@ -38,7 +38,7 @@ class User(Base):
 
     def jsonify(self):
         return {'type':'adopter',
-                'uid':self.uid,
+                'id':self.uid,
                 'fname':self.fname,
                 'lname':self.lname,
                 'city':self.city,

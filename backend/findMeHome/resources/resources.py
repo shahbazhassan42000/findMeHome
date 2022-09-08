@@ -5,7 +5,7 @@ from backend.findMeHome.models.user import User
 from backend.findMeHome.models.dog import Dog
 from backend.findMeHome.models.diseasedog import Diseasedog
 from flask_restful import Resource
-from flask import request, Response, jsonify, make_response, session
+from flask import request, Response, jsonify, make_response
 
 db = DBHandler()
 
@@ -56,9 +56,8 @@ class SignInApi(Resource):
             if user.get("username") is None or user.get("password") is None:
                 return "Couldn't login. Please try again 1", 412
             # call sign in function of db
-            status, user = db.signIn(user.get("username"), user.get("password"))
+            status, user = db.signIn(username=user.get("username"), password=user.get("password"))
             if status is True:
-                session["userName"] = user.username
                 return make_response(jsonify(user.username), 201)
             else:
                 return "Couldn't login. Please try again 2", 412
@@ -82,25 +81,26 @@ class DogApi(Resource):
         data = request.get_json()
         if data.get("user") is None or data.get("dog") is None:
             return "Invalid Data posted", 412
-        if session.get(data.get("user").get("username")) is None:
-            return "Shelter not logged in", 412
-
+        if data.get("user").get("id") is None or data.get("user").get("username") is None:
+            return "Shelter not logged in  1", 412
+        if data.get("dog").get("bid") is None:
+            return "Invalid Data posted", 412
         try:
             # Create a dog object
             dog = Dog(data.get("user").get("id"), data.get("dog").get("name"), data.get("dog").get("age")
-                      , data.get("dog").get("bid"), data.get("dog").get("imgURL"))
-
+                      , data.get("dog").get("bid"), data.get("dog").get("imageURL"))
             # add dog to db
             status, result = db.add(dog)
             # if add operation failed
             if status is False:
                 return make_response(jsonify(result), 412)
             # if add operation succeeded
-            diseases = data.get("diseases")
+            diseases = data.get('dog').get("diseasesId")
             if diseases is not None:
                 for diseaseId in diseases:
-                    dogDisease = Diseasedog(data.get("dog").get("dieseaseDescription"), result.did,
+                    dogDisease = Diseasedog(data.get("dog").get("diseaseDescription"), result.did,
                                             diseaseId)
+                    db.add(dogDisease)
 
             return make_response(jsonify("Dog added Successfully"), 200)
         except:

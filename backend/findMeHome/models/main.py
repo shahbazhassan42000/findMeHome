@@ -117,6 +117,7 @@ class DBHandler():
         flag,session=self.createSession()
         if flag==False:
             return flag,session
+        session.expire_on_commit=False
         if isinstance(obj,User) or isinstance(obj,Shelter) or isinstance(obj,Admin):
             if self.actorExists(obj,session):
                 session.close()
@@ -172,6 +173,7 @@ class DBHandler():
         flag,session=self.createSession()
         if flag==False:
             return flag,session
+        session.expire_on_commit = False
         results=None
         if isinstance(obj,Blog):
             results=session.query(Blog).filter(Blog.blid==obj.blid).one_or_none()

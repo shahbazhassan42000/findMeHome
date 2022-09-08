@@ -56,6 +56,7 @@ CREATE TABLE dog (
 	sid INTEGER NOT NULL, 
 	dname VARCHAR(60), 
 	age VARCHAR(60), 
+	imageurl VARCHAR(60),
 	bid INTEGER, 
 	PRIMARY KEY (did, sid), 
 	FOREIGN KEY(sid) REFERENCES shelter (sid) ON DELETE CASCADE, 

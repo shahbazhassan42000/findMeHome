@@ -41,7 +41,7 @@ class Shelter(Base):
 
     def jsonify(self):
         return {'type':'shelter',
-                'sid':self.sid,
+                'id':self.sid,
                 'name':self.name,
                 'street':self.street,
                 'city':self.city,
