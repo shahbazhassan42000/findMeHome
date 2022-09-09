@@ -1,4 +1,4 @@
-from sqlalchemy import and_,or_
+from sqlalchemy import and_,or_,func
 from backend.findMeHome.models.Base import Base, engine, Session
 from backend.findMeHome.models.breed import Breed
 from backend.findMeHome.models.disease import Disease
@@ -410,9 +410,21 @@ class DBHandler():
         if results==None:
             return False,'Not found'
         return True,results
+    def getBreedWithCount(self):
+        flag, session = self.createSession()
+        result=None
+        if flag == False:
+            return flag, session,0
+        flag, results = self.getBreed(all=True)
+        if flag==False:
+            return flag,'Error with database',0
+        count=session.query(Dog.bid,Breed.bname,func.count(Dog.did)).join(Breed,Dog.bid==Breed.bid).group_by(Dog.bid).all()
+        return True,results,count
 
 
-#------------------------------------------------------Delete object---------------------------------------------------------------
+
+
+        #------------------------------------------------------Delete object---------------------------------------------------------------
     def deleteWholeList(self,lid):
         flag, session = self.createSession()
         result=None
@@ -482,7 +494,6 @@ class DBHandler():
 
 
 #------------------------------------------------------Testing---------------------------------------------------------------
-#db=DBHandler()
 # print(db.add(User('asd','asd','asd','asd','asd','asd','asd','efwe','fwe')))
 # print(db.add(User('aefv','aevfrd','agrbsd','aytnsd','athnsd','atnsd','aaersd','etnfwe','frtgwe')))
 # print(db.add(Shelter('rv','sdc','sdc','sdcsdc','wefwe','ddfv','dfvfdv','efv','ev','erv')))
@@ -499,6 +510,3 @@ class DBHandler():
 # print(db.add(Blog('asdas',1)))
 # print(db.add(Diseasedog('bad',1,2)))
 
-#flag,res=db.getBreed(id=2)
-#print(flag)
-#print(db.delete(res))
