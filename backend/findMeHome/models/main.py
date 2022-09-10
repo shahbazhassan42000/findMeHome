@@ -319,17 +319,19 @@ class DBHandler():
             return False,'No Admin found'
         return True,results
 
-    def getDog(self,id=None,breed=None,age=None):
+    def getDog(self,id=None,breed=None,age=None,sid=None):
         flag,session=self.createSession()
         results=None
         if flag==False:
             return flag,session
         if id!=None:
             results = session.query(Dog).filter(Dog.did == id).one_or_none()
-        if breed!=None:
-            results = session.query(Dog).filter(Dog.did == id).all()
-        if age!=None:
-            results = session.query(Dog).filter(Dog.did == id).all()
+        elif breed!=None:
+            results = session.query(Dog).filter(Dog.bid == breed).all()
+        elif age!=None:
+            results = session.query(Dog).filter(Dog.age == age).all()
+        elif sid!=None:
+            results = session.query(Dog).filter(Dog.sid == sid).all()
         session.close()
         if results==None:
             return False,'Not found'
@@ -460,23 +462,23 @@ class DBHandler():
             if flag==False:
                 return flag,'This blog is not in database'
         elif isinstance(obj,Breed):
-            flag,result=self.getBreed(obj.bid)
+            flag,result=self.getBreed(id=obj.bid)
             if flag == False:
                 return flag, 'This Breed is not in database'
         elif isinstance(obj,Disease):
-            flag,result=self.getDisease(obj.disid)
+            flag,result=self.getDisease(id=obj.disid)
             if flag == False:
                 return flag, 'This Disease is not in database'
         elif isinstance(obj,Dog):
-            flag,result=self.getDog(obj.bid)
+            flag,result=self.getDog(id=obj.did)
             if flag == False:
                 return flag, 'This Dog is not in database'
         elif isinstance(obj,Diseasedog):
-            flag,result=self.getDiseasesOfDog(obj.did,obj.disid)
+            flag,result=self.getDiseasesOfDog(did=obj.did,dsid=obj.disid)
             if flag==False:
                 return flag,'This disease is not in database for this dog'
         elif isinstance(obj,List):
-            flag,result=self.getList(obj.uid,obj.lid,obj.did)
+            flag,result=self.getList(uid=obj.uid,lid=obj.lid,did=obj.did)
             if flag==False:
                 return flag,'This element in list doesn\'t exist'
         else:
