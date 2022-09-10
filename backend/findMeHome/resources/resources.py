@@ -163,3 +163,20 @@ class UsersApi(Resource):
         except:
             return make_response(jsonify('Error in database'), 512)
 
+# recieves shelter id enclosed in user object
+#user.id
+class ShelterDogsApi(Resource):
+    @staticmethod
+    def post():
+        data=request.get_json()
+        if data.get('user') is None:
+            return make_response(jsonify('Wrong format 1'), 412)
+        if data.get('user').get('id') is None or data.get('user').get('username') is None:
+            return make_response(jsonify('Wrong format 2'), 412)
+        try:
+            flag,dogData=db.getDog(sid=data.get('user').get('id'))
+            if flag==False:
+                return make_response(jsonify("Error loading dogs"), 502)
+            return make_response(jsonify([dog.jsonify() for dog in dogData]), 200)
+        except:
+            return make_response(jsonify("Error loading dogs"), 500)
