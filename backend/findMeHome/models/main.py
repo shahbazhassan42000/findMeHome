@@ -279,12 +279,15 @@ class DBHandler():
             return False,'No User found'
         return True,results
 
-    def getShelter(self,id=None,username=None,email=None,password=None):
+    def getShelter(self,id=None,username=None,email=None,password=None,country=None,breed=None):
         flag,session=self.createSession()
         results=None
         if flag==False:
             return flag,session
-        if username!=None and password!=None:
+        session.expire_on_commit = False
+        if country!=None and breed!=None:
+            results = session.query(Shelter).join(Dog,Shelter.sid==Dog.sid).filter(and_(Shelter.country == country,Dog.bid==breed)).all()
+        elif username!=None and password!=None:
             results = session.query(Shelter).filter(and_(Shelter.username == username,Shelter.password==password)).one_or_none()
         elif email != None and password != None:
             results = session.query(Shelter).filter(and_(Shelter.email == email, Shelter.password == password)).one_or_none()
@@ -294,6 +297,8 @@ class DBHandler():
             results=session.query(Shelter).filter(Shelter.username == username).one_or_none()
         elif email!=None:
             results=session.query(Shelter).filter(Shelter.email == email).one_or_none()
+        elif country!=None:
+            results=session.query(Shelter).filter(Shelter.country == country).all()
         session.close()
         if results==None:
             return False,'No User found'
@@ -324,7 +329,9 @@ class DBHandler():
         results=None
         if flag==False:
             return flag,session
-        if id!=None:
+        if breed!=None and sid!=None:
+            results = session.query(Dog).filter(and_(Dog.sid == sid,Dog.bid==breed)).all()
+        elif id!=None:
             results = session.query(Dog).filter(Dog.did == id).one_or_none()
         elif breed!=None:
             results = session.query(Dog).filter(Dog.bid == breed).all()
@@ -344,7 +351,7 @@ class DBHandler():
             return flag,session
         if id!=None:
             results = session.query(Disease).filter(Disease.disid == id).one_or_none()
-        if all!=False:
+        elif all!=False:
             results = session.query(Disease).all()
         session.close()
         if results==None:
@@ -358,7 +365,7 @@ class DBHandler():
             return flag,session
         if id!=None:
             results = session.query(Breed).filter(Breed.bid == id).one_or_none()
-        if all!=False:
+        elif all!=False:
             results = session.query(Breed).all()
         session.close()
         if results==None:
@@ -402,7 +409,7 @@ class DBHandler():
         results=None
         if uid!=None and lid!=None and did!=None:
             results = session.query(List).filter(and_(List.uid == uid,List.lid == lid,List.did == did)).one_or_none()
-        if uid!=None:
+        elif uid!=None:
             results = session.query(List).filter(List.uid == uid).all()
         elif lid!=None:
             results = session.query(List).filter(List.lid == lid).all()
