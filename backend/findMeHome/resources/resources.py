@@ -6,8 +6,23 @@ from backend.findMeHome.models.dog import Dog
 from backend.findMeHome.models.diseasedog import Diseasedog
 from flask_restful import Resource
 from flask import request, Response, jsonify, make_response
+from opencage.geocoder import OpenCageGeocode
+from geopy.distance import geodesic
 
 db = DBHandler()
+key = '5b6f51644dc046b5a3e3188c9abae8ca'
+def find_distance(A, B):
+    geocoder = OpenCageGeocode(key)
+
+    result_A = geocoder.geocode(A)
+    lat_A = result_A[0]['geometry']['lat']
+    lng_A = result_A[0]['geometry']['lng']
+
+    result_B = geocoder.geocode(B)
+    lat_B = result_B[0]['geometry']['lat']
+    lng_B = result_B[0]['geometry']['lng']
+
+    return (geodesic((lat_A, lng_A), (lat_B, lng_B)).kilometers)
 
 
 # Performs the sign-up operation for adopter, shelter or admin
@@ -165,6 +180,7 @@ class UsersApi(Resource):
 
 # recieves shelter id enclosed in user object
 #user.id
+#returns dogs of a specific shelter
 class ShelterDogsApi(Resource):
     @staticmethod
     def post():
@@ -180,3 +196,39 @@ class ShelterDogsApi(Resource):
             return make_response(jsonify([dog.jsonify() for dog in dogData]), 200)
         except:
             return make_response(jsonify("Error loading dogs"), 500)
+
+# receives user object and breed object
+#breed obj
+#breed.id
+# returns list of dogs sorted by location
+# from user location
+class DogByLocAPI(Resource):
+    @staticmethod
+    def post():
+        data=request.get_json()
+        if data.get('user') is None or data.get('breed') is None:
+            return make_response(jsonify('Wrong format 1'), 412)
+        if data.get('user').get('country') is None or data.get('user').get('city') is None or data.get('breed').get('id') is None:
+            return make_response(jsonify('Wrong format 2'), 412)
+        try:
+            flag,shelterData=db.getShelter(country=data.get('user').get('country'),breed=data.get('breed').get('id'))
+            if flag is False:
+                return make_response(jsonify("Error loading dog of breed"), 502)
+            distances=[]
+            userloc=data.get('user').get('city') + ' ' + data.get('user').get('country')
+            for x in shelterData:
+                shelterloc=x.city+' '+x.country
+                distances.append(find_distance(userloc,shelterloc))
+            shelterDistance=[]
+            for x,y in zip(shelterData,distances):
+                shelterDistance.append((x,y))
+            shelterDistance.sort(key=lambda x:x[1])
+            dogsdata=[]
+            for x,y in shelterDistance:
+                flag,res=db.getDog(sid=x.sid,breed=data.get('breed').get('id'))
+                if flag==False:
+                    return make_response(jsonify("Error loading data"), 500)
+                dogsdata.extend(res)
+            return make_response(jsonify([x.jsonify() for x in dogsdata]),200)
+        except:
+            return make_response(jsonify("Error loading Shelter 1"), 500)
