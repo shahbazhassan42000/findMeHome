@@ -324,12 +324,14 @@ class DBHandler():
             return False,'No Admin found'
         return True,results
 
-    def getDog(self,id=None,breed=None,age=None,sid=None):
+    def getDog(self,id=None,breed=None,age=None,sid=None,all=False):
         flag,session=self.createSession()
         results=None
         if flag==False:
             return flag,session
-        if breed!=None and sid!=None:
+        if all==True:
+            results = session.query(Dog).all()
+        elif breed!=None and sid!=None:
             results = session.query(Dog).filter(and_(Dog.sid == sid,Dog.bid==breed)).all()
         elif id!=None:
             results = session.query(Dog).filter(Dog.did == id).one_or_none()
@@ -429,6 +431,12 @@ class DBHandler():
             return flag,'Error with database',0
         count=session.query(Dog.bid,Breed.bname,func.count(Dog.did)).join(Breed,Dog.bid==Breed.bid).group_by(Dog.bid).all()
         return True,results,count
+    def getDogCount(self):
+        flag, session = self.createSession()
+        if flag == False:
+            return flag, session
+        count = session.query(func.count(Dog.did)).one_or_none()
+        return True,count
 
 
 
