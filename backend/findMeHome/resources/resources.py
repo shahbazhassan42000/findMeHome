@@ -19,6 +19,8 @@ class SignUpApi(Resource):
         if data.get("user") is not None:
             user = data["user"]
             # use db to create
+            if user.get("picture") is None:
+                user['picture']='https://i.ibb.co/s5nT3Mg/profile-img.png'
             if data["user"].get("type") == "adopter":
                 adp = User(user.get("fname"), user.get("lname"), user.get("city"), user.get("country"),
                            user.get("email"), user.get("username"),
@@ -182,7 +184,8 @@ class ShelterDogsApi(Resource):
         except:
             return make_response(jsonify("Error loading dogs"), 500)
 
-
+#takes nothing
+#returns json dogs
 class FeaturedDogsApi(Resource):
     @staticmethod
     def post():
@@ -198,10 +201,3 @@ class FeaturedDogsApi(Resource):
 
         except:
             return make_response(jsonify("Error loading dogs 1"), 500)
-
-
-# receives user object and breed object
-#breed obj
-#breed.id
-# returns list of dogs sorted by location
-# from user location
