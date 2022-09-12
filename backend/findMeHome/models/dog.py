@@ -1,7 +1,6 @@
-from backend.findMeHome.models.Base import Base
+from backend.findMeHome.models.Base import Base,MAX_LENGTH
 from sqlalchemy import Column, String,Integer,ForeignKey
 from sqlalchemy.orm import relationship
-MAX_LENGTH=60
 class Dog(Base):
     __tablename__='dog'
     did=Column(Integer,primary_key=True,autoincrement=True)
