@@ -3,16 +3,17 @@ import dogImg from "../../assets/icons/dog.png"
 import {useEffect, useRef, useState} from "react";
 import axios from "axios";
 import Loading from "../Loading";
-import {useDispatch} from "react-redux";
-import {breedResult} from "../../store/dogs/dogSlice";
-import {baseURL, imgBBApiKey, imgBBURL} from "../../store/middleware/api";
+import {useDispatch, useSelector} from "react-redux";
+import {breedResult, headers} from "../../store/dogs/dogSlice";
 import {filter, map, size} from "lodash";
+import {backendURL, dogApiURL, imgBBApiKey, imgBBURL, modelURL} from "../../utils/EndPoints";
 
 const AddDog = () => {
+    const user = useSelector(state => state.dogStore.user);
     const dispatch = useDispatch();
     const [selectedBreed, setSelectedBreed] = useState("Select Breed");
-    const [diseases, setDiseases] = useState(['abc', 'def', '123', 'xyz']);
-    const [breeds, setBreeds] = useState(['000', '111', '222','German shepherd', '333']);
+    const [diseases, setDiseases] = useState(useSelector(state => state.dogStore.diseases));
+    const [breeds, setBreeds] = useState(useSelector(state => state.dogStore.breeds));
     const [selectedDiseases, setSelectedDiseases] = useState([]);
     const [searchFocus, setSearchFocus] = useState(false);
     const [dog, setDog] = useState(null);
@@ -30,7 +31,7 @@ const AddDog = () => {
 
 
     return (
-        <div className="flex flex-col w-[50%] mx-auto items-center">
+        <div className="flex flex-col w-[50%] mx-auto items-center mb-20">
             <div className="w-[220px] mt-[20px]">
                 <img src={logo} alt="logo"/>
             </div>
@@ -83,11 +84,11 @@ const AddDog = () => {
                                 className="w-[60%] p-[5px] w-full border outline-0 text-[#7F99A2] hover:text-[#5A8081] border-[#7F99A2] rounded-[5px]">
                                 <option value="Select Breed">Select Breed</option>
                                 {map(breeds, breed => {
-                                    return <option key={breed} value={breed}>{breed}</option>
+                                    return <option key={breed.bid} value={breed.bid}>{breed.bname}</option>
                                 })}
                             </select>
                             <button
-                                onClick={(e) => onFindBreed(e, fileName, setSelectedBreed,setLoading,setMsg)}
+                                onClick={(e) => onFindBreed(e, fileName, setSelectedBreed, setLoading, setMsg, breeds)}
                                 disabled={!(fileName && fileName.name !== "Upload Picture of Dog" && fileName.name !== "")}
                                 className="py-[4px] w-[40%] rounded-[7px] flex items-center bg-[#E0DFE2] hover:bg-[#5A8081] disabled:bg-[#091e420a]  disabled:cursor-not-allowed text-[#3E665C] hover:text-white disabled:text-[#a5adba] font-bold flex justify-center">
                                 <span>Find Breed</span>
@@ -99,9 +100,9 @@ const AddDog = () => {
                                 {map(selectedDiseases, disease => {
                                     return (
                                         <div
-                                            key={disease}
+                                            key={disease.disid}
                                             className="bg-[#091e420a] flex items-center mr-2 text-[#7F99A2] cursor-default text-[14px] py-[2px] px-[4px] rounded-[3px]">
-                                            <p>{disease}</p>
+                                            <p>{disease.name}</p>
                                             <span
                                                 onClick={() => onRemoveDisease(disease, setSelectedDiseases, setDiseases)}
                                                 className="fa fa-close mt-1 ml-3 pr-[2px] hover:text-[#5A8081] hover:cursor-pointer">
@@ -110,30 +111,30 @@ const AddDog = () => {
                                     );
                                 })}
                                 <select
-                                    onChange={e => onDiseaseChange(e.target, setDiseases, setSelectedDiseases)}
+                                    onChange={e => onDiseaseChange(e.target, setDiseases, setSelectedDiseases, diseases)}
                                     onFocus={() => setSearchFocus(true)}
                                     onBlur={() => setSearchFocus(false)}
                                     className="outline-0 bg-transparent text-[#7F99A2] hover:text-[#5A8081] leading-[20px] text-[14px] min-h-[36px] min-w-[40px]"
                                 >
                                     <option value="Select Disease">Select Disease</option>
                                     {map(diseases, disease => {
-                                        return <option key={disease} value={disease}>{disease}</option>
+                                        return <option key={disease.disid} value={disease.disid}>{disease.name}</option>
                                     })}
                                 </select>
                             </div>
                         </div>
                         {size(selectedDiseases) !== 0 &&
                             <textarea name="diseaseDescp" required
-                                      className="p-[5px] text-[14px] w-full border border-[#7F99A2] hover:border-[#5A8081] focus:border-[#5A8081] outline-0 placeholder:text-[#7F99A2] active:placeholder:text-white hover:placeholder:text-[#5A8081] rounded-[5px]"
+                                      className="p-[5px] text-[#7F99A2] hover:text-[#5A8081] text-[14px] w-full border border-[#7F99A2] hover:border-[#5A8081] focus:border-[#5A8081] outline-0 placeholder:text-[#7F99A2] active:placeholder:text-white hover:placeholder:text-[#5A8081] rounded-[5px]"
                                       placeholder="Disease Description*">
                         </textarea>
 
                         }
-                        <p className={`${msg === "ERROR! while uploading, Please try again" || msg==="ERROR! while getting dog breed data, Please try again" ? 'red' : 'green'} mt-3 -mb-3 text-center`}>
+                        <p className={`${msg === "ERROR! while uploading, Please try again" || msg === "ERROR! while getting dog breed data, Please try again" ? 'red' : 'green'} mt-3 -mb-3 text-center`}>
                             {msg}
                         </p>
                         <button
-                            onClick={(e) => onFormSubmit(e, formRef.current, setMsg, setLoading, setFileName, setDog)}
+                            onClick={(e) => onFormSubmit(e, formRef.current, setMsg, setLoading, selectedBreed, selectedDiseases, user)}
                             disabled={!(fileName && fileName.name !== "Upload Picture of Dog" && fileName.name !== "" && selectedBreed !== "Select Breed")}
                             className="mt-[25px] px-[12px] py-[4px] rounded-[7px] w-full flex items-center bg-[#E0DFE2] hover:bg-[#5A8081] disabled:bg-[#091e420a]  disabled:cursor-not-allowed text-[#3E665C] hover:text-white disabled:text-[#a5adba] font-bold flex justify-center">
                             <span>ADD</span>
@@ -148,29 +149,31 @@ const AddDog = () => {
 
 }
 
-const onFindBreed = (e, fileName, setSelectedBreed,setLoading,setMsg) => {
+const onFindBreed = (e, fileName, setSelectedBreed, setLoading, setMsg, breeds) => {
     setLoading(true);
     e.preventDefault();
     const form = new FormData();
-    form.append('image',fileName);
+    form.append('image', fileName);
     const expiry = 600;
     axios.post(imgBBURL + "?expiration=" + expiry + "&key=" + imgBBApiKey, form)
         .then(res => {
             const dogImgURL = res.data.data.image.url;
             console.log('response URL: ', dogImgURL);
             const reqBody = JSON.stringify({dogURL: dogImgURL});
-            axios.post(baseURL + "/api/dog_model", reqBody, {
+            axios.post(backendURL + modelURL, reqBody, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             }).then(response => {
-                const breed = response.data;
-                console.log("successfully got the dog breed: ", breed);
-                setSelectedBreed(breed);
+                const predictedBreed = response.data;
+                console.log("successfully got the dog breed: ", predictedBreed);
+                map(breeds, breed => {
+                    if (breed.bname === predictedBreed) setSelectedBreed(breed.bid);
+                })
                 setLoading(false);
             }).catch(error => {
                 setMsg("ERROR! while getting dog breed data, Please try again");
-                setTimeout(()=>setMsg(""),5000);
+                setTimeout(() => setMsg(""), 5000);
                 setLoading(false);
                 console.log(error);
             })
@@ -178,15 +181,22 @@ const onFindBreed = (e, fileName, setSelectedBreed,setLoading,setMsg) => {
         }).catch(err => {
         console.log("ERROR: ", err);
         setMsg("ERROR! while getting dog breed data, Please try again");
-        setTimeout(()=>setMsg(""),5000);
+        setTimeout(() => setMsg(""), 5000);
         setLoading(false);
     })
 }
 
-const onDiseaseChange = (selection, setDiseases, setSelectedDiseases) => {
-    setSelectedDiseases(diseases => [...diseases, selection.value]);
+const onDiseaseChange = (selection, setDiseases, setSelectedDiseases, diseases) => {
+    let selectedDisease = "";
+    for (let disease of diseases) {
+        if (disease.disid.toString() === selection.value) {
+            selectedDisease = disease;
+            break;
+        }
+    }
+    setSelectedDiseases(diseases => [...diseases, selectedDisease]);
     setDiseases(diseases => {
-        return filter(diseases, (disease) => disease !== selection.value);
+        return filter(diseases, (disease) => disease.disid.toString() !== selection.value);
     })
 }
 
@@ -199,15 +209,44 @@ const onFileChange = (e, imgUpload) => {
 const onRemoveDisease = (disease, setSelectedDiseases, setDiseases) => {
     setDiseases(diseases => [...diseases, disease]);
     setSelectedDiseases(diseases => {
-        return filter(diseases, (dis) => dis !== disease);
+        return filter(diseases, (dis) => dis.disid.toString() !== disease.disid.toString());
     })
 }
 
-const onFormSubmit = (e, formRef, setMsg, setLoading, setFileName, setDog) => {
+const onFormSubmit = (e, formRef, setMsg, setLoading, selectedBreed, selectedDiseases, user) => {
     e.preventDefault();
     setLoading(true);
     const form = new FormData(formRef);
     const formData = Object.fromEntries(form.entries());
+    const expiry = 600 //TODO remove image expiry time
+    axios.post(imgBBURL + "?expiration=" + expiry + "&key=" + imgBBApiKey, form)
+        .then(res => {
+            const dogImgURL = res.data.data.image.url;
+            console.log('response URL: ', dogImgURL);
+            const dog = {
+                name: formData.dogName,
+                age: formData.dogAge,
+                imageURL: dogImgURL,
+                bid: selectedBreed,
+                diseasesId: map(selectedDiseases, disease => disease.disid),
+                diseaseDescription: formData.diseaseDescp
+            }
+            const reqBody = JSON.stringify({user,dog});
+            axios.post(backendURL+dogApiURL,reqBody, {
+                headers
+            }).then(res=>{
+                console.log(res);
+            }).catch(err=>{
+                console.log(res);
+            })
+
+
+        }).catch(err => {
+        console.log("ERROR: ", err);
+        setMsg("ERROR! while uploading, Please try again");
+        setTimeout(() => setMsg(""), 5000);
+        setLoading(false);
+    })
 
 }
 export default AddDog;

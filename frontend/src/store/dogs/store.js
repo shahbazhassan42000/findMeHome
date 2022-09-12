@@ -1,15 +1,17 @@
 import {configureStore} from "@reduxjs/toolkit";
-import dogReducer from './dogSlice';
+import dogReducer, {loadBreeds, loadDiseases, loadUser} from './dogSlice';
 import api from "../middleware/api";
-import { persistReducer, persistStore } from 'redux-persist';
+import {persistReducer, persistStore} from 'redux-persist';
 import storageSession from 'reduxjs-toolkit-persist/lib/storage/session'
 import thunk from 'redux-thunk';
-// import {user} from "../../App";
+const username=localStorage.getItem("username");
+console.log(username);
+
 
 const persistConfig = {
     key: 'dog',
-    storage:storageSession,
-    whitelist: ['dog']
+    storage: storageSession,
+    whitelist: ['dog', 'breeds', 'diseases','user']
 }
 
 const persistedReducer = persistReducer(persistConfig, dogReducer)
@@ -18,11 +20,13 @@ export const store = configureStore({
     reducer: {
         dogStore: persistedReducer,
     },
-    middleware: (getDefaultMiddleware) => [...getDefaultMiddleware(), thunk,api],
+    middleware: (getDefaultMiddleware) => [...getDefaultMiddleware(), thunk, api],
 
 });
 
 export const persistor = persistStore(store)
 
+if(username) store.dispatch(loadUser({user:{username}}))
 
-// if (user) store.dispatch(loadBoards(user))
+// store.dispatch(loadBreeds());
+// store.dispatch(loadDiseases());

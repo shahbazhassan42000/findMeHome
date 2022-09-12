@@ -4,7 +4,7 @@ import Loading from "../../Loading";
 import {CountryDropdown} from 'react-country-region-selector'
 import {onTogglePasswd} from "./SignupAdopter";
 import axios from "axios";
-import {baseURL} from "../../../store/middleware/api";
+import {backendURL, citiesURL, signUpURL, statesURL} from "../../../utils/EndPoints";
 
 const SignupAdopter = () => {
     const [msg, setMsg] = useState({show: false, msg: "", type: "general"});
@@ -16,7 +16,7 @@ const SignupAdopter = () => {
     const [states, setStates] = useState(null);
     useEffect(() => {
         if (country) {
-            axios.post('https://countriesnow.space/api/v0.1/countries/states', {
+            axios.post(statesURL, {
                 country,
             }).then(res => {
                 setStates(res.data.data.states);
@@ -29,7 +29,7 @@ const SignupAdopter = () => {
     useEffect(() => {
         if (state) {
             setMsg({show: false, msg: "", type: "general"});
-            axios.post('https://countriesnow.space/api/v0.1/countries/state/cities', {
+            axios.post(citiesURL, {
                 country,
                 state
             }).then(res => {
@@ -182,7 +182,7 @@ const onFormSubmit = async (e, setLoading, setMsg) => {
         setLoading(true);
         const reqBody = JSON.stringify({user: formObject});
         console.log("Req Body: ", reqBody);
-        const url = baseURL + "/api/v0.1/user";
+        const url = backendURL + signUpURL;
 
         axios.post(url,reqBody,{
             headers:{

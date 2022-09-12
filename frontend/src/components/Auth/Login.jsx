@@ -2,6 +2,8 @@ import {useRef, useState} from "react";
 import logo from "../../assets/images/find_me_home_logo.png";
 import Loading from "../Loading";
 import {onTogglePasswd} from "./Signup/SignupAdopter";
+import {backendURL, signInURL} from "../../utils/EndPoints";
+import {headers} from "../../store/dogs/dogSlice";
 
 const Login=()=>{
     const [msg, setMsg] = useState("");
@@ -66,20 +68,20 @@ const onFormSubmit = async (e, setLoading, setMsg) => {
     setLoading(true);
     const reqBody = JSON.stringify({user: formObject});
     console.log("Req Body: ", reqBody);
-    const url = "http://localhost:8080/api/v0.1/user";
+    const url = backendURL+signInURL;
     await fetch(url, {
         method: 'post',
         body: reqBody,
-        headers: {
-            'Content-Type': 'application/json',
-        },
+        headers
     }).then((res) => {
         res.json().then(resBody => {
                 setLoading(false);
                 if (res.status === 201) {
                     setMsg("Login successfully");
                     form.reset();
-                    // window.location.pathname = "/home"; TODO
+                    localStorage.setItem("username",resBody);
+                    // window.location.pathname = "/home"; //TODO
+                    window.location.pathname = "/ad"; //TODO
                 }
                 else setMsg("An error occurred while login, please try again");
             }

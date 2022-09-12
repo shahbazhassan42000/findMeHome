@@ -1,0 +1,15 @@
+export const backendURL = "http://192.168.43.165:5000";
+// export const backendURL = "http://172.16.9.207:5000"; //PUCIT
+// export const backendURL = "http://localhost:5000";
+export const imgBBURL = "https://api.imgbb.com/1/upload";
+export const imgBBApiKey = "4d0eff80cd1cea3d5f1f524ac3a0808a";
+export const api2PdfURL="https://v2018.api2pdf.com/chrome/html";
+export const statesURL="https://countriesnow.space/api/v0.1/countries/states";
+export const citiesURL="https://countriesnow.space/api/v0.1/countries/state/cities";
+export const signUpURL = '/api/v0.1/usersignup'
+export const modelURL = "/api/dog_model"
+export const signInURL = '/api/v0.1/userLogin'
+export const dogApiURL = '/api/v0.1/dogApi'
+export const allBreedsURL = '/api/v0.1/breeds'
+export const allDiseasesURL = '/api/v0.1/diseases'
+export const getUserURL='/api/v0.1/user'

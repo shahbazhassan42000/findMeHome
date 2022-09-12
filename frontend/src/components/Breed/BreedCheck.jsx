@@ -5,7 +5,7 @@ import axios from "axios";
 import Loading from "../Loading";
 import {useDispatch} from "react-redux";
 import {breedResult} from "../../store/dogs/dogSlice";
-import {baseURL} from "../../store/middleware/api";
+import {backendURL, modelURL} from "../../utils/EndPoints";
 
 const BreedCheck = () => {
     const dispatch = useDispatch();
@@ -113,7 +113,7 @@ const onFormSubmit = (e, setMsg, setLoading, setFileName, setDog) => {
             const dogImgURL = res.data.data.image.url;
             console.log('response URL: ', dogImgURL);
             const reqBody = JSON.stringify({dogURL: dogImgURL});
-            axios.post(baseURL + "/api/dog_model", reqBody, {
+            axios.post(backendURL + modelURL, reqBody, {
                 headers: {
                     'Content-Type': 'application/json'
                 }

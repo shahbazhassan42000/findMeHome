@@ -2,7 +2,7 @@ import logo from "../../../assets/images/find_me_home_logo.png";
 import {useRef, useState} from "react";
 import Loading from "../../Loading";
 import axios from "axios";
-import {baseURL} from "../../../store/middleware/api";
+import {backendURL, signUpURL} from "../../../utils/EndPoints";
 
 
 const SignupAdopter = () => {
@@ -109,7 +109,7 @@ const onFormSubmit = async (e, setLoading, setMsg) => {
         setLoading(true);
         const reqBody = JSON.stringify({user: formObject});
         console.log("Req Body: ", reqBody);
-        const url = baseURL + "/api/v0.1/user";
+        const url = backendURL + signUpURL;
         axios.post(url, reqBody, {
             headers: {
                 'Content-Type': 'application/json'
