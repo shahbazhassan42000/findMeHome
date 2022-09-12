@@ -247,14 +247,15 @@ class DBHandler():
 #---------------------------------------Getter functions---------------------------------------
 
     def signIn(self,username,password):
-        flag,results=self.getUser(username=username,password=password)
+        flag,results=self.getUser(username=username,password=User.hashPassword(None,password))
         if flag==True:
             return True, results
 
-        flag,results=self.getShelter(username=username,password=password)
+        flag,results=self.getShelter(username=username,password=Shelter.hashPassword(None,password))
         if flag==True:
             return True, results
-        flag,results=self.getAdmin(username=username,password=password)
+
+        flag,results=self.getAdmin(username=username,password=Admin.hashPassword(None,password))
         if flag==True:
             return True, results
         return False,'User doesn\'t exist'
