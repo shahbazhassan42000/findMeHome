@@ -3,6 +3,7 @@ import logo from "../../assets/images/logo.png"
 import bg1 from "../../assets/images/bg1.png"
 import bg2 from "../../assets/images/bg2.png"
 import {useSelector} from "react-redux";
+import FeaturedDogs from "./FeaturedDogs";
 
 const Home = () => {
     const user = useSelector(state => state.dogStore.user);
@@ -54,7 +55,7 @@ const Home = () => {
             </div>
         </header>
         <main className="bg-[#EFEEF1] flex flex-col py-16">
-
+            <FeaturedDogs/>
         </main>
     </div>);
 
