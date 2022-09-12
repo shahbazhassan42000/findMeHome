@@ -79,9 +79,9 @@ const onFormSubmit = async (e, setLoading, setMsg) => {
                 if (res.status === 201) {
                     setMsg("Login successfully");
                     form.reset();
-                    localStorage.setItem("username",resBody);
-                    // window.location.pathname = "/home"; //TODO
-                    window.location.pathname = "/ad"; //TODO
+                    localStorage.setItem("token",resBody);
+                    window.location.pathname = "/home"; //TODO
+                    // window.location.pathname = "/ad"; //TODO
                 }
                 else setMsg("An error occurred while login, please try again");
             }

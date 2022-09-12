@@ -1,6 +1,6 @@
-export const backendURL = "http://192.168.43.165:5000";
+// export const backendURL = "http://192.168.43.165:5000";
 // export const backendURL = "http://172.16.9.207:5000"; //PUCIT
-// export const backendURL = "http://localhost:5000";
+export const backendURL = "http://localhost:5000";
 export const imgBBURL = "https://api.imgbb.com/1/upload";
 export const imgBBApiKey = "4d0eff80cd1cea3d5f1f524ac3a0808a";
 export const api2PdfURL="https://v2018.api2pdf.com/chrome/html";

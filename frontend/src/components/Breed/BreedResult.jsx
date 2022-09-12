@@ -2,6 +2,9 @@ import logo from "../../assets/images/find_me_home_logo.png";
 import {useRef} from "react";
 import {useSelector} from "react-redux";
 import {api2PdfURL} from "../../utils/EndPoints";
+import ellipseUp from "../../assets/icons/Ellipse uppper.png";
+import ellipseDown from "../../assets/icons/Ellipse down.png";
+import vector from "../../assets/icons/Vector 1.png";
 
 
 const BreedResult = () => {
@@ -9,6 +12,10 @@ const BreedResult = () => {
     const breedData = useRef(null);
     if(!dog.breed) window.location.pathname = "/";
     return (
+        <>
+            <img className="-z-10 fixed h-[280px]" src={ellipseUp} alt="ellipse upper"/>
+            <img className="-z-10 fixed h-[180px] bottom-0" src={ellipseDown} alt="ellipse down"/>
+            <img className="-z-10 fixed h-[430px] bottom-0 right-0" src={vector} alt="vector"/>
         <div>
             {!dog.breed ?
                 <div className="flex h-screen items-center">
@@ -71,7 +78,7 @@ const BreedResult = () => {
                 </div>
             }
         </div>
-
+        </>
     )
 }
 
