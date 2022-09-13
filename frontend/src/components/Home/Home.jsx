@@ -4,7 +4,7 @@ import logo from "../../assets/images/logo.png"
 import bg1 from "../../assets/images/bg1.png"
 import bg2 from "../../assets/images/bg2.png"
 import {useSelector} from "react-redux";
-import FeaturedDogs from "./FeaturedDogs";
+import FeaturedDogs from "../Dog/FeaturedDogs";
 import DogArticles from "../Article/DogArticles";
 
 const Home = () => {
