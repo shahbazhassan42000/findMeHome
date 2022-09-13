@@ -6,15 +6,16 @@ import bg2 from "../../assets/images/bg2.png"
 import {useSelector} from "react-redux";
 import FeaturedDogs from "../Dog/FeaturedDogs";
 import DogArticles from "../Article/DogArticles";
+import Footer from "./Footer";
 
 const Home = () => {
     const user = useSelector(state => state.dogStore.user);
-    return (<div className="relative flex flex-col">
+    return (<div id="top" className="relative flex flex-col">
         <nav className="fixed bg-white z-50 w-full px-8">
             <div className="flex justify-between items-center py-3">
-                <div className="w-[180px]">
+                <a href="#top" className="w-[180px]">
                     <img src={logo} alt="logo"/>
-                </div>
+                </a>
                 <ul className="flex space-x-10 underline-offset-4 decoration-[#70CF36] text-[#7F99A2] uppercase font-[700] text-[20px]">
                     <li className="underline text-[#3E665C]">Home</li>
                     <li className="hover:text-[#3E665C]">Blog</li>
@@ -25,7 +26,7 @@ const Home = () => {
                 </ul>
             </div>
         </nav>
-        <header className="px-8">
+        <header  className="px-8">
             <div className="mt-[69px] flex flex-col space-y-10">
                 <div className="relative">
                     <img className="" src={bg1} alt="bg-1"/>
@@ -48,10 +49,10 @@ const Home = () => {
                             </p>
                         </div>
                         <div className="absolute -right-48 bottom-32 flex flex-col space-y-5 font-bold">
-                            <button className="bg-[#3E665C] py-[20px] px-[18px] text-white">
+                            <button className="bg-[#3E665C] hover:bg-[#5A8081]  py-[20px] px-[18px] text-white">
                                 Registered as Shelter
                             </button>
-                            <button className="bg-[#3E665C] py-[20px] px-[18px] text-white">
+                            <button className="bg-[#3E665C] hover:bg-[#5A8081] py-[20px] px-[18px] text-white">
                                 Adopt Dog
                             </button>
                         </div>
@@ -97,7 +98,9 @@ const Home = () => {
                 </div>
             </div>
             <DogArticles/>
-            
+            <div className="relative mt-32">
+                <Footer/>
+            </div>
         </main>
     </div>);
 

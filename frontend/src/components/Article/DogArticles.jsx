@@ -1,5 +1,5 @@
 import ArticleCard from "./ArticleCard";
-import articleCardBg from '../../assets/images/articleCardBg.png'
+import articleCardBg from "../../assets/images/dogArticleBg.png"
 import arrowRight from "../../assets/icons/arrowRight.png";
 import arrowLeft from "../../assets/icons/arrowLeft.png"
 const DogArticles = () => {
