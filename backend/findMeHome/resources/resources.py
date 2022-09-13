@@ -6,15 +6,15 @@ from backend.findMeHome.models.dog import Dog
 from backend.findMeHome.models.diseasedog import Diseasedog
 from flask_restful import Resource
 from flask import request, Response, jsonify, make_response
+import jwt
 import random
 import datetime
-import jwt
-import datetime
+
 db = DBHandler()
-SECRET_KEY='11HIXGkg1Bm1Epw0Du20TV'
+SECRET_KEY = '11HIXGkg1Bm1Epw0Du20TV'
 
 
-def encode_auth_token(user_id,type):
+def encode_auth_token(user_id, type):
     """
     Generates the Auth Token
     :return: string
@@ -24,7 +24,7 @@ def encode_auth_token(user_id,type):
             'exp': datetime.datetime.utcnow() + datetime.timedelta(days=1, seconds=0),
             'iat': datetime.datetime.utcnow(),
             'id': user_id,
-            'type':type
+            'type': type
         }
         return jwt.encode(
             payload,
@@ -33,6 +33,8 @@ def encode_auth_token(user_id,type):
         )
     except Exception as e:
         return e
+
+
 def decode_auth_token(auth_token):
     """
     Decodes the auth token
@@ -40,38 +42,40 @@ def decode_auth_token(auth_token):
     :return: integer|string
     """
     try:
-        payload = jwt.decode(auth_token, SECRET_KEY,algorithms=["HS256"])
-        return True,payload,-1
+        payload = jwt.decode(auth_token, SECRET_KEY, algorithms=["HS256"])
+        return True, payload, -1
     except jwt.ExpiredSignatureError:
-        return False,'Signature expired. Please log in again.',0
+        return False, 'Signature expired. Please log in again.', 0
     except jwt.InvalidTokenError:
-        return False,'Invalid token. Please log in again.',1
+        return False, 'Invalid token. Please log in again.', 1
+
 
 def user_access(token):
     if token is None:
-        return False,make_response(jsonify("UnAuthorized"), 401)
-    status,auth,error = decode_auth_token(token)
-    if status==False:
-        if error==0:
-            return False,make_response(jsonify(auth), 401)
-        if error==1:
-            return False,make_response(jsonify(auth),401)
+        return False, make_response(jsonify("UnAuthorized"), 401)
+    status, auth, error = decode_auth_token(token)
+    if status == False:
+        if error == 0:
+            return False, make_response(jsonify(auth), 401)
+        if error == 1:
+            return False, make_response(jsonify(auth), 401)
     if auth['type'] != 'user':
-        return False,make_response(jsonify("You're not allowed to access this page"), 403)
-    return True,auth['id']
+        return False, make_response(jsonify("You're not allowed to access this page"), 403)
+    return True, auth['id']
+
 
 def shelter_access(token):
     if token is None:
-        return False,make_response(jsonify("UnAuthorized"), 401)
-    status,auth,error = decode_auth_token(token)
-    if status==False:
-        if error==0:
-            return False,make_response(jsonify(auth), 401)
-        if error==1:
-            return False,make_response(jsonify(auth),401)
+        return False, make_response(jsonify("UnAuthorized"), 401)
+    status, auth, error = decode_auth_token(token)
+    if status == False:
+        if error == 0:
+            return False, make_response(jsonify(auth), 401)
+        if error == 1:
+            return False, make_response(jsonify(auth), 401)
     if auth['type'] != 'shelter':
-        return False,make_response(jsonify("You're not allowed to access this page"), 403)
-    return True,auth['id']
+        return False, make_response(jsonify("You're not allowed to access this page"), 403)
+    return True, auth['id']
 def common_access(token):
     if token is None:
         return False,make_response(jsonify("UnAuthorized"), 401)
@@ -83,6 +87,7 @@ def common_access(token):
             return False,make_response(jsonify(auth),401)
     return True,auth['id']
 
+
 # Performs the sign-up operation for adopter, shelter or admin
 # returns failure message if operation failed, and success message otherwise.
 class SignUpApi(Resource):
@@ -93,7 +98,7 @@ class SignUpApi(Resource):
             user = data["user"]
             # use db to create
             if user.get("picture") is None:
-                user['picture']='https://i.ibb.co/s5nT3Mg/profile-img.png'
+                user['picture'] = 'https://i.ibb.co/s5nT3Mg/profile-img.png'
             if data["user"].get("type") == "adopter":
                 adp = User(user.get("fname"), user.get("lname"), user.get("city"), user.get("country"),
                            user.get("email"), user.get("username"),
@@ -125,21 +130,26 @@ class SignInApi(Resource):
         data = request.get_json()
         # if there is no data for key user in json return failure
         if data.get("user") is None:
+            print("user is none")
             return "Invalid Data posted", 412
         try:
             user = data["user"]
             if user.get("username") is None or user.get("password") is None:
-                return "Couldn't login. Please try again 1", 412
+                print("username or password is none")
+                return "Couldn't login. Please try again", 412
+            print(user)
             # call sign in function of db
             status, user = db.signIn(username=user.get("username"), password=user.get("password"))
+            print(status, user)
             if status is True:
-                token=''
-                if isinstance(user,User):
-                    token=encode_auth_token(user.uid,'user')
-                elif isinstance(user,Shelter):
-                    token=encode_auth_token(user.sid,'shelter')
-                tok={}
-                tok['auth-token']=token
+                token = ''
+                if isinstance(user, User):
+                    token = encode_auth_token(user.uid, 'user')
+                elif isinstance(user, Shelter):
+                    token = encode_auth_token(user.sid, 'shelter')
+                print(token)
+                tok = {'token': token}
+                print(tok)
                 return make_response(jsonify(tok), 201)
             else:
                 return "Couldn't login. Please try again 2", 412
@@ -147,8 +157,8 @@ class SignInApi(Resource):
             return "Couldn't login. Please try again 3", 412
 
 
-# adds a dog to the data base
-# Requires following arguments
+# adds a dog to the database
+# Requires following arguments'
 # user.username
 # dog.name
 # dog.age
@@ -161,8 +171,8 @@ class DogApi(Resource):
     @staticmethod
     def post():
         token = request.headers.get('auth-token')
-        status,id=shelter_access(token)
-        if status==False:
+        status, id = shelter_access(token)
+        if status == False:
             return id
         data = request.get_json()
         if data.get("user") is None or data.get("dog") is None:
@@ -230,6 +240,7 @@ class ModelApi(Resource):
         res = breedPredict(url['dogURL'], model)
         return make_response(jsonify(res), 200)
 
+
 class UsersApi(Resource):
     @staticmethod
     def post():
@@ -239,9 +250,9 @@ class UsersApi(Resource):
             return res
         data=request.get_json()
         if data.get('user') is None:
-            return make_response(jsonify('Wrong format'),412)
+            return make_response(jsonify('Wrong format'), 412)
         if data.get('user').get('username') is None:
-            return make_response(jsonify('Wrong format'),412)
+            return make_response(jsonify('Wrong format'), 412)
         try:
             flag, userData = db.getUser(username=data.get('user').get('username'))
             if flag is True:
@@ -253,43 +264,45 @@ class UsersApi(Resource):
         except:
             return make_response(jsonify('Error in database'), 512)
 
+
 # recieves shelter id enclosed in user object
-#user.id
-#returns dogs of a specific shelter
+# user.id
+# returns dogs of a specific shelter
 class ShelterDogsApi(Resource):
     @staticmethod
     def post():
         token = request.headers.get('auth-token')
-        status,id=shelter_access(token)
-        if status==False:
+        status, id = shelter_access(token)
+        if status == False:
             return id
-        data=request.get_json()
+        data = request.get_json()
         if data.get('user') is None:
             return make_response(jsonify('Wrong format 1'), 412)
         if data.get('user').get('id') is None or data.get('user').get('username') is None:
             return make_response(jsonify('Wrong format 2'), 412)
         try:
-            flag,dogData=db.getDog(sid=data.get('user').get('id'))
-            if flag==False:
+            flag, dogData = db.getDog(sid=data.get('user').get('id'))
+            if flag == False:
                 return make_response(jsonify("Error loading dogs"), 502)
             return make_response(jsonify([dog.jsonify() for dog in dogData]), 200)
         except:
             return make_response(jsonify("Error loading dogs"), 500)
 
-#takes nothing
-#returns json dogs
+
+# takes nothing
+# returns json dogs
 class FeaturedDogsApi(Resource):
     @staticmethod
     def post():
         try:
-            dogs=[]
+            dogs = []
             flag, dogData = db.getDog(all=True)
             if flag == False:
                 return make_response(jsonify("Error loading dogs"), 502)
-            randInts = [random.randint(0, len(dogData)-1) for x in range(0, 16)]
+            randInts = [random.randint(0, len(dogData) - 1) for x in range(0, 16)]
             for x in randInts:
                 dogs.append(dogData[x])
-            return make_response(jsonify([dog.jsonify() for dog in dogs]),200)
+            return make_response(jsonify([dog.jsonify() for dog in dogs]), 200)
 
         except:
             return make_response(jsonify("Error loading dogs 1"), 500)
