@@ -6,24 +6,72 @@ from backend.findMeHome.models.dog import Dog
 from backend.findMeHome.models.diseasedog import Diseasedog
 from flask_restful import Resource
 from flask import request, Response, jsonify, make_response
-from opencage.geocoder import OpenCageGeocode
-from geopy.distance import geodesic
-
+import random
+import datetime
+import jwt
+import datetime
 db = DBHandler()
-key = '5b6f51644dc046b5a3e3188c9abae8ca'
-def find_distance(A, B):
-    geocoder = OpenCageGeocode(key)
+SECRET_KEY='11HIXGkg1Bm1Epw0Du20TV'
 
-    result_A = geocoder.geocode(A)
-    lat_A = result_A[0]['geometry']['lat']
-    lng_A = result_A[0]['geometry']['lng']
 
-    result_B = geocoder.geocode(B)
-    lat_B = result_B[0]['geometry']['lat']
-    lng_B = result_B[0]['geometry']['lng']
+def encode_auth_token(user_id,type):
+    """
+    Generates the Auth Token
+    :return: string
+    """
+    try:
+        payload = {
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(days=1, seconds=0),
+            'iat': datetime.datetime.utcnow(),
+            'id': user_id,
+            'type':type
+        }
+        return jwt.encode(
+            payload,
+            SECRET_KEY,
+            algorithm='HS256'
+        )
+    except Exception as e:
+        return e
+def decode_auth_token(auth_token):
+    """
+    Decodes the auth token
+    :param auth_token:
+    :return: integer|string
+    """
+    try:
+        payload = jwt.decode(auth_token, SECRET_KEY,algorithms=["HS256"])
+        return True,payload,-1
+    except jwt.ExpiredSignatureError:
+        return False,'Signature expired. Please log in again.',0
+    except jwt.InvalidTokenError:
+        return False,'Invalid token. Please log in again.',1
 
-    return (geodesic((lat_A, lng_A), (lat_B, lng_B)).kilometers)
+def user_access(token):
+    if token is None:
+        return False,make_response(jsonify("UnAuthorized"), 401)
+    status,auth,error = decode_auth_token(token)
+    if status==False:
+        if error==0:
+            return False,make_response(jsonify(auth), 401)
+        if error==1:
+            return False,make_response(jsonify(auth),401)
+    if auth['type'] != 'user':
+        return False,make_response(jsonify("You're not allowed to access this page"), 403)
+    return True,auth['id']
 
+def shelter_access(token):
+    if token is None:
+        return False,make_response(jsonify("UnAuthorized"), 401)
+    status,auth,error = decode_auth_token(token)
+    if status==False:
+        if error==0:
+            return False,make_response(jsonify(auth), 401)
+        if error==1:
+            return False,make_response(jsonify(auth),401)
+    if auth['type'] != 'shelter':
+        return False,make_response(jsonify("You're not allowed to access this page"), 403)
+    return True,auth['id']
 
 # Performs the sign-up operation for adopter, shelter or admin
 # returns failure message if operation failed, and success message otherwise.
@@ -34,6 +82,8 @@ class SignUpApi(Resource):
         if data.get("user") is not None:
             user = data["user"]
             # use db to create
+            if user.get("picture") is None:
+                user['picture']='https://i.ibb.co/s5nT3Mg/profile-img.png'
             if data["user"].get("type") == "adopter":
                 adp = User(user.get("fname"), user.get("lname"), user.get("city"), user.get("country"),
                            user.get("email"), user.get("username"),
@@ -73,7 +123,14 @@ class SignInApi(Resource):
             # call sign in function of db
             status, user = db.signIn(username=user.get("username"), password=user.get("password"))
             if status is True:
-                return make_response(jsonify(user.username), 201)
+                token=''
+                if isinstance(user,User):
+                    token=encode_auth_token(user.uid,'user')
+                elif isinstance(user,Shelter):
+                    token=encode_auth_token(user.sid,'shelter')
+                tok={}
+                tok['auth-token']=token
+                return make_response(jsonify(tok), 201)
             else:
                 return "Couldn't login. Please try again 2", 412
         except:
@@ -93,13 +150,17 @@ class SignInApi(Resource):
 class DogApi(Resource):
     @staticmethod
     def post():
+        token = request.headers.get('auth-token')
+        status,id=shelter_access(token)
+        if status==False:
+            return id
         data = request.get_json()
         if data.get("user") is None or data.get("dog") is None:
-            return "Invalid Data posted", 412
+            return "Invalid Data posted 1", 412
         if data.get("user").get("id") is None or data.get("user").get("username") is None:
-            return "Shelter not logged in  1", 412
+            return "Invalid data", 412
         if data.get("dog").get("bid") is None:
-            return "Invalid Data posted", 412
+            return "Invalid Data posted 2", 412
         try:
             # Create a dog object
             dog = Dog(data.get("user").get("id"), data.get("dog").get("name"), data.get("dog").get("age")
@@ -184,6 +245,10 @@ class UsersApi(Resource):
 class ShelterDogsApi(Resource):
     @staticmethod
     def post():
+        token = request.headers.get('auth-token')
+        status,id=shelter_access(token)
+        if status==False:
+            return id
         data=request.get_json()
         if data.get('user') is None:
             return make_response(jsonify('Wrong format 1'), 412)
@@ -197,38 +262,20 @@ class ShelterDogsApi(Resource):
         except:
             return make_response(jsonify("Error loading dogs"), 500)
 
-# receives user object and breed object
-#breed obj
-#breed.id
-# returns list of dogs sorted by location
-# from user location
-class DogByLocAPI(Resource):
+#takes nothing
+#returns json dogs
+class FeaturedDogsApi(Resource):
     @staticmethod
     def post():
-        data=request.get_json()
-        if data.get('user') is None or data.get('breed') is None:
-            return make_response(jsonify('Wrong format 1'), 412)
-        if data.get('user').get('country') is None or data.get('user').get('city') is None or data.get('breed').get('id') is None:
-            return make_response(jsonify('Wrong format 2'), 412)
         try:
-            flag,shelterData=db.getShelter(country=data.get('user').get('country'),breed=data.get('breed').get('id'))
-            if flag is False:
-                return make_response(jsonify("Error loading dog of breed"), 502)
-            distances=[]
-            userloc=data.get('user').get('city') + ' ' + data.get('user').get('country')
-            for x in shelterData:
-                shelterloc=x.city+' '+x.country
-                distances.append(find_distance(userloc,shelterloc))
-            shelterDistance=[]
-            for x,y in zip(shelterData,distances):
-                shelterDistance.append((x,y))
-            shelterDistance.sort(key=lambda x:x[1])
-            dogsdata=[]
-            for x,y in shelterDistance:
-                flag,res=db.getDog(sid=x.sid,breed=data.get('breed').get('id'))
-                if flag==False:
-                    return make_response(jsonify("Error loading data"), 500)
-                dogsdata.extend(res)
-            return make_response(jsonify([x.jsonify() for x in dogsdata]),200)
+            dogs=[]
+            flag, dogData = db.getDog(all=True)
+            if flag == False:
+                return make_response(jsonify("Error loading dogs"), 502)
+            randInts = [random.randint(0, len(dogData)-1) for x in range(0, 16)]
+            for x in randInts:
+                dogs.append(dogData[x])
+            return make_response(jsonify([dog.jsonify() for dog in dogs]),200)
+
         except:
-            return make_response(jsonify("Error loading Shelter 1"), 500)
+            return make_response(jsonify("Error loading dogs 1"), 500)

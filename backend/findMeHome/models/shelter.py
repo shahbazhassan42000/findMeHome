@@ -1,7 +1,7 @@
-from backend.findMeHome.models.Base import Base
+from backend.findMeHome.models.Base import Base,MAX_LENGTH,SALT
 from sqlalchemy import Column, String,Integer,ForeignKey
 from sqlalchemy.orm import relationship
-MAX_LENGTH=100
+import bcrypt
 class Shelter(Base):
     __tablename__='shelter'
     sid=Column(Integer,primary_key=True,autoincrement=True)
@@ -23,7 +23,7 @@ class Shelter(Base):
         self.country=country
         self.email=email
         self.username=username
-        self.password=password
+        self.password=self.hashPassword(password)
         self.picture=picture
         self.phone=phone
         self.proof=proof
@@ -34,11 +34,12 @@ class Shelter(Base):
         self.country=shelter.country
         self.email=shelter.email
         self.username=shelter.username
-        self.password=shelter.password
+        self.password=self.hashPassword(shelter.password)
         self.picture=shelter.picture
         self.phone=shelter.phone
         self.proof=shelter.proof
-
+    def hashPassword(self,password):
+        return bcrypt.hashpw(password.encode(),SALT)
     def jsonify(self):
         return {'type':'shelter',
                 'id':self.sid,

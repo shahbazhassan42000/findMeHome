@@ -1,7 +1,7 @@
-from backend.findMeHome.models.Base import Base
+from backend.findMeHome.models.Base import Base,SALT,MAX_LENGTH
 from sqlalchemy import Column, String,Integer,ForeignKey
 from sqlalchemy.orm import relationship
-MAX_LENGTH=100
+import bcrypt
 class Admin(Base):
     __tablename__='admin'
     aid=Column(Integer,primary_key=True,autoincrement=True)
@@ -13,10 +13,12 @@ class Admin(Base):
     def __init__(self,name,username,password,email):
         self.username=username
         self.name=name
-        self.password=password
+        self.password=self.hashPassword(password)
         self.email=email
-    def update(self,name,username,password,email):
-        self.username=username
-        self.name=name
-        self.password=password
-        self.email=email
+    def update(self,admin):
+        self.username=admin.username
+        self.name=admin.name
+        self.password=self.hashPassword(admin.password)
+        self.email=admin.email
+    def hashPassword(self,password):
+        return bcrypt.hashpw(password.encode(),SALT)
