@@ -21,7 +21,7 @@ const Footer=()=>{
                 </div>
                 <p className=" mt-5 text-white text-[25px]">
                     Our mission (and passion) is to provide every homeless pet the chance to do what they do best: give people snoopleboops.
-                    Special thanks to our partners <span className="text-[#70CF36]">Shumaim</span>, <span className="text-[#70CF36]">Rafay</span>, <span className="text-[#70CF36]">Gonash</span> and <span className="text-[#70CF36]">Wajahat</span>, whose support makes our life-saving work possible.
+                    Special thanks to our partners <a href="https://github.com/shumaim11" target="_blank" className="text-[#70CF36]">Shumaim</a>, <a href="https://github.com/Rafayqayyum" target="_blank" className="text-[#70CF36]">Rafay</a>, <a href="https://github.com/gonashrana" target="_blank" className="text-[#70CF36]">Gonash</a> and <a href="https://github.com/Wajahat43" target="_blank" className="text-[#70CF36]">Wajahat</a>, whose support makes our life-saving work possible.
                 </p>
             </div>
             <div className="text-center py-2 bg-white text-black">
