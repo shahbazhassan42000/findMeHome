@@ -3,12 +3,14 @@ import logo from "../../assets/images/find_me_home_logo.png";
 import Loading from "../Loading";
 import {onTogglePasswd} from "./Signup/SignupAdopter";
 import {backendURL, signInURL} from "../../utils/EndPoints";
-import {headers} from "../../store/dogs/dogSlice";
+import {headers, loadUser} from "../../store/dogs/dogSlice";
+import {useDispatch} from "react-redux";
 
 const Login=()=>{
     const [msg, setMsg] = useState("");
     const [loading, setLoading] = useState(false);
     const passwdRef = useRef(null);
+    const dispatch=useDispatch();
     return (
         <div>
             <div className="flex flex-col mx-auto items-center">
@@ -17,7 +19,7 @@ const Login=()=>{
                 </div>
                 <div className="font-['Montserrat'] flex flex-col space-y-10">
                     <h1 className="text-[#3E665C] text-[30px] font-[900] mx-auto">Login</h1>
-                    <form onSubmit={(e) => onFormSubmit(e, setLoading, setMsg)}
+                    <form onSubmit={(e) => onFormSubmit(e, setLoading, setMsg,dispatch)}
                           className="flex flex-col space-y-7 w-[295px]">
                         <label
                             className="border border-[#7F99A2] text-[#7F99A2] hover:text-[#5A8081] hover:border-[#5A8081] px-[12px] py-[4px] rounded-[7px] w-full flex items-center">
@@ -59,7 +61,7 @@ const Login=()=>{
 
 export default Login;
 
-const onFormSubmit = async (e, setLoading, setMsg) => {
+const onFormSubmit = async (e, setLoading, setMsg,dispatch) => {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
@@ -79,11 +81,16 @@ const onFormSubmit = async (e, setLoading, setMsg) => {
                 if (res.status === 201) {
                     setMsg("Login successfully");
                     form.reset();
-                    localStorage.setItem("token",resBody);
+                    console.log(resBody)
+                    localStorage.setItem("token",resBody.token);
+                    dispatch(loadUser());
                     window.location.pathname = "/home"; //TODO
                     // window.location.pathname = "/ad"; //TODO
                 }
-                else setMsg("An error occurred while login, please try again");
+                else{
+                    setMsg("An error occurred while login, please try again");
+                    console.log(resBody);
+                }
             }
         ).catch(err => {
             setMsg("An error occurred while login, please try again");
