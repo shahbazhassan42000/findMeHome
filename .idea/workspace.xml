@@ -1,22 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="83d10028-510f-4d16-b8fd-141c28ce52ae" name="Changes" comment="added uncomited data">
-      <change beforePath="$PROJECT_DIR$/ui_ux/Readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/ui_ux/Readme.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui_ux/signin-singup/Breed_check_without_signin.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui_ux/signin-singup/Breed_show.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui_ux/signin-singup/Find-Me-Home-login-logup.fig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui_ux/signin-singup/Find-Me-Home-login-logup.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui_ux/signin-singup/Find-Me-Home-login.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui_ux/signin-singup/Find-Me-Home-logup-adopter.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui_ux/signin-singup/Find-Me-Home-logup-shelter.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui_ux/signin-singup/Find-Me-Home-sign_up-opt.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui_ux/signin-singup/post-breed-check-page.png" beforeDir="false" />
+    <list default="true" id="058233d9-d0e5-43a2-aeab-8abef0b60f33" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/findMeHome.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/findMeHome.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_01_09_2022_10_12_AM_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_01_09_2022_10_12_AM__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_01_09_2022_10_13_AM_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_01_09_2022_10_13_AM__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/findMeHome/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/findMeHome/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/findMeHome/resources/resources.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/findMeHome/resources/resources.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/server.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FlaskConsoleOptions" custom-start-script="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))">
+    <envs>
+      <env key="FLASK_APP" value="app" />
+    </envs>
+    <option name="myCustomStartScript" value="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))" />
+    <option name="myEnvs">
+      <map>
+        <entry key="FLASK_APP" value="app" />
+      </map>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -24,185 +35,107 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-<<<<<<< HEAD
-  <component name="ProjectId" id="2DcE4rXce7Nq2hMBrx7bdKwJU4Q" />
-=======
-  <component name="ProjectId" id="2EA0lxwfJZuCt5KxJrELWGSejpk" />
->>>>>>> origin/main
+  <component name="ProjectId" id="2ESHeSrNS4yX81OUpaMMF8Mshs6" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-<<<<<<< HEAD
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="D:/BCSF19A009-1/BCSF19A009" />
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  }
+}</component>
+  <component name="RunManager" selected="Python.server">
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="findMeHome" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/backend/findMeHome/models" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/backend/findMeHome/models/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="server" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="findMeHome" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/backend" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/backend/server.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.server" />
+        <item itemvalue="Python.main" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="83d10028-510f-4d16-b8fd-141c28ce52ae" name="Changes" comment="" />
-      <created>1660989784922</created>
+      <changelist id="058233d9-d0e5-43a2-aeab-8abef0b60f33" name="Changes" comment="" />
+      <created>1662582164141</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1660989784922</updated>
-      <workItem from="1660989787143" duration="52000" />
-      <workItem from="1660989843858" duration="3357000" />
-      <workItem from="1661019344736" duration="690000" />
-      <workItem from="1661184227028" duration="1320000" />
-      <workItem from="1661188646908" duration="1257000" />
-      <workItem from="1661199356430" duration="1397000" />
-      <workItem from="1661231417284" duration="815000" />
-      <workItem from="1661236457959" duration="1844000" />
-      <workItem from="1661320574289" duration="1763000" />
-      <workItem from="1661359944181" duration="1536000" />
-      <workItem from="1661405324403" duration="2483000" />
-      <workItem from="1661453612590" duration="1159000" />
-      <workItem from="1661492535156" duration="6000" />
-      <workItem from="1661682150631" duration="2064000" />
-      <workItem from="1662009139492" duration="2436000" />
-      <workItem from="1662046185616" duration="321000" />
+      <updated>1662582164141</updated>
+      <workItem from="1662582167619" duration="58000" />
+      <workItem from="1662615377843" duration="10000" />
+      <workItem from="1662615556609" duration="539000" />
+      <workItem from="1662616187841" duration="3508000" />
+      <workItem from="1662620695817" duration="3897000" />
+      <workItem from="1662631087762" duration="8080000" />
+      <workItem from="1662734417666" duration="4100000" />
+      <workItem from="1662808854242" duration="913000" />
+      <workItem from="1662810291496" duration="876000" />
+      <workItem from="1662905324491" duration="9327000" />
+      <workItem from="1662992038295" duration="1806000" />
+      <workItem from="1662994153446" duration="242000" />
+      <workItem from="1662994431492" duration="558000" />
+      <workItem from="1663012775098" duration="6788000" />
+      <workItem from="1663020121073" duration="41000" />
+      <workItem from="1663045778545" duration="1225000" />
+      <workItem from="1663085800027" duration="311000" />
+      <workItem from="1663087575903" duration="692000" />
+      <workItem from="1663094418320" duration="1077000" />
     </task>
-    <task id="LOCAL-00001" summary="Added Readme for UI/UX">
-      <created>1660990435672</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1660990435672</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Added Readme for UI/UX">
-      <created>1660992693126</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1660992693126</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Added updated-files with new logo and icons">
-      <created>1661019885171</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1661019885171</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Added updated-files with new logo and icons">
-      <created>1661188078185</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1661188078185</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Added updated-files with new logo and icons">
-      <created>1661191688868</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1661191688868</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Added updated-files with new logo and icons">
-      <created>1661201289204</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1661201289204</updated>
-    </task>
-    <task id="LOCAL-00007" summary="Added web-icon SVG and Breed Show Page png">
-      <created>1661236677445</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1661236677445</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Added web-icon SVG and Breed Show Page png">
-      <created>1661236696961</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1661236696961</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Added post-breed-check page">
-      <created>1661240064363</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1661240064363</updated>
-    </task>
-    <task id="LOCAL-00010" summary="Added post-breed-check page">
-      <created>1661240686112</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1661240686112</updated>
-    </task>
-    <task id="LOCAL-00011" summary="Added post-breed-check page">
-      <created>1661683281349</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1661683281349</updated>
-    </task>
-    <task id="LOCAL-00012" summary="added bg-icons">
-      <created>1661684553488</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1661684553488</updated>
-    </task>
-    <task id="LOCAL-00013" summary="added uncomited data">
-      <created>1662009456711</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1662009456711</updated>
-    </task>
-    <option name="localTasksCounter" value="14" />
-=======
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/rafay/OneDrive/Documents/GitHub/findMeHome"
-  }
-}]]></component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
-  <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="79053667-691c-4d1c-a183-6edb9809e191" name="Changes" comment="" />
-      <created>1662023235725</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1662023235725</updated>
-      <workItem from="1662023241290" duration="36000" />
-    </task>
->>>>>>> origin/main
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-<<<<<<< HEAD
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/findMeHome$server.coverage" NAME="server Coverage Results" MODIFIED="1663094498263" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/backend" />
+    <SUITE FILE_PATH="coverage/findMeHome$main.coverage" NAME="main Coverage Results" MODIFIED="1662742500141" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/backend/findMeHome/models" />
   </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added Readme for UI/UX" />
-    <MESSAGE value="Added updated-files with new logo and icons" />
-    <MESSAGE value="Added web-icon SVG and Breed Show Page png" />
-    <MESSAGE value="Added post-breed-check page" />
-    <MESSAGE value="added bg-icons" />
-    <MESSAGE value="added uncomited data" />
-    <option name="LAST_COMMIT_MESSAGE" value="added uncomited data" />
-  </component>
-=======
->>>>>>> origin/main
 </project>
