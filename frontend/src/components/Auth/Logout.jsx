@@ -23,14 +23,14 @@ const Logout = () => {
             <section className="overflow-visible mt-9 max-w-[400px] mx-auto">
                 <form
                     className="flex flex-col space-y-5 text-center bg-[#ffffff] rounded-[3px] py-[25px] px-[40px] shadow-[0_0_10px_rgba(0,0,0,0.15)]">
-                    <h1 className="mb-2 text-[#5E6C84] font-bold">Log out</h1>
+                    <h1 className="mb-2 text-[#5E6C84] text-[30px] font-[900]">Log out</h1>
                     <div className="flex space-x-3 items-center">
                         <div className="relative flex justify-center items-center py-2 w-[72px]">
                             <img src={"https://i.ibb.co/s5nT3Mg/profile-img.png"} alt="profile"/>
                         </div>
                         <div className="flex flex-col">
-                            <p className="text-[#5e6c84] text-start font-bold text-[20px]">user.username</p>
-                            <p className="text-[14px] text-[#253858]">user.email</p>
+                            <p className="text-[#3E665C] text-start font-bold text-[20px]">user.username</p>
+                            <p className="text-[14px] text-[#7F99A2]">user.email</p>
                         </div>
                     </div>
                     {msg.show && <p className={`text-[14px] green !mt-0`}>{msg.msg}</p>}
@@ -42,10 +42,10 @@ const Logout = () => {
                             window.location.pathname = "/login";
                             e.preventDefault();
                         }}
-                        className="bg-[#0052cc] text-[#ffffff] font-bold hover:bg-[#0065ff] py-[0.6em] px-[1.3em] rounded-[0.3em]">
+                        className="bg-[#3E665C] hover:bg-[#5A8081] py-[8px] px-[50px] text-white rounded-[14px]">
                         Log out
                     </button>
-                    <a href="/home" className="text-[#0052cc] text-[14px] hover:underline">Back to home page</a>
+                    <a href="/home" className="text-[#7F99A2] text-[14px] hover:underline">Back to home page</a>
                 </form>
             </section>
         </div>
