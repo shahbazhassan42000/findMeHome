@@ -1,5 +1,5 @@
 import './App.css';
-import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import {BrowserRouter as Router, Route, Routes,Navigate} from "react-router-dom";
 import BreedCheck from "./components/Breed/BreedCheck";
 import BreedResult from "./components/Breed/BreedResult";
 import Signup from "./components/Auth/Signup/Signup";
@@ -24,6 +24,7 @@ function App() {
                     <Route exact path="/signup/s" element={<SignupShelter/>}/>
                     {user && <Route exact path="/ad" element={<AddDog/>}/>}
                     {user && <Route exact path="/home" element={<Home/>}/>}
+                    {!user && <Route exact path="/home" element={<Navigate to="/login"/>}/>}
                 </Routes>
             </Router>
         </div>
