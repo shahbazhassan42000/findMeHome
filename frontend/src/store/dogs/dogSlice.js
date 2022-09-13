@@ -50,7 +50,7 @@ export {breedResult};
 //api data
 export const headers = {
     "Content-type": "application/json;charset=UTF-8",
-    "authorization": `Bearer ${localStorage.getItem('token')}`
+    "Authorization": `Bearer ${localStorage.getItem('token')}`
 };
 
 //action creators

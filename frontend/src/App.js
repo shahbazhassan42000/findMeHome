@@ -18,6 +18,7 @@ function App() {
                 <Routes>
                     <Route exact path="/" element={<BreedCheck/>}/>
                     <Route exact path="/br" element={<BreedResult/>}/>
+                    {user && <Route exact path="/login" element={<Navigate to="/logout"/>}/>}
                     <Route exact path="/login" element={<Login/>}/>
                     <Route exact path="/signup" element={<Signup/>}/>
                     <Route exact path="/signup/a" element={<SignupAdopter/>}/>
