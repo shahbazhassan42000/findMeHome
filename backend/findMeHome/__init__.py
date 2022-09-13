@@ -10,7 +10,6 @@ from backend.findMeHome.resources import routes
 # from backend.findMeHome.controllers import *
 
 app = Flask('fmh')
-app.config['SECRET_KEY'] = 'random'
 app.debug = True
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 api = Api(app)

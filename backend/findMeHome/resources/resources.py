@@ -50,6 +50,10 @@ def decode_auth_token(auth_token):
 def user_access(token):
     if token is None:
         return False,make_response(jsonify("UnAuthorized"), 401)
+    token=token.split()
+    if token[0]!='Bearer':
+        return False, make_response(jsonify("UnAuthorized"), 401)
+    token=token[1]
     status,auth,error = decode_auth_token(token)
     if status==False:
         if error==0:
@@ -63,6 +67,10 @@ def user_access(token):
 def shelter_access(token):
     if token is None:
         return False,make_response(jsonify("UnAuthorized"), 401)
+    token=token.split()
+    if token[0]!='Bearer':
+        return False, make_response(jsonify("UnAuthorized"), 401)
+    token=token[1]
     status,auth,error = decode_auth_token(token)
     if status==False:
         if error==0:
@@ -71,6 +79,20 @@ def shelter_access(token):
             return False,make_response(jsonify(auth),401)
     if auth['type'] != 'shelter':
         return False,make_response(jsonify("You're not allowed to access this page"), 403)
+    return True,auth['id']
+def common_access(token):
+    if token is None:
+        return False,make_response(jsonify("UnAuthorized"), 401)
+    token=token.split()
+    if token[0]!='Bearer':
+        return False, make_response(jsonify("UnAuthorized"), 401)
+    token=token[1]
+    status,auth,error = decode_auth_token(token)
+    if status==False:
+        if error==0:
+            return False,make_response(jsonify(auth), 401)
+        if error==1:
+            return False,make_response(jsonify(auth),401)
     return True,auth['id']
 
 # Performs the sign-up operation for adopter, shelter or admin
@@ -129,7 +151,7 @@ class SignInApi(Resource):
                 elif isinstance(user,Shelter):
                     token=encode_auth_token(user.sid,'shelter')
                 tok={}
-                tok['auth-token']=token
+                tok['Authorization']=token
                 return make_response(jsonify(tok), 201)
             else:
                 return "Couldn't login. Please try again 2", 412
@@ -150,7 +172,7 @@ class SignInApi(Resource):
 class DogApi(Resource):
     @staticmethod
     def post():
-        token = request.headers.get('auth-token')
+        token = request.headers.get('Authorization')
         status,id=shelter_access(token)
         if status==False:
             return id
@@ -223,6 +245,10 @@ class ModelApi(Resource):
 class UsersApi(Resource):
     @staticmethod
     def post():
+        token = request.headers.get('Authorization')
+        status,res=common_access(token)
+        if status==False:
+            return res
         data=request.get_json()
         if data.get('user') is None:
             return make_response(jsonify('Wrong format'),412)
@@ -245,7 +271,7 @@ class UsersApi(Resource):
 class ShelterDogsApi(Resource):
     @staticmethod
     def post():
-        token = request.headers.get('auth-token')
+        token = request.headers.get('Authorization')
         status,id=shelter_access(token)
         if status==False:
             return id
