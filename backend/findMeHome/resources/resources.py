@@ -72,6 +72,16 @@ def shelter_access(token):
     if auth['type'] != 'shelter':
         return False,make_response(jsonify("You're not allowed to access this page"), 403)
     return True,auth['id']
+def common_access(token):
+    if token is None:
+        return False,make_response(jsonify("UnAuthorized"), 401)
+    status,auth,error = decode_auth_token(token)
+    if status==False:
+        if error==0:
+            return False,make_response(jsonify(auth), 401)
+        if error==1:
+            return False,make_response(jsonify(auth),401)
+    return True,auth['id']
 
 # Performs the sign-up operation for adopter, shelter or admin
 # returns failure message if operation failed, and success message otherwise.
@@ -223,6 +233,10 @@ class ModelApi(Resource):
 class UsersApi(Resource):
     @staticmethod
     def post():
+        token = request.headers.get('auth-token')
+        status,res=common_access(token)
+        if status==False:
+            return res
         data=request.get_json()
         if data.get('user') is None:
             return make_response(jsonify('Wrong format'),412)
