@@ -9,6 +9,7 @@ import Login from "./components/Auth/Login";
 import AddDog from "./components/Shelter/AddDog";
 import {useSelector} from "react-redux";
 import Home from "./components/Home/Home";
+import Logout from "./components/Auth/Logout";
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
     return (<div>
             <Router>
                 <Routes>
+                    <Route exact path="/logout" element={<Logout/>}/>
                     <Route exact path="/" element={<BreedCheck/>}/>
                     <Route exact path="/br" element={<BreedResult/>}/>
                     {user && <Route exact path="/login" element={<Navigate to="/logout"/>}/>}
@@ -23,6 +25,8 @@ function App() {
                     <Route exact path="/signup" element={<Signup/>}/>
                     <Route exact path="/signup/a" element={<SignupAdopter/>}/>
                     <Route exact path="/signup/s" element={<SignupShelter/>}/>
+                    {user && <Route exact path="/logout" element={<Logout/>}/>}
+                    {!user && <Route exact path="/logout" element={<Navigate to="/login"/>}/>}
                     {user && <Route exact path="/ad" element={<AddDog/>}/>}
                     {user && <Route exact path="/home" element={<Home/>}/>}
                     {!user && <Route exact path="/home" element={<Navigate to="/login"/>}/>}

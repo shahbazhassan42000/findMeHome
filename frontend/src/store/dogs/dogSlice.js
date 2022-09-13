@@ -10,9 +10,9 @@ const dogSlice = createSlice({
     name: "Dog",
     initialState: {
         dog: {name: "", breed: "", image: "", age: ""},
-        breeds:[],
-        diseases:[],
-        user:null
+        breeds: [],
+        diseases: [],
+        user: null
     },
     reducers: {
         breedResult(state, action) {
@@ -23,17 +23,17 @@ const dogSlice = createSlice({
             if (image) state.dog.image = image;
             if (age) state.dog.age = age;
         },
-        breedsReceived(state,action){
+        breedsReceived(state, action) {
             console.log("BREEDS RECEIVED");
-            state.breeds=action.payload;
+            state.breeds = action.payload;
         },
-        diseasesReceived(state,action){
+        diseasesReceived(state, action) {
             console.log("DISEASES RECEIVED");
-            state.diseases=action.payload;
+            state.diseases = action.payload;
         },
-        userReceived(state,action){
+        userReceived(state, action) {
             console.log("USER RECEIVED");
-            state.user=action.payload;
+            state.user = action.payload;
         }
     }
 });
@@ -45,7 +45,7 @@ const {
     userReceived
 } = dogSlice.actions;
 export default dogSlice.reducer;
-export {breedResult};
+export {breedResult, userReceived};
 
 //api data
 export const headers = {
@@ -55,21 +55,21 @@ export const headers = {
 
 //action creators
 
-export const loadBreeds=()=>apiCallBegan({
-    url:backendURL+allBreedsURL,
+export const loadBreeds = () => apiCallBegan({
+    url: backendURL + allBreedsURL,
     headers,
-    onSuccess:breedsReceived.type
+    onSuccess: breedsReceived.type
 })
-export const loadDiseases=()=>apiCallBegan({
-    url:backendURL+allDiseasesURL,
+export const loadDiseases = () => apiCallBegan({
+    url: backendURL + allDiseasesURL,
     headers,
-    onSuccess:diseasesReceived.type
+    onSuccess: diseasesReceived.type
 })
 
-export const loadUser=(user)=>apiCallBegan({
-    url:backendURL+getUserURL,
+export const loadUser = (user) => apiCallBegan({
+    url: backendURL + getUserURL,
     headers,
-    method:'POST',
-    data:JSON.stringify(user),
-    onSuccess:userReceived.type
+    method: 'POST',
+    data: JSON.stringify(user),
+    onSuccess: userReceived.type
 })
