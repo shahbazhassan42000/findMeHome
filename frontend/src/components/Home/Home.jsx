@@ -10,8 +10,8 @@ import DogArticles from "../Article/DogArticles";
 const Home = () => {
     const user = useSelector(state => state.dogStore.user);
     return (<div className="relative flex flex-col">
-        <header className="px-8">
-            <nav className="fixed bg-white z-50 w-[95.3%] flex justify-between items-center py-3">
+        <nav className="fixed bg-white z-50 w-full px-8">
+            <div className="flex justify-between items-center py-3">
                 <div className="w-[180px]">
                     <img src={logo} alt="logo"/>
                 </div>
@@ -23,7 +23,9 @@ const Home = () => {
                     <li><img title={user.username} className="h-[33px]" src="https://i.ibb.co/s5nT3Mg/profile-img.png"
                              alt="user profile"/></li>
                 </ul>
-            </nav>
+            </div>
+        </nav>
+        <header className="px-8">
             <div className="mt-[69px] flex flex-col space-y-10">
                 <div className="relative">
                     <img className="" src={bg1} alt="bg-1"/>
@@ -95,6 +97,7 @@ const Home = () => {
                 </div>
             </div>
             <DogArticles/>
+            
         </main>
     </div>);
 
