@@ -151,7 +151,7 @@ class SignInApi(Resource):
                 elif isinstance(user,Shelter):
                     token=encode_auth_token(user.sid,'shelter')
                 tok={}
-                tok['Authorization']=token
+                tok['token']=token
                 return make_response(jsonify(tok), 201)
             else:
                 return "Couldn't login. Please try again 2", 412
