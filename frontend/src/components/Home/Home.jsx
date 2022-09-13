@@ -1,4 +1,5 @@
 //https://i.ibb.co/s5nT3Mg/profile-img.png
+import dancingDog from '../../assets/gif/dancingDog.png'
 import logo from "../../assets/images/logo.png"
 import bg1 from "../../assets/images/bg1.png"
 import bg2 from "../../assets/images/bg2.png"
@@ -33,13 +34,15 @@ const Home = () => {
                     <div className="relative bg-[#3E665C] z-10 -mr-14 -mt-10 mb-10 w-full">
                         <div className="absolute text-[20px] p-8 bottom-16 left-16 w-[400px] h-[400px] border bg-white">
                             <p>
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                                has been the industry's standard dummy text
                             </p>
 
-                             <p className="w-[76%]">
-                                 ever since the 1500s,
-                                 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry 1500s,
-                             </p>
+                            <p className="w-[76%]">
+                                ever since the 1500s,
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                                has been the industry 1500s,
+                            </p>
                         </div>
                         <div className="absolute -right-48 bottom-32 flex flex-col space-y-5 font-bold">
                             <button className="bg-[#3E665C] py-[20px] px-[18px] text-white">
@@ -56,6 +59,40 @@ const Home = () => {
         </header>
         <main className="bg-[#EFEEF1] flex flex-col py-16">
             <FeaturedDogs/>
+            <div className="flex flex-col items-center px-24 ">
+                <div>
+                    <img src={dancingDog} alt="dancing dog"/>
+                    <h2 className="text-[#3E665C] font-bold text-[40px]">Pet Adoption <span
+                        className="text-[#70CF36]  font-['Bubblegum_Sans']">tips</span></h2>
+                </div>
+                <div className="flex space-x-10 mt-5">
+                    <div>
+                        <h4 className="text-[29px] font-[600]">Why Adoption Over Buying</h4>
+                        <p className="text-[20px]">
+                            Did you know that over 1,000 people per hour run a search right here looking to adopt a
+                            pet? Pet adoption is quickly becoming the preferred way to find a new dog or cat, and
+                            rightly so, there are many benefits to adopting a pet. Pet adoption fees are usually
+                            much lower than buying from a breeder. You’re also likely to find a pet who’s already
+                            learned a few things. Adoptable pets are often already house-trained, good with kids,
+                            and
+                            do well with other pets. And don’t forget the wonderful feeling you get from saving a
+                            life!
+                        </p>
+                    </div>
+                    <div>
+                        <h4 className="text-[29px] font-[600]">How to Find the Perfect Pet</h4>
+                        <p className="text-[20px]">
+                            Do you know what type of pet personality you’re looking for? Finding the ideal pet for
+                            your home should start with understanding the personality that best fits your lifestyle,
+                            not necessarily a specific breed. Consider this, do you need a dog that is low key?
+                            Perhaps a cat that gets along well with others? The rescue professionals posting on our
+                            site are experts at matching you with the right pet. Our website even has a "New Pet
+                            Alert" feature to help you narrow things down. Simply tell us what you are looking for
+                            and we’ll email you your matches!
+                        </p>
+                    </div>
+                </div>
+            </div>
         </main>
     </div>);
 
