@@ -177,15 +177,13 @@ class DogApi(Resource):
         if status==False:
             return id
         data = request.get_json()
-        if data.get("user") is None or data.get("dog") is None:
+        if data.get("dog") is None:
             return "Invalid Data posted 1", 412
-        if data.get("user").get("id") is None or data.get("user").get("username") is None:
-            return "Invalid data", 412
         if data.get("dog").get("bid") is None:
             return "Invalid Data posted 2", 412
         try:
             # Create a dog object
-            dog = Dog(data.get("user").get("id"), data.get("dog").get("name"), data.get("dog").get("age")
+            dog = Dog(id, data.get("dog").get("name"), data.get("dog").get("age")
                       , data.get("dog").get("bid"), data.get("dog").get("imageURL"))
             # add dog to db
             status, result = db.add(dog)
@@ -250,15 +248,11 @@ class UsersApi(Resource):
         if status==False:
             return res
         data=request.get_json()
-        if data.get('user') is None:
-            return make_response(jsonify('Wrong format'),412)
-        if data.get('user').get('username') is None:
-            return make_response(jsonify('Wrong format'),412)
         try:
-            flag, userData = db.getUser(username=data.get('user').get('username'))
+            flag, userData = db.getUser(id=res)
             if flag is True:
                 return make_response(userData.jsonify(), 200)
-            flag, userData = db.getShelter(username=data.get('user').get('username'))
+            flag, userData = db.getShelter(id=res)
             if flag is True:
                 return make_response(userData.jsonify(), 200)
             return make_response(jsonify('User not found'), 412)
@@ -302,6 +296,22 @@ class FeaturedDogsApi(Resource):
             for x in randInts:
                 dogs.append(dogData[x])
             return make_response(jsonify([dog.jsonify() for dog in dogs]),200)
+
+        except:
+            return make_response(jsonify("Error loading dogs 1"), 500)
+
+class getDogsAPI(Resource):
+    @staticmethod
+    def post():
+        token = request.headers.get('Authorization')
+        status,id=user_access(token)
+        if status==False:
+            return id
+        try:
+            flag, dogData = db.getDog(all=True)
+            if flag == False:
+                return make_response(jsonify("Error loading dogs"), 502)
+            return make_response(jsonify([dog.jsonify() for dog in dogData]),200)
 
         except:
             return make_response(jsonify("Error loading dogs 1"), 500)
