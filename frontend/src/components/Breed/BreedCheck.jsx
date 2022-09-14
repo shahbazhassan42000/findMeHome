@@ -31,9 +31,9 @@ const BreedCheck = () => {
             <img className="-z-10 fixed h-[180px] bottom-0" src={ellipseDown} alt="ellipse down"/>
             <img className="-z-10 fixed h-[430px] bottom-0 right-0" src={vector} alt="vector"/>
             <div className="flex flex-col w-[50%] mx-auto items-center">
-                <div className="w-[220px] mt-[20px]">
+                <a href="/" className="w-[220px] mt-[20px]">
                     <img src={logo} alt="logo"/>
-                </div>
+                </a>
                 <div className="w-[430px] font-['Montserrat']">
                     <div className="mt-[35px] flex flex-col items-center  justify-center">
                         <h1 className="text-[40px] font-[900] text-center text-[#3E665C]">
@@ -69,7 +69,7 @@ const BreedCheck = () => {
                                 </div>
                                 <span className="ml-[10px] fa fa-arrow-up-from-bracket text-[24.4px]"></span>
                             </button>
-                            <p className={`${msg === "ERROR! while uploading, Please try again" ? '#ff0033' : '#567a0d'} mt-3 -mb-3 text-center`}>
+                            <p className={`${msg === "ERROR! while getting dog breed data, Please try again" ? '#ff0033' : '#567a0d'} mt-3 -mb-3 text-center`}>
                                 {msg}
                             </p>
                             <button

@@ -1,4 +1,5 @@
-export const backendURL = "http://192.168.43.165:4000"; //RAFAY
+// export const backendURL = "http://192.168.43.165:4000"; //RAFAY
+export const backendURL = "http://192.168.159.165:4000"; //RAFAY2
 // export const backendURL = "http://172.16.9.207:5000"; //PUCIT
 // export const backendURL = "http://localhost:5000";
 export const imgBBURL = "https://api.imgbb.com/1/upload";

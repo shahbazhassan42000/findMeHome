@@ -20,9 +20,9 @@ const Home = () => {
                     <li className="underline text-[#3E665C]">Home</li>
                     <li className="hover:text-[#3E665C]">Blog</li>
                     <li className="hover:text-[#3E665C]">About Us</li>
-                    <li className="hover:text-[#3E665C]"><a href="/">Breed</a></li>
-                    <li><img title={user.username} className="h-[33px]" src="https://i.ibb.co/s5nT3Mg/profile-img.png"
-                             alt="user profile"/></li>
+                    <li className="hover:text-[#3E665C]"><a href="/bc">Breed</a></li>
+                    {/*<li><img title={user.username} className="h-[33px]" src="https://i.ibb.co/s5nT3Mg/profile-img.png"*/}
+                    {/*         alt="user profile"/></li>*/}
                 </ul>
             </div>
         </nav>
@@ -49,12 +49,12 @@ const Home = () => {
                             </p>
                         </div>
                         <div className="absolute -right-48 bottom-32 flex flex-col space-y-5 font-bold">
-                            <button className="bg-[#3E665C] hover:bg-[#5A8081]  py-[20px] px-[18px] text-white">
-                                Registered as Shelter
-                            </button>
-                            <button className="bg-[#3E665C] hover:bg-[#5A8081] py-[20px] px-[18px] text-white">
-                                Adopt Dog
-                            </button>
+                            <a href="/login" className="bg-[#3E665C] hover:bg-[#5A8081]  py-[20px] px-[18px] text-white">
+                                Log In
+                            </a>
+                            <a href="/signup" className="bg-[#3E665C] hover:bg-[#5A8081] py-[20px] px-[18px] text-white">
+                                Sign up
+                            </a>
                         </div>
                     </div>
                     <img className="w-[75%]" src={bg2} alt="bg-2"/>

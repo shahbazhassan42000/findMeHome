@@ -5,13 +5,13 @@ const Footer=()=>{
             <div className="bg-[#7F99A2] px-12 pt-8 pb-2">
                 <div className="flex justify-between">
                     <div className="flex flex-col space-y-4">
-                        <a className="text-white border-b-2 border-[#70CF36] block w-[280px] text-[30px]" href="/home">
+                        <a className="text-white border-b-2 border-[#70CF36] block w-[280px] text-[30px]" href="/">
                             Find Me Home
                         </a>
-                        <a className="text-white border-b-2 border-[#70CF36] block w-[280px] text-[30px]" href="/">
+                        <a className="text-white border-b-2 border-[#70CF36] block w-[280px] text-[30px]" href="/bc">
                             Find Breed
                         </a>
-                        <a className="text-white border-b-2 border-[#70CF36] block w-[280px] text-[30px]" href="#">
+                        <a className="text-white border-b-2 border-[#70CF36] block w-[280px] text-[30px]" href="/login">
                             Find Dog to Adopt
                         </a>
                     </div>

@@ -14,6 +14,7 @@ const AddDog = () => {
     const [selectedBreed, setSelectedBreed] = useState("Select Breed");
     const [diseases, setDiseases] = useState(useSelector(state => state.dogStore.diseases));
     const [breeds, setBreeds] = useState(useSelector(state => state.dogStore.breeds));
+    const [ages, setAges] = useState(useSelector(state => state.dogStore.ages));
     const [selectedDiseases, setSelectedDiseases] = useState([]);
     const [searchFocus, setSearchFocus] = useState(false);
     const [dog, setDog] = useState(null);
@@ -45,7 +46,6 @@ const AddDog = () => {
                     </p>
                     <form
                         ref={formRef}
-                        // onSubmit={(e) => onFormSubmit(e, setMsg, setLoading, setFileName, setDog)}
                         className="flex flex-col mt-[25px] w-full px-[33px] ml-1 justify-center items-center">
                         <label
                             className="border border-[#7F99A2] active:border-[#A7B4BF] hover:border-[#5A8081] active:bg-[#5A8081] active:text-white px-[12px] py-[4px] rounded-[7px] w-full flex items-center mb-5">
@@ -57,9 +57,15 @@ const AddDog = () => {
                         <label
                             className="border text-[#7F99A2] hover:text-[#5A8081] border-[#7F99A2] active:border-[#A7B4BF] hover:border-[#5A8081] active:bg-[#5A8081] active:text-white px-[12px] py-[4px] rounded-[7px] w-full flex items-center mb-5">
                             <span className="fa-brands fa-pagelines mr-[10px] text-[24.4px]"></span>
-                            <input
-                                className="w-full bg-transparent outline-0 placeholder:text-[#7F99A2] active:placeholder:text-white hover:placeholder:text-[#5A8081]"
-                                type="text" name="dogAge" placeholder="Age"/>
+                            <select
+                                name="age"
+                                // value={selectedBreed} onChange={(e) => setSelectedBreed(e.target.value)}
+                                className=" p-[5px] w-full outline-0 text-[#7F99A2] hover:text-[#5A8081] border-[#7F99A2] rounded-[5px]">
+                                <option value="Select Age">Select Age</option>
+                                {map(ages, age => {
+                                    return <option key={age[0]} value={age[0]}>{`${age[0]}(${age[1]})`}</option>
+                                })}
+                            </select>
                         </label>
                         <input
                             ref={imgUpload}
