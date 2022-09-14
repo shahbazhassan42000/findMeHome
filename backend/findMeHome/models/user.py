@@ -15,8 +15,10 @@ class User(Base):
     password=Column(String(MAX_LENGTH))
     picture=Column(String(MAX_LENGTH))
     phone=Column(String(MAX_LENGTH))
+    lat=Column(String(MAX_LENGTH))
+    long=Column(String(MAX_LENGTH))
     user=relationship('List', cascade="all,delete",backref='User')
-    def __init__(self,fname,lname,city,country,email,username,password,picture,phone):
+    def __init__(self,fname,lname,city,country,email,username,password,picture,phone,lat,long):
         self.fname=fname
         self.lname=lname
         self.city=city
@@ -26,6 +28,8 @@ class User(Base):
         self.password=self.hashPassword(password)
         self.picture=picture
         self.phone=phone
+        self.lat = lat
+        self.long = long
     def update(self,user):
         self.fname=user.fname
         self.lname=user.lname
@@ -36,6 +40,8 @@ class User(Base):
         self.password=self.hashPassword(user.password)
         self.picture=user.picture
         self.phone=user.phone
+        self.lat = user.lat
+        self.long = user.long
     def hashPassword(self,password):
         return bcrypt.hashpw(password.encode(),SALT)
     def jsonify(self):

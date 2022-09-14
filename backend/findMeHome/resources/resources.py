@@ -9,10 +9,23 @@ from flask import request, Response, jsonify, make_response
 import random
 import datetime
 import jwt
+from geopy.distance import geodesic
 import datetime
+from opencage.geocoder import OpenCageGeocode
+
 db = DBHandler()
 SECRET_KEY='11HIXGkg1Bm1Epw0Du20TV'
+opencagekey = '5b6f51644dc046b5a3e3188c9abae8ca'
+#COMPLETED
+def convert_to_lat_long(location):
+    geocoder = OpenCageGeocode(opencagekey)
 
+    result = geocoder.geocode(location)
+    lat = result[0]['geometry']['lat']
+    lng = result[0]['geometry']['lng']
+    return (lat,lng)
+def find_distance(A, B):
+    return (geodesic(A, B).kilometers)
 
 def encode_auth_token(user_id,type):
     """
@@ -104,18 +117,20 @@ class SignUpApi(Resource):
         if data.get("user") is not None:
             user = data["user"]
             # use db to create
+            loc = data.get('city') + ' ' + data.get('country')
+            lat,long=convert_to_lat_long(loc)
             if user.get("picture") is None:
-                user['picture']='https://i.ibb.co/s5nT3Mg/profile-img.png'
+                user['picture']='https://i.ibb.co/6skvT57/profile-pic.png'
             if data["user"].get("type") == "adopter":
                 adp = User(user.get("fname"), user.get("lname"), user.get("city"), user.get("country"),
                            user.get("email"), user.get("username"),
-                           user.get("password"), user.get("picture"), user.get("phone"))
+                           user.get("password"), user.get("picture"), user.get("phone"),lat,long)
                 status, msg = db.add(adp)
             elif data["user"].get("type") == "shelter":
                 shelter = Shelter(user.get("name"), user.get("street"), user.get("city"), user.get("country"),
                                   user.get("email")
                                   , user.get("username"), user.get("password"), user.get("picture"),
-                                  user.get("phone"), user.get("proof"))
+                                  user.get("phone"), user.get("proof"),lat,long)
                 status, msg = db.add(shelter)
             if data["user"].get("type") == "adopter" or data["user"].get("type") == "shelter":
                 if status:
@@ -307,11 +322,28 @@ class getDogsAPI(Resource):
         if status==False:
             return id
         try:
-            flag, dogData = db.getDog(all=True)
-            if flag == False:
-                return make_response(jsonify("Error loading dogs"), 502)
-            return make_response(jsonify([dog.jsonify() for dog in dogData]),200)
-
+            flag,user=db.getUser(id=id)
+            if flag==False:
+                return make_response(jsonify("Error loading user"), 502)
+            flag, shelterData = db.getShelter(country=user.country)
+            if flag==False:
+                return make_response(jsonify("Error loading shelters"), 502)
+            distances=[]
+            userloc = user.city + ' ' + user.country
+            for x in shelterData:
+                shelterloc = x.city + ' ' + x.country
+                distances.append(find_distance(userloc, shelterloc))
+            shelterDistance = []
+            for x, y in zip(shelterData, distances):
+                shelterDistance.append((x, y))
+            shelterDistance.sort(key=lambda x: x[1])
+            dogsdata = []
+            for x, y in shelterDistance:
+                flag, res = db.getDog(sid=x.sid)
+                if flag == False:
+                    return make_response(jsonify("Error loading data"), 500)
+                dogsdata.extend(res)
+            return make_response(jsonify([x.jsonify() for x in dogsdata]), 200)
         except:
             return make_response(jsonify("Error loading dogs 1"), 500)
 
@@ -347,3 +379,35 @@ class getDogsFilteredAPI(Resource):
                 return make_response(jsonify('Invalid data posted'), 412)
         except:
             return make_response(jsonify("Error loading dogs"), 500)
+
+##------------------------------------------------------------------------------------------
+# class DogByLocAPI(Resource):
+#     @staticmethod
+#     def post():
+#         data=request.get_json()
+#         if data.get('user') is None or data.get('breed') is None:
+#             return make_response(jsonify('Wrong format 1'), 412)
+#         if data.get('user').get('country') is None or data.get('user').get('city') is None or data.get('breed').get('id') is None:
+#             return make_response(jsonify('Wrong format 2'), 412)
+#         try:
+#             flag,shelterData=db.getShelter(country=data.get('user').get('country'),breed=data.get('breed').get('id'))
+#             if flag is False:
+#                 return make_response(jsonify("Error loading dog of breed"), 502)
+#             distances=[]
+#             userloc=data.get('user').get('city') + ' ' + data.get('user').get('country')
+#             for x in shelterData:
+#                 shelterloc=x.city+' '+x.country
+#                 distances.append(find_distance(userloc,shelterloc))
+#             shelterDistance=[]
+#             for x,y in zip(shelterData,distances):
+#                 shelterDistance.append((x,y))
+#             shelterDistance.sort(key=lambda x:x[1])
+#             dogsdata=[]
+#             for x,y in shelterDistance:
+#                 flag,res=db.getDog(sid=x.sid,breed=data.get('breed').get('id'))
+#                 if flag==False:
+#                     return make_response(jsonify("Error loading data"), 500)
+#                 dogsdata.extend(res)
+#             return make_response(jsonify([x.jsonify() for x in dogsdata]),200)
+#         except:
+#             return make_response(jsonify("Error loading Shelter 1"), 500)
