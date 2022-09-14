@@ -29,8 +29,8 @@ const Logout = () => {
                             <img src={"https://i.ibb.co/s5nT3Mg/profile-img.png"} alt="profile"/>
                         </div>
                         <div className="flex flex-col">
-                            <p className="text-[#3E665C] text-start font-bold text-[20px]">user.username</p>
-                            <p className="text-[14px] text-[#7F99A2]">user.email</p>
+                            <p className="text-[#3E665C] text-start font-bold text-[20px]">{user.username}</p>
+                            <p className="text-[14px] text-[#7F99A2]">{user.email}</p>
                         </div>
                     </div>
                     {msg.show && <p className={`text-[14px] green !mt-0`}>{msg.msg}</p>}

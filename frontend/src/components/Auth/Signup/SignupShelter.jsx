@@ -202,7 +202,10 @@ const onFormSubmit = async (e, setLoading, setMsg) => {
                 setMsg({show: true, msg: "Your account created successfully", type: "general"});
                 form.reset();
                 window.location.pathname = "/login";
-            } else setMsg({show: true, msg: "An error occurred while signup, please try again", type: "general"});
+            } else{
+                setMsg({show: true, msg: "An error occurred while signup, please try again", type: "general"});
+                console.log(res);
+            }
             setLoading(false);
         }).catch((err) => {
             setMsg({show: true, msg: "An error occurred while signup, please try again", type: "general"});
