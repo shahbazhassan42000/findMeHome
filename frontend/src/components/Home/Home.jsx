@@ -26,7 +26,7 @@ const Home = () => {
                 </ul>
             </div>
         </nav>
-        <header  className="px-8">
+        <header className="px-8">
             <div className="mt-[69px] flex flex-col space-y-10">
                 <div className="relative">
                     <img className="" src={bg1} alt="bg-1"/>
@@ -48,11 +48,13 @@ const Home = () => {
                                 has been the industry 1500s,
                             </p>
                         </div>
-                        <div className="absolute -right-48 bottom-32 flex flex-col space-y-5 font-bold">
-                            <a href="/login" className="bg-[#3E665C] hover:bg-[#5A8081]  py-[20px] px-[18px] text-white">
+                        <div className="absolute -right-[168px] bottom-32 flex flex-col space-y-5 font-bold">
+                            <a href="/login"
+                               className="rounded-[30px] bg-[#3E665C] hover:bg-[#5A8081]  py-[20px] px-[52px] text-[16px] font-bold uppercase text-white">
                                 Log In
                             </a>
-                            <a href="/signup" className="bg-[#3E665C] hover:bg-[#5A8081] py-[20px] px-[18px] text-white">
+                            <a href="/signup"
+                               className="rounded-[30px] bg-[#3E665C] hover:bg-[#5A8081]  py-[20px] px-[52px] text-[16px] font-bold uppercase text-white">
                                 Sign up
                             </a>
                         </div>
@@ -64,11 +66,9 @@ const Home = () => {
         <main className="bg-[#EFEEF1] flex flex-col py-16">
             <FeaturedDogs/>
             <div className="flex flex-col items-center px-24 mb-20">
-                <div>
-                    <img src={dancingDog} alt="dancing dog"/>
-                    <h2 className="text-[#3E665C] font-bold text-[40px]">Pet Adoption <span
-                        className="text-[#70CF36]  font-['Bubblegum_Sans']">tips</span></h2>
-                </div>
+                <img src={dancingDog} alt="dancing dog"/>
+                <h2 className="text-[#3E665C] font-bold text-[40px]">Pet Adoption <span
+                    className="text-[#70CF36]  font-['Bubblegum_Sans']">tips</span></h2>
                 <div className="flex space-x-10 mt-5">
                     <div>
                         <h4 className="text-[29px] font-[600]">Why Adoption Over Buying</h4>
