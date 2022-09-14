@@ -1,4 +1,4 @@
-//https://i.ibb.co/s5nT3Mg/profile-img.png
+//https://i.ibb.co/6skvT57/profile-pic.png
 import dancingDog from '../../assets/gif/dancingDog.gif'
 import logo from "../../assets/images/logo.png"
 import bg1 from "../../assets/images/bg1.jpg"

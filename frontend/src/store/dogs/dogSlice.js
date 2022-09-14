@@ -70,6 +70,5 @@ export const loadUser = (user) => apiCallBegan({
     url: backendURL + getUserURL,
     headers,
     method: 'POST',
-    data: JSON.stringify(user),
     onSuccess: userReceived.type
 })
