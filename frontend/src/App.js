@@ -24,9 +24,12 @@ function App() {
                     <Route exact path="/br" element={<BreedResult/>}/>
                     {user && <Route exact path="/login" element={<Navigate to="/logout"/>}/>}
                     <Route exact path="/login" element={<Login/>}/>
-                    <Route exact path="/signup" element={<Signup/>}/>
-                    <Route exact path="/signup/a" element={<SignupAdopter/>}/>
-                    <Route exact path="/signup/s" element={<SignupShelter/>}/>
+                    {!user &&<Route exact path="/signup" element={<Signup/>}/>}
+                    {user &&<Route exact path="/signup" element={<Navigate to="/logout"/>}/>}
+                    {!user &&<Route exact path="/signup/a" element={<SignupAdopter/>}/>}
+                    {!user &&<Route exact path="/signup/s" element={<SignupShelter/>}/>}
+                    {user &&<Route exact path="/signup/a" element={<Navigate to="/logout"/>}/>}
+                    {user &&<Route exact path="/signup/s" element={<Navigate to="/logout"/>}/>}
                     {user && <Route exact path="/logout" element={<Logout/>}/>}
                     {!user && <Route exact path="/logout" element={<Navigate to="/login"/>}/>}
                     {user && <Route exact path="/ad" element={<AddDog/>}/>}
