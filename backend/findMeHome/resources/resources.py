@@ -315,3 +315,36 @@ class getDogsAPI(Resource):
 
         except:
             return make_response(jsonify("Error loading dogs 1"), 500)
+
+
+# takes authorization
+#takes breed-id or age or both breed id and age
+# returns filtered data
+class getDogsFilteredAPI(Resource):
+    @staticmethod
+    def post():
+        token=request.headers.get('Authorization')
+        status,id=user_access(token)
+        if status==False:
+            return id
+        data=request.get_json()
+        try:
+            if data.get("breed") is not None and data.get("age") is not None:
+                status, data = db.getDog(breed=data.get('breed'),age=data.get('age'))
+                if status == False:
+                    return make_response(jsonify("Database error"), 502)
+                return make_response(jsonify([x.jsonify() for x in data]), 200)
+            elif data.get('breed') is not None:
+                status,data=db.getDog(breed=data.get('breed'))
+                if status==False:
+                    return make_response(jsonify("Database error"), 502)
+                return make_response(jsonify([x.jsonify() for x in data]),200)
+            elif data.get('age') is not None:
+                status, data = db.getDog(age=data.get('age'))
+                if status == False:
+                    return make_response(jsonify("Database error"), 502)
+                return make_response(jsonify([x.jsonify() for x in data]), 200)
+            else:
+                return make_response(jsonify('Invalid data posted'), 412)
+        except:
+            return make_response(jsonify("Error loading dogs"), 500)

@@ -332,6 +332,8 @@ class DBHandler():
             return flag,session
         if all==True:
             results = session.query(Dog).all()
+        elif breed!=None and age!=None:
+            results = session.query(Dog).filter(and_(Dog.age == age, Dog.bid == breed)).all()
         elif breed!=None and sid!=None:
             results = session.query(Dog).filter(and_(Dog.sid == sid,Dog.bid==breed)).all()
         elif id!=None:
