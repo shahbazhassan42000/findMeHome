@@ -121,7 +121,7 @@ class SignUpApi(Resource):
                 if status:
                     return make_response(jsonify("Sign up Successful"), 201)
                 else:
-                    return make_response(jsonify(msg), 412)
+                    return make_response(jsonify(msg), 409)
             else:
                 return "Invalid User type", 412
         else:
@@ -247,7 +247,6 @@ class UsersApi(Resource):
         status,res=common_access(token)
         if status==False:
             return res
-        data=request.get_json()
         try:
             flag, userData = db.getUser(id=res)
             if flag is True:
