@@ -15,8 +15,10 @@ class Shelter(Base):
     picture=Column(String(MAX_LENGTH))
     phone=Column(String(MAX_LENGTH))
     proof=Column(String(MAX_LENGTH))
+    lat=Column(String(MAX_LENGTH))
+    long=Column(String(MAX_LENGTH))
     shelter=relationship('Dog', cascade="all,delete",backref='Shelter')
-    def __init__(self,name,street,city,country,email,username,password,picture,phone,proof):
+    def __init__(self,name,street,city,country,email,username,password,picture,phone,proof,lat,long):
         self.name=name
         self.street=street
         self.city=city
@@ -27,6 +29,8 @@ class Shelter(Base):
         self.picture=picture
         self.phone=phone
         self.proof=proof
+        self.lat=lat
+        self.long=long
     def update(self,shelter):
         self.name=shelter.name
         self.street=shelter.street
@@ -38,6 +42,8 @@ class Shelter(Base):
         self.picture=shelter.picture
         self.phone=shelter.phone
         self.proof=shelter.proof
+        self.lat=shelter.lat
+        self.long=shelter.long
     def hashPassword(self,password):
         return bcrypt.hashpw(password.encode(),SALT)
     def jsonify(self):

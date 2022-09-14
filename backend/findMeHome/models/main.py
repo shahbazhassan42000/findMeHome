@@ -28,10 +28,10 @@ class DBHandler():
 
 
     #---------------------------------------------Object creation Functions---------------------------------------------
-    def createObjUser(self,fname,lname,city,country,email,username,password,picture,phone):
-        return User(fname,lname,city,country,email,username,password,picture,phone)
-    def createObjShelter(self,name,street,city,country,email,username,password,picture,phone,proof):
-        return Shelter(name,street,city,country,email,username,password,picture,phone,proof)
+    def createObjUser(self,fname,lname,city,country,email,username,password,picture,phone,lat,long):
+        return User(fname,lname,city,country,email,username,password,picture,phone,lat,long)
+    def createObjShelter(self,name,street,city,country,email,username,password,picture,phone,proof,lat,long):
+        return Shelter(name,street,city,country,email,username,password,picture,phone,proof,lat,long)
     def createObjDog(self,sid,dname,age,bid,image):
         return Dog(sid,dname,age,bid,image)
     def createObjBlog(self,url,aid):
