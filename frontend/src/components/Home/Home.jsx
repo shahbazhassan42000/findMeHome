@@ -1,8 +1,8 @@
 //https://i.ibb.co/s5nT3Mg/profile-img.png
-import dancingDog from '../../assets/gif/dancingDog.png'
+import dancingDog from '../../assets/gif/dancingDog.gif'
 import logo from "../../assets/images/logo.png"
-import bg1 from "../../assets/images/bg1.png"
-import bg2 from "../../assets/images/bg2.png"
+import bg1 from "../../assets/images/bg1.jpg"
+import bg2 from "../../assets/images/bg2.jpg"
 import {useSelector} from "react-redux";
 import FeaturedDogs from "../Dog/FeaturedDogs";
 import DogArticles from "../Article/DogArticles";
