@@ -223,8 +223,7 @@ const onFormSubmit = (e, formRef, setMsg, setLoading, selectedBreed, selectedDis
     setLoading(true);
     const form = new FormData(formRef);
     const formData = Object.fromEntries(form.entries());
-    const expiry = 600 //TODO remove image expiry time
-    axios.post(imgBBURL + "?expiration=" + expiry + "&key=" + imgBBApiKey, form)
+    axios.post(imgBBURL + "?key=" + imgBBApiKey, form)
         .then(res => {
             const dogImgURL = res.data.data.image.url;
             console.log('response URL: ', dogImgURL);

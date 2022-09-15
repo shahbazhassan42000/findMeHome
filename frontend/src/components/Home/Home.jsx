@@ -7,6 +7,7 @@ import {useSelector} from "react-redux";
 import FeaturedDogs from "../Dog/FeaturedDogs";
 import DogArticles from "../Article/DogArticles";
 import Footer from "./Footer";
+import {useState} from "react";
 
 const Home = () => {
     const user = useSelector(state => state.dogStore.user);

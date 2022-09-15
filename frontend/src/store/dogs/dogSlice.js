@@ -1,6 +1,13 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {apiCallBegan} from "../actions";
-import {allBreedsURL, allDiseasesURL, backendURL, getUserURL} from "../../utils/EndPoints";
+import {
+    allBreedsURL,
+    allDiseasesURL,
+    backendURL,
+    getFeaturedDogs,
+    getShelterURL,
+    getUserURL
+} from "../../utils/EndPoints";
 // import {forEach} from "lodash";
 
 
@@ -12,7 +19,9 @@ const dogSlice = createSlice({
         breeds: [],
         ages: [['Young','0–2 years'],['Adult','2–5 years'],['Senior','>6 years']],
         diseases: [],
-        user: null
+        user: null,
+        featuredDogs:[],
+        shelter:null
     },
     reducers: {
         breedResult(state, action) {
@@ -34,6 +43,14 @@ const dogSlice = createSlice({
         userReceived(state, action) {
             console.log("USER RECEIVED");
             state.user = action.payload;
+        },
+        featuredDogsReceived(state,action){
+            console.log("FEATURED DOGS RECEIVED")
+            state.featuredDogs=action.payload
+        },
+        shelterReceived(state,action){
+            console.log("SHELTER RECEIVED");
+            state.shelter=action.payload;
         }
     }
 });
@@ -42,7 +59,9 @@ const {
     breedResult,
     breedsReceived,
     diseasesReceived,
-    userReceived
+    userReceived,
+    featuredDogsReceived,
+    shelterReceived
 } = dogSlice.actions;
 export default dogSlice.reducer;
 export {breedResult, userReceived};
@@ -71,4 +90,18 @@ export const loadUser = (user) => apiCallBegan({
     headers,
     method: 'POST',
     onSuccess: userReceived.type
+})
+
+export const loadFeaturedDogs=()=>apiCallBegan({
+    url:backendURL+getFeaturedDogs,
+    headers,
+    method: 'POST',
+    onSuccess:featuredDogsReceived.type
+})
+
+export const loadShelter=()=>apiCallBegan({
+    url:backendURL+getShelterURL,
+    headers,
+    method:"POST",
+    onSuccess: shelterReceived.type
 })

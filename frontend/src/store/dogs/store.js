@@ -1,5 +1,5 @@
 import {configureStore} from "@reduxjs/toolkit";
-import dogReducer, {loadBreeds, loadDiseases, loadUser} from './dogSlice';
+import dogReducer, {loadBreeds, loadDiseases, loadFeaturedDogs, loadUser} from './dogSlice';
 import api from "../middleware/api";
 import {persistReducer, persistStore} from 'redux-persist';
 import storageSession from 'reduxjs-toolkit-persist/lib/storage/session'
@@ -12,7 +12,7 @@ console.log(token);
 const persistConfig = {
     key: 'dog',
     storage: storageSession,
-    whitelist: ['dog', 'breeds','ages', 'diseases', 'user']
+    whitelist: ['dog', 'breeds','ages', 'diseases', 'user','shelter']
 }
 
 const persistedReducer = persistReducer(persistConfig, dogReducer)
@@ -32,4 +32,4 @@ if(token) store.dispatch(loadUser())
 
 store.dispatch(loadBreeds());
 store.dispatch(loadDiseases());
-// store.dispatch(loadFeaturedDogs())
+store.dispatch(loadFeaturedDogs())
