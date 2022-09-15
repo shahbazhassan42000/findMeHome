@@ -233,9 +233,9 @@ class DogApi(Resource):
             if flag==False:
                 return make_response(jsonify("Error loading shelters"), 502)
             distances=[]
-            userloc = user.city + ' ' + user.country
+            userloc = (user.lat,user.lng)
             for x in shelterData:
-                shelterloc = x.city + ' ' + x.country
+                shelterloc = (x.lat,x.lng)
                 distances.append(find_distance(userloc, shelterloc))
             shelterDistance = []
             for x, y in zip(shelterData, distances):
@@ -249,7 +249,7 @@ class DogApi(Resource):
                 dogsdata.extend(res)
             return make_response(jsonify([x.jsonify() for x in dogsdata]), 200)
         except:
-            return make_response(jsonify("Error loading dogs 1"), 500)
+            return make_response(jsonify('Internal server error'), 500)
     @staticmethod
     def delete():
         token = request.headers.get('Authorization')
@@ -329,6 +329,27 @@ class DiseasesApi(Resource):
             return make_response(jsonify("Couldn't load breeds"), 502)
         except:
             return make_response(jsonify("Couldn't load breeds"), 500)
+    @staticmethod
+    def post():
+        token = request.headers.get('Authorization')
+        status, data = user_access(token)
+        if status == False:
+            return data
+
+        rec=request.get_json()
+        if rec.get('dog') is None:
+            return make_response(jsonify('Wrong format 1'),412)
+        if rec.get('dog').get('did') is None:
+            return make_response(jsonify('Wrong format 1'),412)
+        try:
+            flag,diseases=db.getDiseasesOfDog(did=rec.get('dog').get('did'))
+            if flag==False:
+                return make_response(jsonify('Unable to fetch data'),502)
+            return make_response(jsonify([x.jsonify() for x in diseases]))
+        except:
+            return make_response(jsonify('Error with server'), 500)
+
+
 
 
 class ModelApi(Resource):
