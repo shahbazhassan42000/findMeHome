@@ -4,13 +4,13 @@ import {allBreedsURL, allDiseasesURL, backendURL, getUserURL} from "../../utils/
 // import {forEach} from "lodash";
 
 
-// const user = JSON.parse(localStorage.getItem('user'));
 
 const dogSlice = createSlice({
     name: "Dog",
     initialState: {
         dog: {name: "", breed: "", image: "", age: ""},
         breeds: [],
+        ages: [['Young','0–2 years'],['Adult','2–5 years'],['Senior','>6 years']],
         diseases: [],
         user: null
     },

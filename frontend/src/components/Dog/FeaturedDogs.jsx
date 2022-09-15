@@ -9,10 +9,10 @@ const FeaturedDogs = () => {
             <p className="-mt-2 text-[29px]">Adorable adoptable near you!</p>
             <div className="flex items-center justify-evenly mt-9">
                 <img className="h-[70px] cursor-pointer" src={arrowLeft} alt="arrow left"/>
-                <DogCard name={"Koda"} url={"https://i.ibb.co/s5nT3Mg/profile-img.png"} age={"Young"} loc={"OakLand CA"} />
-                <DogCard name={"Koda"} url={"https://i.ibb.co/s5nT3Mg/profile-img.png"} age={"Young"} loc={"OakLand CA"} />
-                <DogCard name={"Koda"} url={"https://i.ibb.co/s5nT3Mg/profile-img.png"} age={"Young"} loc={"OakLand CA"} />
-                <DogCard name={"Koda"} url={"https://i.ibb.co/s5nT3Mg/profile-img.png"} age={"Young"} loc={"OakLand CA"} />
+                <DogCard name={"Koda"} url={"https://i.ibb.co/6skvT57/profile-pic.png"} age={"Young"} loc={"OakLand CA"} />
+                <DogCard name={"Koda"} url={"https://i.ibb.co/6skvT57/profile-pic.png"} age={"Young"} loc={"OakLand CA"} />
+                <DogCard name={"Koda"} url={"https://i.ibb.co/6skvT57/profile-pic.png"} age={"Young"} loc={"OakLand CA"} />
+                <DogCard name={"Koda"} url={"https://i.ibb.co/6skvT57/profile-pic.png"} age={"Young"} loc={"OakLand CA"} />
                 <img className="h-[70px] cursor-pointer" src={arrowRight} alt="arrow right"/>
             </div>
         </div>

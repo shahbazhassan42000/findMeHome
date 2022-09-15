@@ -1,7 +1,7 @@
 import {useRef, useState} from "react";
 import logo from "../../assets/images/find_me_home_logo.png";
 import Loading from "../Loading";
-import {onTogglePasswd} from "./Signup/SignupAdopter";
+import {onTogglePasswd} from "./Signup/Signup";
 import {backendURL, signInURL} from "../../utils/EndPoints";
 import {headers, loadUser} from "../../store/dogs/dogSlice";
 import {useDispatch} from "react-redux";

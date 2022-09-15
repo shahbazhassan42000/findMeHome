@@ -24,9 +24,9 @@ const BreedResult = () => {
                     </h1>
                 </div> :
                 <div className="flex flex-col w-[70%] mx-auto items-center">
-                    <div className="w-[220px] mt-[20px]">
+                    <a href="/" className="w-[220px] mt-[20px]">
                         <img src={logo} alt="logo"/>
-                    </div>
+                    </a>
                     <div className="font-['Montserrat'] flex w-full space-x-14">
                         <div className="border-[7px] border-[#3E665C] ">
                             <img className="object-cover w-[330px] h-[400px]" src={dog.image} alt={"dog"}/>

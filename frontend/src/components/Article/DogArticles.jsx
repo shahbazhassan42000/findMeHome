@@ -9,10 +9,10 @@ const DogArticles = () => {
                 className="text-[#70CF36]  font-['Bubblegum_Sans']">Articles</span></h2>
             <div className="flex items-center justify-evenly mt-9">
                 <img className="h-[70px] cursor-pointer" src={arrowLeft} alt="arrow left"/>
-                <ArticleCard name={"Dog Care"} bgURL={articleCardBg} url={"https://i.ibb.co/s5nT3Mg/profile-img.png"} descp={"Learn more about caring your new dog"} />
-                <ArticleCard name={"Dog Care"} bgURL={articleCardBg} url={"https://i.ibb.co/s5nT3Mg/profile-img.png"} descp={"Learn more about caring your new dog"} />
-                <ArticleCard name={"Dog Care"} bgURL={articleCardBg} url={"https://i.ibb.co/s5nT3Mg/profile-img.png"} descp={"Learn more about caring your new dog"} />
-                <ArticleCard name={"Dog Care"} bgURL={articleCardBg} url={"https://i.ibb.co/s5nT3Mg/profile-img.png"} descp={"Learn more about caring your new dog"} />
+                <ArticleCard name={"Dog Care"} bgURL={articleCardBg} url={"https://i.ibb.co/6skvT57/profile-pic.png"} descp={"Learn more about caring your new dog"} />
+                <ArticleCard name={"Dog Care"} bgURL={articleCardBg} url={"https://i.ibb.co/6skvT57/profile-pic.png"} descp={"Learn more about caring your new dog"} />
+                <ArticleCard name={"Dog Care"} bgURL={articleCardBg} url={"https://i.ibb.co/6skvT57/profile-pic.png"} descp={"Learn more about caring your new dog"} />
+                <ArticleCard name={"Dog Care"} bgURL={articleCardBg} url={"https://i.ibb.co/6skvT57/profile-pic.png"} descp={"Learn more about caring your new dog"} />
                 <img className="h-[70px] cursor-pointer" src={arrowRight} alt="arrow right"/>
             </div>
 
