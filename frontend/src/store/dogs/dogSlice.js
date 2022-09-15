@@ -3,13 +3,12 @@ import {apiCallBegan} from "../actions";
 import {
     allBreedsURL,
     allDiseasesURL,
-    backendURL,
-    getFeaturedDogs,
+    backendURL, dogApiURL,
+    getFeaturedDogsURL, getShelterDogsURL,
     getShelterURL,
     getUserURL
 } from "../../utils/EndPoints";
 // import {forEach} from "lodash";
-
 
 
 const dogSlice = createSlice({
@@ -17,11 +16,12 @@ const dogSlice = createSlice({
     initialState: {
         dog: {name: "", breed: "", image: "", age: ""},
         breeds: [],
-        ages: [['Young','0–2 years'],['Adult','2–5 years'],['Senior','>6 years']],
+        ages: [['Young', '0–2 years'], ['Adult', '2–5 years'], ['Senior', '>6 years']],
         diseases: [],
         user: null,
-        featuredDogs:[],
-        shelter:null
+        featuredDogs: [],
+        shelter: null,
+        dogs:[]
     },
     reducers: {
         breedResult(state, action) {
@@ -44,13 +44,17 @@ const dogSlice = createSlice({
             console.log("USER RECEIVED");
             state.user = action.payload;
         },
-        featuredDogsReceived(state,action){
+        featuredDogsReceived(state, action) {
             console.log("FEATURED DOGS RECEIVED")
-            state.featuredDogs=action.payload
+            state.featuredDogs = action.payload
         },
-        shelterReceived(state,action){
+        shelterReceived(state, action) {
             console.log("SHELTER RECEIVED");
-            state.shelter=action.payload;
+            state.shelter = action.payload;
+        },
+        dogsReceived(state,action){
+            console.log("DOGS RECEIVED");
+            state.dogs=action.payload;
         }
     }
 });
@@ -61,7 +65,8 @@ const {
     diseasesReceived,
     userReceived,
     featuredDogsReceived,
-    shelterReceived
+    shelterReceived,
+    dogsReceived
 } = dogSlice.actions;
 export default dogSlice.reducer;
 export {breedResult, userReceived};
@@ -92,16 +97,31 @@ export const loadUser = (user) => apiCallBegan({
     onSuccess: userReceived.type
 })
 
-export const loadFeaturedDogs=()=>apiCallBegan({
-    url:backendURL+getFeaturedDogs,
+export const loadFeaturedDogs = () => apiCallBegan({
+    url: backendURL + getFeaturedDogsURL,
     headers,
     method: 'POST',
-    onSuccess:featuredDogsReceived.type
+    onSuccess: featuredDogsReceived.type
 })
 
-export const loadShelter=()=>apiCallBegan({
-    url:backendURL+getShelterURL,
+export const loadShelter = (sid) => apiCallBegan({
+    url: backendURL + getShelterURL,
     headers,
-    method:"POST",
+    method: "POST",
+    data: {"sid": JSON.stringify(sid)},
     onSuccess: shelterReceived.type
 })
+
+export const loadShelterDogs=()=>apiCallBegan({
+    url:backendURL+getShelterDogsURL,
+    headers,
+    method:"POST",
+    onSuccess:dogsReceived.type
+})
+export const loadDogs=()=>apiCallBegan({
+    url:backendURL+dogApiURL,
+    headers,
+    method:"GET",
+    onSuccess:dogsReceived.type
+})
+
