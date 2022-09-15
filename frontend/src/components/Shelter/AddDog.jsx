@@ -160,8 +160,7 @@ const onFindBreed = (e, fileName, setSelectedBreed, setLoading, setMsg, breeds) 
     e.preventDefault();
     const form = new FormData();
     form.append('image', fileName);
-    const expiry = 600;
-    axios.post(imgBBURL + "?expiration=" + expiry + "&key=" + imgBBApiKey, form)
+    axios.post(imgBBURL + "?key=" + imgBBApiKey, form)
         .then(res => {
             const dogImgURL = res.data.data.image.url;
             console.log('response URL: ', dogImgURL);

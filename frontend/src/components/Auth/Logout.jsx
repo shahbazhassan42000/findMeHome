@@ -45,7 +45,7 @@ const Logout = () => {
                         className="bg-[#3E665C] hover:bg-[#5A8081] py-[8px] px-[50px] text-white rounded-[14px]">
                         Log out
                     </button>
-                    <a href="/home" className="text-[#7F99A2] text-[14px] hover:underline">Back to home page</a>
+                    <a href="/" className="text-[#7F99A2] text-[14px] hover:underline">Back to home page</a>
                 </form>
             </section>
         </div>
