@@ -16,9 +16,9 @@ const Logout = () => {
             <img className="-z-10 fixed h-[180px] bottom-0" src={ellipseDown} alt="ellipse down"/>
             <img className="-z-10 fixed h-[430px] bottom-0 right-0" src={vector} alt="vector"/>
             <div className="flex flex-col mx-auto items-center">
-                <div className="w-[220px] mt-[20px]">
+                <a href="/" className="w-[220px] mt-[20px]">
                     <img src={logo} alt="logo"/>
-                </div>
+                </a>
             </div>
             <section className="overflow-visible mt-9 max-w-[400px] mx-auto">
                 <form
