@@ -23,7 +23,7 @@ const ShelterHomePage = () => {
       <span className={"text-[30px] text-[#3E665C] fa-solid fa-filter"}></span>
         <p className={"text-[15px] mx-2 text-[#3E665C] font-[900]"}>Filter</p>
         <div className={"flex items-center border border-[#3E665C] ml-5 h-[54px] rounded-[50px]"}>
-            <div className={"w-[200px] border-r border-[#3E665C] text-center"}>
+            <div className={"w-auto  px-4 border-r border-[#3E665C] text-center"}>
               <label className={"text-[10px] text-gray-600"}>Age of Pet</label>
               <br/>
               <select name="Age" className={"bg-transparent outline-0 font-[600] text-[15px] text-[#3E665C]"}>
@@ -33,7 +33,7 @@ const ShelterHomePage = () => {
                 })}
               </select>
             </div>
-          <div className={"w-[200px] border-r border-[#3E665C] text-center"}>
+          <div className={"w-auto px-4 border-r border-[#3E665C] text-center"}>
             <label className={"text-[10px] text-gray-600"}>Breed</label>
             <br/>
             <select name={"Breed"} className={"bg-transparent font-[600] outline-0 text-[15px] text-[#3E665C]"}>
@@ -51,15 +51,13 @@ const ShelterHomePage = () => {
       </div>
       <div className={"mt-12"}>
         <div className={"flex flex-wrap justify-center items-center"}>
-          <ShelterDogCard />
-          <ShelterDogCard />
-          <ShelterDogCard /><ShelterDogCard />
-          <ShelterDogCard />
-          <ShelterDogCard /><ShelterDogCard />
-          <ShelterDogCard />
-          <ShelterDogCard /><ShelterDogCard />
-          <ShelterDogCard />
-          <ShelterDogCard />
+          <ShelterDogCard type={"see more"}/>
+          <ShelterDogCard  type={"see more"}/>
+          <ShelterDogCard  type={"see more"}/>
+          <ShelterDogCard  type={"see more"}/>
+          <ShelterDogCard  type={"see more"}/>
+          <ShelterDogCard  type={"see more"}/>
+          <ShelterDogCard  type={"see more"}/>
         </div>
          </div>
       <div className={"flex justify-center p-10"}>
