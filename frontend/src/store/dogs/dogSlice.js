@@ -8,6 +8,7 @@ import {
     getShelterURL,
     getUserURL
 } from "../../utils/EndPoints";
+import {map} from "lodash";
 // import {forEach} from "lodash";
 
 
@@ -21,7 +22,9 @@ const dogSlice = createSlice({
         user: null,
         featuredDogs: [],
         shelter: null,
-        dogs:[]
+        dogs:[],
+        dogDiseases:[],
+        dogInfo:{},
     },
     reducers: {
         breedResult(state, action) {
@@ -55,6 +58,18 @@ const dogSlice = createSlice({
         dogsReceived(state,action){
             console.log("DOGS RECEIVED");
             state.dogs=action.payload;
+        },
+        dogDiseasesReceived(state,action){
+            console.log("DOG DISEASES RECEIVED");
+            const objs=action.payload;
+            const diseases=[];
+            map(objs,obj=>{
+                diseases.push(state.diseases[obj.disid].dname);
+            })
+            state.dogDiseases=diseases;
+        },dogInfoReceived(state,action){
+            console.log("DOG INFO RECEIVED");
+            state.dogInfo=action.payload;
         }
     }
 });
@@ -66,10 +81,12 @@ const {
     userReceived,
     featuredDogsReceived,
     shelterReceived,
-    dogsReceived
+    dogsReceived,
+    dogDiseasesReceived,
+    dogInfoReceived
 } = dogSlice.actions;
 export default dogSlice.reducer;
-export {breedResult, userReceived};
+export {breedResult, userReceived,dogInfoReceived};
 
 //api data
 export const headers = {
@@ -124,4 +141,20 @@ export const loadDogs=()=>apiCallBegan({
     method:"GET",
     onSuccess:dogsReceived.type
 })
+
+export const deleteDog=(dogID)=>apiCallBegan({
+    url:backendURL+dogApiURL,
+    headers,
+    method:"DELETE",
+    data:JSON.stringify(dogID)
+})
+
+export const loadDogDiseases=(dogID)=>apiCallBegan({
+    url:backendURL+allDiseasesURL,
+    headers,
+    method:"POST",
+    data:JSON.stringify(dogID),
+    onSuccess:dogDiseasesReceived.type
+})
+
 

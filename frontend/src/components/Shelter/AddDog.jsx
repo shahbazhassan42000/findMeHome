@@ -33,9 +33,9 @@ const AddDog = () => {
 
     return (
         <div className="flex flex-col w-[50%] mx-auto items-center mb-20">
-            <div className="w-[220px] mt-[20px]">
+            <a href="/" className="w-[220px] mt-[20px]">
                 <img src={logo} alt="logo"/>
-            </div>
+            </a>
             <div className="w-[430px] font-['Montserrat']">
                 <div className="mt-[35px] flex flex-col items-center  justify-center">
                     <h1 className="text-[40px] font-[900] text-center text-[#3E665C]">

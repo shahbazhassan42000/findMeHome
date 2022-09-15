@@ -15,7 +15,6 @@ const DogCard = ({url, name, age, breed,sid}) => {
                 <p>Male, <span>{age}</span></p>
                 <p>{breed}</p>
                 <button  className="bg-[#3E665C] hover:bg-[#5A8081] text-white font-bold rounded-[18px] px-12 py-1">See More</button>
-
             </div>
             </div>);
 }

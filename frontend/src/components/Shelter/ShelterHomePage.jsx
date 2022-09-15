@@ -9,6 +9,7 @@ const ShelterHomePage = () => {
   const user = useSelector(state => state.dogStore.user);
   const [ages, setAges] = useState(useSelector(state => state.dogStore.ages));
   const [breeds, setBreeds] = useState(useSelector(state => state.dogStore.breeds));
+  const dogs=useSelector(state=>state.dogStore.dogs);
 
   return <div className={"flex justify-center items-center"}>
   <div className={"max-w-screen-xl w-[100%]"}>
@@ -23,6 +24,7 @@ const ShelterHomePage = () => {
             <li className="hover:text-[#3E665C]">Blog</li>
             <li className="hover:text-[#3E665C]">About Us</li>
             <li className="hover:text-[#3E665C]"><a href="/bc">Breed</a></li>
+            <li className="hover:text-[#3E665C]"><a href="/logout">Log Out</a></li>
             <li><img title={user.username} className="h-[33px]" src={user.picture}
                      alt="user profile"/></li>
           </ul>
@@ -68,13 +70,9 @@ const ShelterHomePage = () => {
       </div>
       <div className={"mt-12"}>
         <div className={"flex flex-wrap justify-center items-center"}>
-          <ShelterDogCard type={user.type==="adopter"?"see more":""}/>
-          <ShelterDogCard type={user.type==="adopter"?"see more":""}/>
-          <ShelterDogCard type={user.type==="adopter"?"see more":""}/>
-          <ShelterDogCard type={user.type==="adopter"?"see more":""}/>
-          <ShelterDogCard type={user.type==="adopter"?"see more":""}/>
-          <ShelterDogCard type={user.type==="adopter"?"see more":""}/>
-          <ShelterDogCard type={user.type==="adopter"?"see more":""}/>
+          {map(dogs,dog=>{
+            return <ShelterDogCard  key={dog.did} dog={dog} name={dog.dname} age={dog.age} breed={breeds[dog.bid].bname} dogImg={dog.imageurl} did={dog.did} type={user.type==="adopter"?"see more":""}/>;
+          })}
         </div>
          </div>
       <div className={"flex justify-center p-10"}>
