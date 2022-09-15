@@ -17,9 +17,9 @@ const Auth = () => {
             <img className="-z-10 fixed h-[430px] bottom-0 right-0" src={vector} alt="vector"/>
             <div>
                 <div className="flex flex-col w-[60%] mx-auto items-center">
-                    <div className="w-[220px] mt-[20px]">
+                    <a href="/" className="w-[220px] mt-[20px]">
                         <img src={logo} alt="logo"/>
-                    </div>
+                    </a>
                     <div className="font-['Montserrat'] mt-10 flex space-x-10">
                         <div
                             className="w-[400px] flex flex-col space-y-4 items-start p-[35px] bg-white shadow-[4px_5px_6px_1px_#CFCFD0] rounded-[4px]">
