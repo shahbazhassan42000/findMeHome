@@ -14,6 +14,7 @@ import datetime
 from opencage.geocoder import OpenCageGeocode
 
 db = DBHandler()
+DEFAULT_PIC='https://i.ibb.co/6skvT57/profile-pic.png'
 SECRET_KEY='11HIXGkg1Bm1Epw0Du20TV'
 opencagekey = '5b6f51644dc046b5a3e3188c9abae8ca'
 #COMPLETED
@@ -75,7 +76,7 @@ def user_access(token):
             return False,make_response(jsonify(auth),401)
     if auth['type'] != 'user':
         return False,make_response(jsonify("You're not allowed to access this page"), 403)
-    return True,auth['id']
+    return True,auth
 
 def shelter_access(token):
     if token is None:
@@ -92,7 +93,7 @@ def shelter_access(token):
             return False,make_response(jsonify(auth),401)
     if auth['type'] != 'shelter':
         return False,make_response(jsonify("You're not allowed to access this page"), 403)
-    return True,auth['id']
+    return True,auth
 def common_access(token):
     if token is None:
         return False,make_response(jsonify("UnAuthorized"), 401)
@@ -106,7 +107,7 @@ def common_access(token):
             return False,make_response(jsonify(auth), 401)
         if error==1:
             return False,make_response(jsonify(auth),401)
-    return True,auth['id']
+    return True,auth
 
 # Performs the sign-up operation for adopter, shelter or admin
 # returns failure message if operation failed, and success message otherwise.
@@ -120,7 +121,7 @@ class SignUpApi(Resource):
             loc = user.get('city') + ' ' + user.get('country')
             lat,long=convert_to_lat_long(loc)
             if user.get("picture") is None:
-                user['picture']='https://i.ibb.co/6skvT57/profile-pic.png'
+                user['picture']=DEFAULT_PIC
             if data["user"].get("type") == "adopter":
                 adp = User(user.get("fname"), user.get("lname"), user.get("city"), user.get("country"),
                            user.get("email"), user.get("username"),
@@ -188,9 +189,10 @@ class DogApi(Resource):
     @staticmethod
     def post():
         token = request.headers.get('Authorization')
-        status,id=shelter_access(token)
+        status,data=shelter_access(token)
         if status==False:
-            return id
+            return data
+        id=data['id']
         data = request.get_json()
         if data.get("dog") is None:
             return "Invalid Data posted 1", 412
@@ -219,9 +221,10 @@ class DogApi(Resource):
     @staticmethod
     def get():
         token = request.headers.get('Authorization')
-        status,id=user_access(token)
+        status,data=user_access(token)
         if status==False:
-            return id
+            return data
+        id = data['id']
         try:
             flag,user=db.getUser(id=id)
             if flag==False:
@@ -250,9 +253,10 @@ class DogApi(Resource):
     @staticmethod
     def delete():
         token = request.headers.get('Authorization')
-        status, id = shelter_access(token)
+        status, data = shelter_access(token)
         if status == False:
-            return id
+            return data
+        id = data['id']
         data=request.get_json()
         if data.get('dog') is None:
             return make_response(jsonify('Wrong format 1'), 412)
@@ -271,10 +275,11 @@ class DogApi(Resource):
             return make_response(jsonify("Error deleting dog"), 500)
     @staticmethod
     def put():
-        #token = request.headers.get('Authorization')
-        #status, id = shelter_access(token)
-        #if status == False:
-        #    return id
+        token = request.headers.get('Authorization')
+        status, data = shelter_access(token)
+        if status == False:
+            return data
+        id = data['id']
         data=request.get_json()
         if data.get('dog') is None:
             return make_response(jsonify('Wrong format 1'), 412)
@@ -339,19 +344,78 @@ class UsersApi(Resource):
     @staticmethod
     def post():
         token = request.headers.get('Authorization')
-        status,res=common_access(token)
+        status,data=common_access(token)
         if status==False:
-            return res
+            return data
+        id = data['id']
         try:
-            flag, userData = db.getUser(id=res)
+            flag, userData = db.getUser(id=id)
             if flag is True:
                 return make_response(userData.jsonify(), 200)
-            flag, userData = db.getShelter(id=res)
+            flag, userData = db.getShelter(id=id)
             if flag is True:
                 return make_response(userData.jsonify(), 200)
             return make_response(jsonify('User not found'), 412)
         except:
             return make_response(jsonify('Error in database'), 512)
+    @staticmethod
+    def put():
+        token = request.headers.get('Authorization')
+        status,data=common_access(token)
+        if status==False:
+            return data
+        updateddata=request.get_json()
+        if updateddata.get('user') is None:
+            return make_response(jsonify('Wrong Format'), 412)
+        if updateddata.get('user').get('street') is None or updateddata.get('user').get('city') is None \
+                or updateddata.get('user').get('country') is None or updateddata.get('user').get('email') is None or updateddata.get('user').get('username') is None \
+                or updateddata.get('user').get('phone') is None:
+            return make_response(jsonify('Wrong format 2'), 412)
+        try:
+            loc = updateddata.get('user').get('city') + ' ' + updateddata.get('user').get('country')
+            lat,long=convert_to_lat_long(loc)
+            if data['type']=='shelter':
+                flag,shelter=db.getShelter(id=data['id'])
+                if flag==False:
+                    return make_response(jsonify('Error fetching shelter'),502)
+                shelter.name=updateddata.get('user').get('name')
+                shelter.street = updateddata.get('user').get('street')
+                shelter.city = updateddata.get('user').get('city')
+                shelter.country = updateddata.get('user').get('country')
+                shelter.phone = updateddata.get('user').get('phone')
+                shelter.lat=lat
+                shelter.lng=long
+                if updateddata.get('user').get('picture') is None:
+                    shelter.picture=DEFAULT_PIC
+                else:
+                    shelter.picture=updateddata.get('user').get('picture')
+                flag, mess = db.update(shelter)
+                if flag == False:
+                    return make_response(jsonify('Error updating shelter'), 502)
+                return make_response(jsonify('Successful'), 200)
+            if data['type']=='user':
+                flag, user = db.getUser(id=data['id'])
+                if flag==False:
+                    return make_response(jsonify('Error fetching user'), 502)
+                user.fname=updateddata.get('user').get('fname')
+                user.lname = updateddata.get('user').get('lname')
+                user.city = updateddata.get('user').get('city')
+                user.country = updateddata.get('user').get('country')
+                user.phone = updateddata.get('user').get('phone')
+                user.lat=lat
+                user.lng=long
+                if updateddata.get('user').get('picture') is None:
+                    user.picture=DEFAULT_PIC
+                else:
+                    user.picture=updateddata.get('user').get('picture')
+                flag, mess = db.update(user)
+                if flag == False:
+                    return make_response(jsonify('Error updating user'), 502)
+                return make_response(jsonify('Successful'), 200)
+        except:
+            return make_response(jsonify('Error with server'), 500)
+
+
 
 # recieves shelter id enclosed in user object
 #user.id
@@ -360,9 +424,10 @@ class ShelterDogsApi(Resource):
     @staticmethod
     def post():
         token = request.headers.get('Authorization')
-        status,id=shelter_access(token)
+        status,data=shelter_access(token)
         if status==False:
-            return id
+            return data
+        id = data['id']
         data=request.get_json()
         if data.get('user') is None:
             return make_response(jsonify('Wrong format 1'), 412)
@@ -403,9 +468,10 @@ class getDogsFilteredAPI(Resource):
     @staticmethod
     def post():
         token=request.headers.get('Authorization')
-        status,id=user_access(token)
+        status,data=user_access(token)
         if status==False:
-            return id
+            return data
+        id = data['id']
         data=request.get_json()
         try:
             if data.get("breed") is not None and data.get("age") is not None:
