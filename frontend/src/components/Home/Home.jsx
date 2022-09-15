@@ -29,13 +29,13 @@ const Home = () => {
         <header className="px-8">
             <div className="mt-[69px] flex flex-col space-y-10">
                 <div className="relative">
-                    <img className="" src={bg1} alt="bg-1"/>
-                    <h1 className="absolute drop-shadow-[1px_2px_9px_#3E665C] right-[130px] leading-[59px] top-[96px] text-[55px] font-bold text-[#70CF36] backdrop-blur-[2px]">
+                    <img className="w-full" src={bg1} alt="bg-1"/>
+                    <h1 className="absolute drop-shadow-[1px_2px_9px_#3E665C] right-[130px] leading-[6rem] top-[96px] text-[6rem] font-bold text-[#70CF36] backdrop-blur-[2px]">
                         ADOPT<br/>a Forever<br/>Friend Today!
                     </h1>
                 </div>
                 <div className="flex">
-                    <div className="relative bg-[#3E665C] z-10 -mr-14 -mt-10 mb-10 w-full">
+                    <div className="relative bg-[#3E665C] w-[25%] z-10 -mr-14 -mt-10 mb-10 w-full">
                         <div className="absolute text-[20px] p-8 bottom-16 left-16 w-[400px] h-[400px] border bg-white">
                             <p className="font-['Bubblegum_Sans'] text-[52px] text-center text-[#70CF36]">
                                 Welcome to FIND ME HOME
@@ -60,7 +60,7 @@ const Home = () => {
                         </div>
 
                     </div>
-                    <img className="w-[75%]" src={bg2} alt="bg-2"/>
+                    <img className="w-full" src={bg2} alt="bg-2"/>
                 </div>
             </div>
         </header>
