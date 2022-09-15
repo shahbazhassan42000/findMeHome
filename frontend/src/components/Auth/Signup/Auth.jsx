@@ -20,7 +20,7 @@ const Auth = () => {
                     <div className="w-[220px] mt-[20px]">
                         <img src={logo} alt="logo"/>
                     </div>
-                    <div className="font-['Montserrat'] flex space-x-10">
+                    <div className="font-['Montserrat'] mt-10 flex space-x-10">
                         <div
                             className="w-[400px] flex flex-col space-y-4 items-start p-[35px] bg-white shadow-[4px_5px_6px_1px_#CFCFD0] rounded-[4px]">
                             <h1 className="text-[#5A8081] text-[26px] font-[600] mx-auto">Adopter</h1>

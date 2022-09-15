@@ -1,12 +1,11 @@
 import logo from "../../../assets/images/find_me_home_logo.png";
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import Loading from "../../Loading";
 import axios from "axios";
 import {backendURL, citiesURL, signUpURL, statesURL} from "../../../utils/EndPoints";
 import ellipseUp from "../../../assets/icons/Ellipse uppper.png";
 import ellipseDown from "../../../assets/icons/Ellipse down.png";
 import vector from "../../../assets/icons/Vector 1.png";
-import {useEffect} from "react";
 import {CountryDropdown} from "react-country-region-selector";
 
 
@@ -62,8 +61,32 @@ const Signup = ({userType}) => {
                     </div>
                     <div className="font-['Montserrat'] flex flex-col space-y-10">
                         <h1 className="text-[#3E665C] text-[30px] font-[900] mx-auto">Sign up</h1>
-                        <form onSubmit={(e) => onFormSubmit(e, setLoading, setMsg,userType)}
+                        <form onSubmit={(e) => onFormSubmit(e, setLoading, setMsg, userType)}
                               className="flex flex-col space-y-7 w-[599px]">
+                            {userType === "adopter" &&
+                                <div className="flex space-x-5">
+                                    <div className="relative w-full">
+                                        <input
+                                            className="p-[5px] w-full border border-[#7F99A2] bg-transparent outline-0 placeholder:text-[#7F99A2] active:placeholder:text-white hover:placeholder:text-[#5A8081] rounded-[5px]"
+                                            type="text" name="fname" placeholder="First Name*" required/>
+                                        {msg.show && msg.type === "username" &&
+                                            <p className="text-[14px] text-[#EB5A46] absolute">{msg.msg}</p>}
+                                    </div>
+                                    <div className="relative w-full">
+                                        <input
+                                            className="p-[5px] w-full border border-[#7F99A2] bg-transparent outline-0 placeholder:text-[#7F99A2] active:placeholder:text-white hover:placeholder:text-[#5A8081] rounded-[5px]"
+                                            type="text" name="lname" placeholder="Last Name*" required/>
+                                        {msg.show && msg.type === "email" &&
+                                            <p className="absolute text-[14px] text-[#EB5A46]">{msg.msg}</p>}
+                                    </div>
+                                </div>}
+                            {userType==="shelter" && <div className="relative w-full">
+                                <input
+                                    className="p-[5px] w-full border border-[#7F99A2] bg-transparent outline-0 placeholder:text-[#7F99A2] active:placeholder:text-white hover:placeholder:text-[#5A8081] rounded-[5px]"
+                                    type="text" name="name" placeholder="Name*" required/>
+                                {msg.show && msg.type === "email" &&
+                                    <p className="absolute text-[14px] text-[#EB5A46]">{msg.msg}</p>}
+                            </div>}
                             <div className="flex space-x-5">
                                 <div className="relative w-full">
                                     <input
@@ -174,7 +197,7 @@ export const onTogglePasswd = (e) => {
 
     }
 }
-export const onFormSubmit = async (e, setLoading, setMsg,userType) => {
+export const onFormSubmit = async (e, setLoading, setMsg, userType) => {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
@@ -217,7 +240,7 @@ export const onFormSubmit = async (e, setLoading, setMsg,userType) => {
                 setMsg({show: true, msg: "Your account created successfully", type: "general"});
                 form.reset();
                 window.location.pathname = "/login";
-            } else{
+            } else {
                 setMsg({show: true, msg: "An error occurred while signup, please try again", type: "general"});
                 console.log(res);
             }
