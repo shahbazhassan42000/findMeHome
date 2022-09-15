@@ -56,9 +56,9 @@ const Signup = ({userType}) => {
             <img className="-z-10 fixed h-[430px] bottom-0 right-0" src={vector} alt="vector"/>
             <div>
                 <div className="flex flex-col mx-auto items-center">
-                    <div className="w-[220px] mt-[20px]">
+                    <a  href="/" className="w-[220px] mt-[20px]">
                         <img src={logo} alt="logo"/>
-                    </div>
+                    </a>
                     <div className="font-['Montserrat'] flex flex-col space-y-10">
                         <h1 className="text-[#3E665C] text-[30px] font-[900] mx-auto">Sign up</h1>
                         <form onSubmit={(e) => onFormSubmit(e, setLoading, setMsg, userType)}
