@@ -230,21 +230,27 @@ const onFormSubmit = (e, formRef, setMsg, setLoading, selectedBreed, selectedDis
             console.log('response URL: ', dogImgURL);
             const dog = {
                 name: formData.dogName,
-                age: formData.dogAge,
+                age: formData.age,
                 imageURL: dogImgURL,
                 bid: selectedBreed,
                 diseasesId: map(selectedDiseases, disease => disease.disid),
                 diseaseDescription: formData.diseaseDescp
             }
             const reqBody = JSON.stringify({user,dog});
+            console.log(reqBody);
             axios.post(backendURL+dogApiURL,reqBody, {
                 headers
             }).then(res=>{
-                console.log(res);
+                console.log("ERROR: ", res);
+                setMsg("Dog Added Successfully!!!");
+                setLoading(false);
+                window.location="/ad";
             }).catch(err=>{
-                console.log(res);
+                console.log("ERROR: ", err);
+                setMsg("ERROR! while uploading, Please try again");
+                setTimeout(() => setMsg(""), 5000);
+                setLoading(false);
             })
-
 
         }).catch(err => {
         console.log("ERROR: ", err);
