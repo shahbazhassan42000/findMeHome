@@ -117,7 +117,7 @@ class SignUpApi(Resource):
         if data.get("user") is not None:
             user = data["user"]
             # use db to create
-            loc = data.get('city') + ' ' + data.get('country')
+            loc = user.get('city') + ' ' + user.get('country')
             lat,long=convert_to_lat_long(loc)
             if user.get("picture") is None:
                 user['picture']='https://i.ibb.co/6skvT57/profile-pic.png'
@@ -216,6 +216,86 @@ class DogApi(Resource):
             return make_response(jsonify("Dog added Successfully"), 200)
         except:
             return "Couldn't add dog. Please try again", 412
+    @staticmethod
+    def get():
+        token = request.headers.get('Authorization')
+        status,id=user_access(token)
+        if status==False:
+            return id
+        try:
+            flag,user=db.getUser(id=id)
+            if flag==False:
+                return make_response(jsonify("Error loading user"), 502)
+            flag, shelterData = db.getShelter(country=user.country)
+            if flag==False:
+                return make_response(jsonify("Error loading shelters"), 502)
+            distances=[]
+            userloc = user.city + ' ' + user.country
+            for x in shelterData:
+                shelterloc = x.city + ' ' + x.country
+                distances.append(find_distance(userloc, shelterloc))
+            shelterDistance = []
+            for x, y in zip(shelterData, distances):
+                shelterDistance.append((x, y))
+            shelterDistance.sort(key=lambda x: x[1])
+            dogsdata = []
+            for x, y in shelterDistance:
+                flag, res = db.getDog(sid=x.sid)
+                if flag == False:
+                    return make_response(jsonify("Error loading data"), 500)
+                dogsdata.extend(res)
+            return make_response(jsonify([x.jsonify() for x in dogsdata]), 200)
+        except:
+            return make_response(jsonify("Error loading dogs 1"), 500)
+    @staticmethod
+    def delete():
+        token = request.headers.get('Authorization')
+        status, id = shelter_access(token)
+        if status == False:
+            return id
+        data=request.get_json()
+        if data.get('dog') is None:
+            return make_response(jsonify('Wrong format 1'), 412)
+        if data.get('dog').get('did') is None:
+            return make_response(jsonify('Wrong format 2'), 412)
+        did=data.get('dog').get('did')
+        try:
+            flag,dog=db.getDog(id=did)
+            if flag==False:
+                return make_response(jsonify('Error fetching dogs'), 502)
+            flag,mess=db.delete(dog)
+            if flag==False:
+                return make_response(jsonify('Error deleting dogs'), 502)
+            return make_response(jsonify(mess),200)
+        except:
+            return make_response(jsonify("Error deleting dog"), 500)
+    @staticmethod
+    def put():
+        #token = request.headers.get('Authorization')
+        #status, id = shelter_access(token)
+        #if status == False:
+        #    return id
+        data=request.get_json()
+        if data.get('dog') is None:
+            return make_response(jsonify('Wrong format 1'), 412)
+        data=data.get('dog')
+        if data.get('did') is None or data.get('sid') is None or data.get('dname') is None or data.get('age') is None or data.get('bid') is None \
+            or data.get('imageURL') is None:
+            return make_response(jsonify('Wrong format 2'), 412)
+        try:
+            flag,obj=db.getDog(id=data.get('did'))
+            if flag==False:
+                return make_response(jsonify('Error fetching dog'), 502)
+            obj.dname=data.get('dname')
+            obj.age=data.get('age')
+            obj.imageURL=data.get('imageURL')
+            obj.bid=data.get('bid')
+            flag,mess=db.update(obj)
+            if flag==False:
+                return make_response(jsonify('Error updating dog'), 502)
+            return make_response(jsonify('Successful'),200)
+        except:
+            return make_response(jsonify('Error'), 500)
 
 
 # Returns list of all the breads in database.
@@ -314,38 +394,6 @@ class FeaturedDogsApi(Resource):
         except:
             return make_response(jsonify("Error loading dogs 1"), 500)
 
-class getDogsAPI(Resource):
-    @staticmethod
-    def post():
-        token = request.headers.get('Authorization')
-        status,id=user_access(token)
-        if status==False:
-            return id
-        try:
-            flag,user=db.getUser(id=id)
-            if flag==False:
-                return make_response(jsonify("Error loading user"), 502)
-            flag, shelterData = db.getShelter(country=user.country)
-            if flag==False:
-                return make_response(jsonify("Error loading shelters"), 502)
-            distances=[]
-            userloc = user.city + ' ' + user.country
-            for x in shelterData:
-                shelterloc = x.city + ' ' + x.country
-                distances.append(find_distance(userloc, shelterloc))
-            shelterDistance = []
-            for x, y in zip(shelterData, distances):
-                shelterDistance.append((x, y))
-            shelterDistance.sort(key=lambda x: x[1])
-            dogsdata = []
-            for x, y in shelterDistance:
-                flag, res = db.getDog(sid=x.sid)
-                if flag == False:
-                    return make_response(jsonify("Error loading data"), 500)
-                dogsdata.extend(res)
-            return make_response(jsonify([x.jsonify() for x in dogsdata]), 200)
-        except:
-            return make_response(jsonify("Error loading dogs 1"), 500)
 
 
 # takes authorization
@@ -379,6 +427,7 @@ class getDogsFilteredAPI(Resource):
                 return make_response(jsonify('Invalid data posted'), 412)
         except:
             return make_response(jsonify("Error loading dogs"), 500)
+
 
 ##------------------------------------------------------------------------------------------
 # class DogByLocAPI(Resource):

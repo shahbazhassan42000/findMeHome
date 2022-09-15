@@ -24,7 +24,9 @@ CREATE TABLE shelter (
 	password VARCHAR(100), 
 	picture VARCHAR(100), 
 	phone VARCHAR(100), 
-	proof VARCHAR(100), 
+	proof VARCHAR(100),
+	lat VARCHAR(100),
+	lng VARCHAR(100),
 	PRIMARY KEY (sid)
 );
 
@@ -38,7 +40,9 @@ CREATE TABLE user (
 	username VARCHAR(60), 
 	password VARCHAR(60), 
 	picture VARCHAR(60), 
-	phone VARCHAR(60), 
+	phone VARCHAR(60),
+	lat VARCHAR(100),
+	lng VARCHAR(100),
 	PRIMARY KEY (uid)
 );
 
