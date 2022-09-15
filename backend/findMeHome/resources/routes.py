@@ -1,5 +1,5 @@
 from backend.findMeHome.resources.resources import SignUpApi, ModelApi, SignInApi, \
-    DogApi, BreedsApi, DiseasesApi, UsersApi, ShelterDogsApi, FeaturedDogsApi
+    DogApi, BreedsApi, DiseasesApi, UsersApi, ShelterDogsApi, FeaturedDogsApi, ShelterPage
 
 # baseUrl = 'http://127.0.0.1:5000'
 signUpURL = '/api/v0.1/usersignup'
@@ -11,6 +11,7 @@ getAllDiseasesURL = '/api/v0.1/diseases'
 userApiUrl = '/api/v0.1/user'
 ShelterDogsApiURL='/api/v0.1/shelterdogs'
 FeaturedDogsApiURL='/api/v0.1/featureddogs'
+getShelterPageURL = '/api/v0.1/getshelterpage'
 
 def initialize_routes(api):
     api.add_resource(SignUpApi, signUpURL)
@@ -22,3 +23,4 @@ def initialize_routes(api):
     api.add_resource(UsersApi, userApiUrl)
     api.add_resource(ShelterDogsApi,ShelterDogsApiURL)
     api.add_resource(FeaturedDogsApi,FeaturedDogsApiURL)
+    api.add_resource(ShelterPage,getShelterPageURL)

@@ -428,13 +428,8 @@ class ShelterDogsApi(Resource):
         if status==False:
             return data
         id = data['id']
-        data=request.get_json()
-        if data.get('user') is None:
-            return make_response(jsonify('Wrong format 1'), 412)
-        if data.get('user').get('id') is None or data.get('user').get('username') is None:
-            return make_response(jsonify('Wrong format 2'), 412)
         try:
-            flag,dogData=db.getDog(sid=data.get('user').get('id'))
+            flag,dogData=db.getDog(sid=id)
             if flag==False:
                 return make_response(jsonify("Error loading dogs"), 502)
             return make_response(jsonify([dog.jsonify() for dog in dogData]), 200)
@@ -494,6 +489,17 @@ class getDogsFilteredAPI(Resource):
         except:
             return make_response(jsonify("Error loading dogs"), 500)
 
+
+class ShelterPage(Resource):
+    @staticmethod
+    def post():
+        data = request.get_json()
+        if data.get('sid') is None:
+            return make_response(jsonify("Please provide shelter id"), 412)
+        flag, data = db.getShelter(id = data.get('sid'))
+        if flag == False:
+            return make_response(jsonify("Shelter with given id not found"), 412)
+        return make_response((jsonify(data.jsonify())),200)
 
 ##------------------------------------------------------------------------------------------
 # class DogByLocAPI(Resource):
