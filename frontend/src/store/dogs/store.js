@@ -1,5 +1,5 @@
 import {configureStore} from "@reduxjs/toolkit";
-import dogReducer, {loadUser} from './dogSlice';
+import dogReducer, {loadBreeds, loadDiseases, loadUser} from './dogSlice';
 import api from "../middleware/api";
 import {persistReducer, persistStore} from 'redux-persist';
 import storageSession from 'reduxjs-toolkit-persist/lib/storage/session'
@@ -30,5 +30,5 @@ export const persistor = persistStore(store)
 if(token) store.dispatch(loadUser())
 
 
-// store.dispatch(loadBreeds());
-// store.dispatch(loadDiseases());
+store.dispatch(loadBreeds());
+store.dispatch(loadDiseases());

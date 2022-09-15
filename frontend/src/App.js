@@ -10,6 +10,7 @@ import {useSelector} from "react-redux";
 import Home from "./components/Home/Home";
 import Logout from "./components/Auth/Logout";
 import ShelterHomePage from "./components/Shelter/ShelterHomePage";
+import ProfileSetting from "./components/user/ProfileSetting";
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
                     <Route exact path="/" element={<Home/>}/>
                     <Route exact path="/logout" element={<Logout/>}/>
                     {user && <Route exact path="/s" element={<ShelterHomePage/>}/>}
+                    {user && <Route exact path="/user/ps" element={<ProfileSetting/>}/>}
                     <Route exact path="/bc" element={<BreedCheck/>}/>
                     <Route exact path="/br" element={<BreedResult/>}/>
                     {user && <Route exact path="/login" element={<Navigate to="/logout"/>}/>}
