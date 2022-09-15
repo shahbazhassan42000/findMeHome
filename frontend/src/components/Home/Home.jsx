@@ -45,13 +45,13 @@ const Home = () => {
                                     FInd Me Home is The online Dog adoption Website where people who want to adopt a Dog connect with shelters.
                                 </p>
                                 <div className="relative ">
-                                    <div className="absolute top-0 flex flex-col space-y-5 font-bold">
+                                    <div className="absolute left-5 top-4 w-[189px] space-y-5 font-bold">
                                         <a href="/login"
-                                           className="rounded-[30px] bg-[#3E665C] text-center hover:bg-[#5A8081] py-[15px] px-[20px] text-[16px] font-bold uppercase text-white">
+                                           className="rounded-[30px] block bg-[#3E665C] text-center hover:bg-[#5A8081] py-[15px] px-[20px] text-[16px] font-bold uppercase text-white">
                                             Log In
                                         </a>
                                         <a href="/signup"
-                                           className="rounded-[30px] bg-[#3E665C] hover:bg-[#5A8081]  py-[10px] px-[20px] text-[16px] font-bold uppercase text-white">
+                                           className="rounded-[30px] block bg-[#3E665C] text-center hover:bg-[#5A8081]  py-[15px] px-[20px] text-[16px] font-bold uppercase text-white">
                                             Sign up
                                         </a>
                                     </div>
