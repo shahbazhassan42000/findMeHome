@@ -32,3 +32,4 @@ if(token) store.dispatch(loadUser())
 
 store.dispatch(loadBreeds());
 store.dispatch(loadDiseases());
+// store.dispatch(loadFeaturedDogs())

@@ -44,7 +44,6 @@ const BreedResult = () => {
                                     <span className="text-[#3E665C]">{dog.name}</span>
                                 </div>
                                 <div className="text-[22px]  flex space-x-5">
-                                    <span className="text-[#7F99A2] pr-[25px]">Age:</span>
                                     <span className="text-[#3E665C]">{dog.age}</span>
                                 </div>
                                 <div className="text-[22px]  flex space-x-5">
@@ -57,7 +56,7 @@ const BreedResult = () => {
                                     <span className="text-[18px] italic text-[#7F99A2]">Download<br></br>Details?</span>
                                     <span
                                         className="fa fa-arrow-up-from-bracket text-[48px] text-[#7F99A2] cursor-pointer hover:text-[#3E665C]"
-                                        onClick={() => generatePDF(breedData.current)}
+                                        onClick={() => generatePDF(breedData.current,dog.name,dog.breed)}
                                     >
                             </span>
                                 </div>
@@ -82,10 +81,10 @@ const BreedResult = () => {
     )
 }
 
-const generatePDF = (breedData) => {
+const generatePDF = (breedData,dogName,dogBreed) => {
     console.log("Generating pdf...");
     const img = breedData.parentElement.firstElementChild.firstElementChild;
-    let data = `<div style="font-family: 'Montserrat',serif; width: 80%; display: flex; "><div style="border: 7px solid #3E665C;"><img style="object-fit: cover;" height="400px" width="330px" src=${img.src} alt="dog" /></div> <div style=" width: 100%; margin-left: 56px; display: flex; flex-direction: column; height: 400px;"> <h1 style="font-size: 32px; padding-right: 20px; padding-left: 20px font-weight: 700; margin: 0 auto 50px; text-align: center;color:#3E665C;">Dog Breed Details</h1> <div style="font-size: 22px; display: flex;"> <span style="color: #7F99A2">Name:</span> <span style="color: #3E665C; margin-left: 20px;">Lanzo</span> </div>  <div style="font-size: 22px; display: flex;"> <span style="color: #7F99A2; padding-right: 18px;">Age:</span> <span style="color: #3E665C; margin-left: 20px;">23</span> </div>  <div style="font-size: 22px; display: flex;"> <span style="color: #7F99A2; padding-right: 1px;">Breed:</span> <span style="color: #3E665C; margin-left: 20px;">Lagotto Romagnolo</span> </div> </div> </div>`;
+    let data = `<div style="font-family: 'Montserrat',serif; width: 80%; display: flex; "><div style="border: 7px solid #3E665C;"><img style="object-fit: cover;" height="400px" width="330px" src=${img.src} alt="dog" /></div> <div style=" width: 100%; margin-left: 56px; display: flex; flex-direction: column; height: 400px;"> <h1 style="font-size: 32px; padding-right: 20px; padding-left: 20px font-weight: 700; margin: 0 auto 50px; text-align: center;color:#3E665C;">Dog Breed Details</h1> <div style="font-size: 22px; display: flex;"> <span style="color: #7F99A2">Name:</span> <span style="color: #3E665C; margin-left: 20px;">${dogName}</span> </div>  <div style="font-size: 22px; display: flex;">   </div>  <div style="font-size: 22px; display: flex;"> <span style="color: #7F99A2; padding-right: 1px;">Breed:</span> <span style="color: #3E665C; margin-left: 20px;">${dogBreed}</span> </div> </div> </div>`;
     fetch(api2PdfURL, {
         method: 'post',
         headers: {
