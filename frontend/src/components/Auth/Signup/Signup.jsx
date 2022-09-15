@@ -80,7 +80,7 @@ const Signup = ({userType}) => {
                                             <p className="absolute text-[14px] text-[#EB5A46]">{msg.msg}</p>}
                                     </div>
                                 </div>}
-                            {userType==="shelter" && <div className="relative w-full">
+                            {userType === "shelter" && <div className="relative w-full">
                                 <input
                                     className="p-[5px] w-full border border-[#7F99A2] bg-transparent outline-0 placeholder:text-[#7F99A2] active:placeholder:text-white hover:placeholder:text-[#5A8081] rounded-[5px]"
                                     type="text" name="name" placeholder="Name*" required/>
@@ -103,11 +103,11 @@ const Signup = ({userType}) => {
                                         <p className="absolute text-[14px] text-[#EB5A46]">{msg.msg}</p>}
                                 </div>
                             </div>
-                            <textarea name="street" required
-                                      className="p-[5px] text-[14px] w-full border border-[#7F99A2] outline-0 placeholder:text-[#7F99A2] active:placeholder:text-white hover:placeholder:text-[#5A8081] rounded-[5px]"
-                                      placeholder="Street Address*">
+                            {userType === "shelter" && <textarea name="street" required
+                                                                 className="p-[5px] text-[14px] w-full border border-[#7F99A2] outline-0 placeholder:text-[#7F99A2] active:placeholder:text-white hover:placeholder:text-[#5A8081] rounded-[5px]"
+                                                                 placeholder="Street Address*">
 
-                        </textarea>
+                        </textarea>}
                             <div className="flex space-x-5">
                                 <CountryDropdown
                                     required
@@ -152,19 +152,21 @@ const Signup = ({userType}) => {
                                     <p className={`-mb-[18px] text-center text-[14px] ${msg.msg === "Your account created successfully" ? "green" : "red"} !mt-0`}>{msg.msg}</p>}
                             </div>
                             <div className="flex space-x-5">
-                                <button type="submit"
-                                        className="w-full block bg-[#3E665C] hover:bg-[#5A8081] py-[5px] text-white rounded-[14px]">
-                                    Sign up
-                                </button>
-                                <div className="w-full flex flex-col -space-y-1 text-center text-[14px] italic">
-                                    <p className="text-[#7F99A2]">
+                                <input
+                                    className="p-[5px] w-full border border-[#7F99A2] bg-transparent outline-0 placeholder:text-[#7F99A2] active:placeholder:text-white hover:placeholder:text-[#5A8081] rounded-[5px]"
+                                    type="text" name="phone" placeholder="Phone*" required/>
+                                <div className="w-full relative">
+                                    <button type="submit"
+                                            className="block w-full bg-[#3E665C] hover:bg-[#5A8081] py-[5px] text-white rounded-[14px]">
+                                        Sign up
+                                    </button>
+                                    <p className="absolute text-[12px] left-10 mt-1 text-[#7F99A2]">
                                         Already have an account?
+                                        <a href="/login"
+                                           className="ml-1 text-[#5A8081] font-[600] hover:text-[#3E665C]">Login</a>
                                     </p>
-                                    <a href="/login"
-                                       className="text-[#5A8081] font-[600] hover:text-[#3E665C]">Login</a>
                                 </div>
                             </div>
-
                         </form>
                     </div>
                 </div>
