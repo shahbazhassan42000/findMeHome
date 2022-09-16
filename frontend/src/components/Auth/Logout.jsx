@@ -26,7 +26,7 @@ const Logout = () => {
                     <h1 className="mb-2 text-[#5E6C84] text-[30px] font-[900]">Log out</h1>
                     <div className="flex space-x-3 items-center">
                         <div className="relative flex justify-center items-center py-2 w-[72px]">
-                            <img src={"https://i.ibb.co/s5nT3Mg/profile-img.png"} alt="profile"/>
+                            <img src={user.picture} alt="profile"/>
                         </div>
                         <div className="flex flex-col">
                             <p className="text-[#3E665C] text-start font-bold text-[20px]">{user.username}</p>

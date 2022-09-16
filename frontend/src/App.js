@@ -11,6 +11,7 @@ import Home from "./components/Home/Home";
 import Logout from "./components/Auth/Logout";
 import ShelterHomePage from "./components/Shelter/ShelterHomePage";
 import ProfileSetting from "./components/user/ProfileSetting";
+import DogInfo from "./components/Dog/DogInfo";
 
 
 function App() {
@@ -19,9 +20,11 @@ function App() {
             <Router>
                 <Routes>
                     <Route exact path="/" element={<Home/>}/>
+                    {!user&&<Route exact path="/logout" element={<Navigate to="/login"/>}/>}
                     <Route exact path="/logout" element={<Logout/>}/>
                     {user && <Route exact path="/s" element={<ShelterHomePage/>}/>}
                     {user && <Route exact path="/user/ps" element={<ProfileSetting/>}/>}
+                    {user && <Route exact path="/di" element={<DogInfo/>}/>}
                     <Route exact path="/bc" element={<BreedCheck/>}/>
                     <Route exact path="/br" element={<BreedResult/>}/>
                     {user && <Route exact path="/login" element={<Navigate to="/logout"/>}/>}
