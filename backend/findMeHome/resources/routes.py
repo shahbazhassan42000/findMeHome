@@ -1,7 +1,6 @@
 from backend.findMeHome.resources.resources import SignUpApi, ModelApi, SignInApi, \
     DogApi, BreedsApi, DiseasesApi, UsersApi, ShelterDogsApi, FeaturedDogsApi, ShelterPage
 
-# baseUrl = 'http://127.0.0.1:5000'
 signUpURL = '/api/v0.1/usersignup'
 modelURL = "/api/dog_model"
 signInURL = '/api/v0.1/userLogin'
