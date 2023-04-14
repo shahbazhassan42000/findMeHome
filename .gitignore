@@ -18,3 +18,5 @@ backend/server.py
 .idea
 .idea/*
 .idea/*.*
+.env
+frontend/.env
