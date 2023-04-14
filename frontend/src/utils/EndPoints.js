@@ -2,6 +2,7 @@
 // export const backendURL = "http://192.168.159.165:4000"; //RAFAY2
 // export const backendURL = "http://192.168.8.100:4000"; //PUCIT
 //export const backendURL = "http://localhost:4000";
+export const backendURL=process.env.REACT_APP_API_URL;
 export const imgBBURL = "https://api.imgbb.com/1/upload";
 export const api2PdfURL="https://v2018.api2pdf.com/chrome/html";
 export const statesURL="https://countriesnow.space/api/v0.1/countries/states";
