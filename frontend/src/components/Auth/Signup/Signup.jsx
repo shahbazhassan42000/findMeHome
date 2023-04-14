@@ -22,6 +22,8 @@ const Signup = ({userType}) => {
             axios.post(statesURL, {
                 country,
             }).then(res => {
+                console.log(res)
+                console.log(res.data.data.states)
                 setStates(res.data.data.states);
             }).catch(err => {
                 console.log("ERROR");

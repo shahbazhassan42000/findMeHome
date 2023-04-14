@@ -26,7 +26,6 @@ const dogSlice = createSlice({
     },
     reducers: {
         breedResult(state, action) {
-            console.log("BREED RESULT");
             const {name, breed, image, age} = action.payload;
             if (name) state.dog.name = name;
             if (breed) state.dog.breed = breed;
