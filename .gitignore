@@ -1,4 +1,3 @@
-
 backend/findMeHome/__pycache__/__init__.cpython-39.pyc
 backend/findMeHome/models/__pycache__/admin.cpython-39.pyc
 backend/findMeHome/models/__pycache__/Base.cpython-39.pyc
@@ -21,3 +20,4 @@ backend/server.py
 .idea/shelf/Uncommitted_changes_before_Update_at_01_09_2022_10_12_AM__Changes_.xml
 .idea/shelf/Uncommitted_changes_before_Update_at_01_09_2022_10_13_AM__Changes_.xml
 *.xml
+.idea
