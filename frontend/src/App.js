@@ -20,7 +20,7 @@ function App() {
             <Router>
                 <Routes>
                     <Route exact path="/" element={<Home/>}/>
-                    {!user&&<Route exact path="/logout" element={<Navigate to="/login"/>}/>}
+                    {!user && <Route exact path="/logout" element={<Navigate to="/login"/>}/>}
                     <Route exact path="/logout" element={<Logout/>}/>
                     {user && <Route exact path="/s" element={<ShelterHomePage/>}/>}
                     {user && <Route exact path="/user/ps" element={<ProfileSetting/>}/>}

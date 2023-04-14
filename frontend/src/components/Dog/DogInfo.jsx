@@ -3,10 +3,12 @@ import ellipseUp from "../../assets/icons/Ellipse uppper.png";
 import ellipseDown from "../../assets/icons/Ellipse down.png";
 import vector from "../../assets/icons/Vector 1.png";
 import {useSelector} from "react-redux";
+import {map} from "lodash";
 
 
 const DogInfo = () => {
     const dog=useSelector(state=>state.dogStore.dogInfo);
+    const breeds=useSelector(state=>state.dogStore.breeds);
     const dogDiseases=useSelector(state=>state.dogStore.dogDiseases);
     const shelter=useSelector(state=>state.dogStore.shelter);
     return (
@@ -22,7 +24,7 @@ const DogInfo = () => {
                     </a>
                     <div className="font-['Montserrat'] flex w-full space-x-14">
                         <div className="border-[7px] border-[#3E665C] ">
-                            <img className="object-cover w-[330px] h-[400px]" src={dog.image} alt={"dog"}/>
+                            <img className="object-cover w-[330px] h-[400px]" src={dog.imageurl} alt={"dog"}/>
                         </div>
                         <div
                             className="flex flex-col justify-between h-[400px]"
@@ -33,14 +35,15 @@ const DogInfo = () => {
                                 </h1>
                                 <div className="text-[22px] flex space-x-5">
                                     <span className="text-[#7F99A2]">Name:</span>
-                                    <span className="text-[#3E665C]">{dog.name}</span>
+                                    <span className="text-[#3E665C]">{dog.dname}</span>
                                 </div>
                                 <div className="text-[22px]  flex space-x-5">
+                                    <span className="text-[#7F99A2]">Age:</span>
                                     <span className="text-[#3E665C]">{dog.age}</span>
                                 </div>
                                 <div className="text-[22px]  flex space-x-5">
                                     <span className="text-[#7F99A2] pr-[1px]">Breed:</span>
-                                    <span className="text-[#3E665C]">{dog.breed}</span>
+                                    <span className="text-[#3E665C]">{breeds[dog.bid-1].bname}</span>
                                 </div>
                                 <div className="text-[22px]  flex space-x-5">
                                     <span className="text-[#7F99A2] pr-[1px]">Shelter Name:</span>

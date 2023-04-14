@@ -22,7 +22,6 @@ const Home = () => {
                     <li className="hover:text-[#3E665C]">Blog</li>
                     <li className="hover:text-[#3E665C]">About Us</li>
                     <li className="hover:text-[#3E665C]"><a href="/bc">Breed</a></li>
-                    <li className="hover:text-[#3E665C]"><a href="/logout">Log Out</a></li>
                     {/*<li><img title={user.username} className="h-[33px]" src="https://i.ibb.co/s5nT3Mg/profile-img.png"*/}
                     {/*         alt="user profile"/></li>*/}
                 </ul>

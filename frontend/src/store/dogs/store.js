@@ -12,7 +12,7 @@ console.log(token);
 const persistConfig = {
     key: 'dog',
     storage: storageSession,
-    whitelist: ['dog', 'breeds', 'ages', 'diseases', 'user', 'shelter']
+    whitelist: ['dog', 'breeds', 'ages', 'diseases', 'user', 'shelter','dogDiseases','dogInfo']
 }
 
 const persistedReducer = persistReducer(persistConfig, dogReducer)

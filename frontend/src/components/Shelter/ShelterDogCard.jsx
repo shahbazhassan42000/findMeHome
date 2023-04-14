@@ -17,6 +17,7 @@ const ShelterDogCard = ({type, dog, name, dogImg, age, breed, did}) => {
                             dispatch(loadShelter(dog.sid));
                             dispatch((loadDogDiseases({"dog":{"did":dog.did}})));
                             dispatch(dogInfoReceived(dog));
+                            window.location="/di"
                         }
                         } type={"button"}
                                                      className={"absolute rounded-[21px] mt-5 items-between text-white text-[13px] font-[600] bg-[#3E665C] w-[100px] h-[22px] "}>See
