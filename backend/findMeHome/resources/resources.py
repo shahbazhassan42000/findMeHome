@@ -12,9 +12,12 @@ import jwt
 from geopy.distance import geodesic
 import datetime
 from opencage.geocoder import OpenCageGeocode
+from backend.findMeHome import SECRET_KEY, opencagekey
+
 
 db = DBHandler()
 DEFAULT_PIC='https://i.ibb.co/6skvT57/profile-pic.png'
+
 # SECRET_KEY='11HIXGkg1Bm1Epw0Du20TV'
 # opencagekey = '5b6f51644dc046b5a3e3188c9abae8ca'
 #COMPLETED
