@@ -15,8 +15,8 @@ from opencage.geocoder import OpenCageGeocode
 
 db = DBHandler()
 DEFAULT_PIC='https://i.ibb.co/6skvT57/profile-pic.png'
-SECRET_KEY='11HIXGkg1Bm1Epw0Du20TV'
-opencagekey = '5b6f51644dc046b5a3e3188c9abae8ca'
+# SECRET_KEY='11HIXGkg1Bm1Epw0Du20TV'
+# opencagekey = '5b6f51644dc046b5a3e3188c9abae8ca'
 #COMPLETED
 def convert_to_lat_long(location):
     geocoder = OpenCageGeocode(opencagekey)
