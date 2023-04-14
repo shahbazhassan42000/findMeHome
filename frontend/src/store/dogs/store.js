@@ -6,7 +6,6 @@ import storageSession from 'reduxjs-toolkit-persist/lib/storage/session'
 import thunk from 'redux-thunk';
 
 const token = localStorage.getItem("token");
-console.log(token);
 
 
 const persistConfig = {
