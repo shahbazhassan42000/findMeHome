@@ -3,13 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="058233d9-d0e5-43a2-aeab-8abef0b60f33" name="Changes" comment="fixed everything">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Dog/DogInfo.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Dog/DogInfo.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Home/Home.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Home/Home.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Shelter/ShelterDogCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Shelter/ShelterDogCard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Shelter/ShelterHomePage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Shelter/ShelterHomePage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/store/dogs/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/store/dogs/store.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/utils/EndPoints.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/utils/EndPoints.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,17 +32,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "E:/Web Development/GitHub/findMeHome",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/Web Development/GitHub/findMeHome&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Python.main">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="findMeHome" />
@@ -132,6 +125,7 @@
       <workItem from="1674627431410" duration="63000" />
       <workItem from="1674745764867" duration="20000" />
       <workItem from="1681481827614" duration="491000" />
+      <workItem from="1681484613973" duration="190000" />
     </task>
     <task id="LOCAL-00001" summary="Added Shelter and user dashboards plus view pages">
       <created>1663206535516</created>
