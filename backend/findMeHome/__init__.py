@@ -14,9 +14,6 @@ app.debug = True
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 api = Api(app)
 
-SECRET_KEY = app.config['SECRET_KEY']
-opencagekey = app.config['OPEN_CAGE_KEY']
-
 # db_handler = DBHandler()
 
 # db.initialize_db(app)

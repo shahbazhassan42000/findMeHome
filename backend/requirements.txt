@@ -5,6 +5,6 @@ requests~=2.28.1
 numpy~=1.21.5
 pillow~=9.3.0
 pyjwt~=2.4.0
-flask~=1.1.2
+flask~=2.2.3
 geopy~=2.3.0
 opencage~=2.1.0
