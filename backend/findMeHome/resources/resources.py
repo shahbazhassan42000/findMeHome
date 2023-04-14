@@ -8,7 +8,6 @@ from backend.findMeHome.models.diseasedog import Diseasedog
 from flask_restful import Resource
 from flask import request, Response, jsonify, make_response
 import random
-import datetime
 import jwt
 from geopy.distance import geodesic
 import datetime
@@ -25,8 +24,6 @@ SECRET_KEY = getenv('SECRET_KEY')
 opencagekey = getenv('OPEN_CAGE_KEY')
 
 
-# SECRET_KEY='11HIXGkg1Bm1Epw0Du20TV'
-# opencagekey = '5b6f51644dc046b5a3e3188c9abae8ca'
 # COMPLETED
 def convert_to_lat_long(location):
     geocoder = OpenCageGeocode(opencagekey)

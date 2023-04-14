@@ -14,7 +14,6 @@ DB_PASSWORD = getenv('DB_PASSWORD')
 DB_HOST = getenv('DB_HOST')
 db_url=f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}"
 
-# engine = create_engine("mysql+pymysql://root:123@localhost/FMH",echo = False)
 engine = create_engine(db_url, echo=False)
 # remember that the engine needs to be passed to a Session object in order to be able to work with the ORM
 Session = sessionmaker(bind=engine)
