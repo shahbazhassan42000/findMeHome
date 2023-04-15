@@ -91,8 +91,7 @@ const onFormSubmit = async (e, setLoading, setMsg,dispatch,user) => {
                     console.log(resBody)
                     localStorage.setItem("token",resBody.token);
                     dispatch(loadUser());
-                    window.location.pathname = "/s"; //TODO
-                    // window.location.pathname = "/ad"; //TODO
+                    window.location.pathname = "/s";
                 }
                 else{
                     setMsg("An error occurred while login, please try again");

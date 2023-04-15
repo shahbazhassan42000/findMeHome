@@ -111,7 +111,7 @@ const onFormSubmit = (e, setMsg, setLoading, setFileName, setDog) => {
     const formData = Object.fromEntries(form.entries());
     const dogName = formData.dogName;
     const imgBBURL = "https://api.imgbb.com/1/upload";
-    const expiry = 600; //TODO change it to 86400
+    const expiry = 86400; // 1 day
     const apiKey = "4d0eff80cd1cea3d5f1f524ac3a0808a";
     axios.post(imgBBURL + "?expiration=" + expiry + "&key=" + apiKey, form)
         .then(res => {

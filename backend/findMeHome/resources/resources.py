@@ -207,7 +207,7 @@ class DogApi(Resource):
     def post():
         token = request.headers.get('Authorization')
         status, data = shelter_access(token)
-        if status == False:
+        if not status:
             return data
         id = data['id']
         data = request.get_json()
@@ -240,7 +240,7 @@ class DogApi(Resource):
     def get():
         token = request.headers.get('Authorization')
         status, data = user_access(token)
-        if status == False:
+        if not status:
             return data
         id = data['id']
         try:
