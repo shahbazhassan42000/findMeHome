@@ -442,17 +442,17 @@ class DBHandler():
         elif did is not None:
             results = session.query(List).filter(List.did == did).all()
         session.close()
-        if results == None:
+        if results is None:
             return False, 'Not found'
         return True, results
 
     def getBreedWithCount(self):
         flag, session = self.createSession()
         result = None
-        if flag == False:
+        if not flag:
             return flag, session, 0
         flag, results = self.getBreed(all=True)
-        if flag == False:
+        if not flag:
             return flag, 'Error with database', 0
         count = session.query(Dog.bid, Breed.bname, func.count(Dog.did)).join(Breed, Dog.bid == Breed.bid).group_by(
             Dog.bid).all()
@@ -460,7 +460,7 @@ class DBHandler():
 
     def getDogCount(self):
         flag, session = self.createSession()
-        if flag == False:
+        if not flag:
             return flag, session
         count = session.query(func.count(Dog.did)).one_or_none()
         return True, count
@@ -470,10 +470,10 @@ class DBHandler():
     def deleteWholeList(self, lid):
         flag, session = self.createSession()
         result = None
-        if flag == False:
+        if not flag:
             return flag, session
         flag, result = self.getList(lid=lid)
-        if flag == False:
+        if not flag:
             return False, 'This list doesn\'t exist'
         try:
             session.delete(result)
@@ -487,7 +487,7 @@ class DBHandler():
 
     def delete(self, obj):
         flag, session = self.createSession()
-        if flag == False:
+        if not flag:
             return flag, session
         if isinstance(obj, Admin):
             if not self.actorExistsByID('admin', obj.aid, session):
@@ -500,27 +500,27 @@ class DBHandler():
                 return False, 'This Shelter doesn\'t exist'
         elif isinstance(obj, Blog):
             flag, result = self.getBlog(id=obj.blid)
-            if flag == False:
+            if not flag:
                 return flag, 'This blog is not in database'
         elif isinstance(obj, Breed):
             flag, result = self.getBreed(id=obj.bid)
-            if flag == False:
+            if not flag:
                 return flag, 'This Breed is not in database'
         elif isinstance(obj, Disease):
             flag, result = self.getDisease(id=obj.disid)
-            if flag == False:
+            if not flag:
                 return flag, 'This Disease is not in database'
         elif isinstance(obj, Dog):
             flag, result = self.getDog(id=obj.did)
-            if flag == False:
+            if not flag:
                 return flag, 'This Dog is not in database'
         elif isinstance(obj, Diseasedog):
             flag, result = self.getDiseasesOfDog(did=obj.did, dsid=obj.disid)
-            if flag == False:
+            if not flag:
                 return flag, 'This disease is not in database for this dog'
         elif isinstance(obj, List):
             flag, result = self.getList(uid=obj.uid, lid=obj.lid, did=obj.did)
-            if flag == False:
+            if not flag:
                 return flag, 'This element in list doesn\'t exist'
         else:
             return False, 'Input a right object'
