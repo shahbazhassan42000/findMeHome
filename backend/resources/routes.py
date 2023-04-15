@@ -1,4 +1,4 @@
-from .resources import SignUpApi, ModelApi, SignInApi, DogApi, BreedsApi, DiseasesApi, UsersApi, ShelterDogsApi, \
+from backend.resources.resources import SignUpApi, ModelApi, SignInApi, DogApi, BreedsApi, DiseasesApi, UsersApi, ShelterDogsApi, \
     FeaturedDogsApi, ShelterPage
 
 signUpURL = '/api/v0.1/usersignup'

@@ -1,12 +1,12 @@
 from os import getenv
-from ..dl_model.DLModel import breedPredict, model
-from ..models.main import DBHandler
-from ..models.shelter import Shelter
-from ..models.user import User
-from ..models.dog import Dog
-from ..models.diseasedog import Diseasedog
+from backend.dl_model.DLModel import breedPredict, model
+from backend.models.main import DBHandler
+from backend.models.shelter import Shelter
+from backend.models.user import User
+from backend.models.dog import Dog
+from backend.models.diseasedog import Diseasedog
 from flask_restful import Resource
-from flask import request, Response, jsonify, make_response
+from flask import request, jsonify, make_response
 import random
 import jwt
 from geopy.distance import geodesic

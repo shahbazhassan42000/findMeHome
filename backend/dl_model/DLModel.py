@@ -1,11 +1,14 @@
+import os
+
 import tensorflow as tf
 from PIL import Image
 import requests
 import numpy as np
+
 gpus = tf.config.experimental.list_physical_devices('GPU')
 for gpu in gpus:
-  tf.config.experimental.set_memory_growth(gpu, True)
-model = tf.keras.models.load_model("findMeHome/dl_model/fine_tuned.h5")
+    tf.config.experimental.set_memory_growth(gpu, True)
+model = tf.keras.models.load_model("dl_model//fine_tuned.h5")
 
 
 def breedPredict(url, model):
@@ -32,10 +35,10 @@ def breedPredict(url, model):
                    'Great pyrenees', 'Samoyed', 'Pomeranian', 'Chow', 'Keeshond', 'Brabancon griffon', 'Pembroke',
                    'Cardigan', 'Toy poodle', 'Miniature poodle', 'Standard poodle', 'Mexican hairless', 'Dingo',
                    'Dhole', 'African hunting dog']
-    img =  np.array(Image.open(requests.get(url, stream=True).raw))
+    img = np.array(Image.open(requests.get(url, stream=True).raw))
     print('model is analyzing dog image...')
     img = tf.image.resize(img, [360, 360])
-    pred = model.predict(tf.expand_dims(img, axis=0),verbose=0)
+    pred = model.predict(tf.expand_dims(img, axis=0), verbose=0)
     pred = tf.argmax(tf.squeeze(pred))
     class_name = class_names[pred]
     return class_name

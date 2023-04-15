@@ -1,4 +1,4 @@
-from .findMeHome import app
+from backend_.findMeHome import app
 import os
 
 if __name__ == '__main__':

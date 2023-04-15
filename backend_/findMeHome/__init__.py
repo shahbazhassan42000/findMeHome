@@ -3,7 +3,7 @@ __version__ = '0.1'
 from flask_cors import CORS
 from flask import Flask
 from flask_restful import Api
-from .resources import routes
+from backend.resources import routes
 
 app = Flask('fmh')
 app.debug = True
