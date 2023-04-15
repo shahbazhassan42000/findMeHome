@@ -60,7 +60,7 @@ class DBHandler():
     def checkDogInList(self, list, session):
         results = session.query(List).filter(
             and_(List.lid == list.lid, List.did == list.did, List.uid == list.uid)).one_or_none()
-        if (results == None):
+        if results is None:
             return False
         return True
 
@@ -72,25 +72,25 @@ class DBHandler():
             results = session.query(Shelter).filter(Shelter.sid == id).one_or_none()
         elif type == 'admin':
             results = session.query(Admin).filter(Admin.aid == id).one_or_none()
-        if (results == None):
+        if results is None:
             return False
         return True
 
     def dogExists(self, id, session):
         results = session.query(Dog).filter(Dog.did == id).one_or_none()
-        if (results == None):
+        if results is None:
             return False
         return True
 
     def breedExists(self, id, session):
         results = session.query(Breed).filter(Breed.bid == id).one_or_none()
-        if (results == None):
+        if results is None:
             return False
         return True
 
     def diseaseExists(self, id, session):
         results = session.query(Disease).filter(Disease.disid == id).one_or_none()
-        if (results == None):
+        if results is None:
             return False
         return True
 
@@ -103,19 +103,19 @@ class DBHandler():
 
     def isEmailAvailable(self, user, session):
         results = session.query(Admin).filter(Admin.email == user.email).one_or_none()
-        if results != None:
+        if results is not None:
             return False
         results = session.query(User).filter(User.email == user.email).one_or_none()
-        if results != None:
+        if results is not None:
             return False
         results = session.query(Shelter).filter(Shelter.email == user.email).one_or_none()
-        if results != None:
+        if results is not None:
             return False
         return True
 
     def isUsernameAvailable(self, user, session):
         results = session.query(Admin).filter(Admin.username == user.username).one_or_none()
-        if results != None:
+        if results is not None:
             return False
         results = session.query(User).filter(User.username == user.username).one_or_none()
         if results != None:
