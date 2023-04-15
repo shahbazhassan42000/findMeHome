@@ -488,11 +488,12 @@ class FeaturedDogsApi(Resource):
         try:
             dogs = []
             flag, dogData = db.getDog(all=True)
-            if flag == False:
+            if not flag:
                 return make_response(jsonify("Error loading dogs"), 502)
-            randInts = [random.randint(0, len(dogData) - 1) for x in range(0, 16)]
-            for x in randInts:
-                dogs.append(dogData[x])
+            if len(dogData) > 0:
+                randInts = [random.randint(0, len(dogData) - 1) for x in range(0, 16)]
+                for x in randInts:
+                    dogs.append(dogData[x])
             return make_response(jsonify([dog.jsonify() for dog in dogs]), 200)
 
         except:

@@ -8,9 +8,10 @@ dogApiURL = '/api/v0.1/dogApi'
 getAllBreedsURL = '/api/v0.1/breeds'
 getAllDiseasesURL = '/api/v0.1/diseases'
 userApiUrl = '/api/v0.1/user'
-ShelterDogsApiURL='/api/v0.1/shelterdogs'
-FeaturedDogsApiURL='/api/v0.1/featureddogs'
+ShelterDogsApiURL = '/api/v0.1/shelterdogs'
+FeaturedDogsApiURL = '/api/v0.1/featureddogs'
 getShelterPageURL = '/api/v0.1/getshelterpage'
+
 
 def initialize_routes(api):
     api.add_resource(SignUpApi, signUpURL)
@@ -20,6 +21,6 @@ def initialize_routes(api):
     api.add_resource(BreedsApi, getAllBreedsURL)
     api.add_resource(DiseasesApi, getAllDiseasesURL)
     api.add_resource(UsersApi, userApiUrl)
-    api.add_resource(ShelterDogsApi,ShelterDogsApiURL)
-    api.add_resource(FeaturedDogsApi,FeaturedDogsApiURL)
-    api.add_resource(ShelterPage,getShelterPageURL)
+    api.add_resource(ShelterDogsApi, ShelterDogsApiURL)
+    api.add_resource(FeaturedDogsApi, FeaturedDogsApiURL)
+    api.add_resource(ShelterPage, getShelterPageURL)

@@ -328,7 +328,7 @@ class DBHandler():
     def getDog(self,id=None,breed=None,age=None,sid=None,all=False):
         flag,session=self.createSession()
         results=None
-        if flag==False:
+        if not flag:
             return flag,session
         if all==True:
             results = session.query(Dog).all()
