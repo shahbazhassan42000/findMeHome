@@ -239,7 +239,7 @@ class DogApi(Resource):
     @staticmethod
     def get():
         token = request.headers.get('Authorization')
-        status, data = user_access(token)
+        status, data = common_access(token)
         if not status:
             return data
         id = data['id']
@@ -467,13 +467,15 @@ class ShelterDogsApi(Resource):
     @staticmethod
     def post():
         token = request.headers.get('Authorization')
+        print(token)
         status, data = shelter_access(token)
+        print(status,data)
         if not status:
             return data
         id = data['id']
         try:
             flag, dogData = db.getDog(sid=id)
-            if flag == False:
+            if not flag:
                 return make_response(jsonify("Error loading dogs"), 502)
             return make_response(jsonify([dog.jsonify() for dog in dogData]), 200)
         except:
