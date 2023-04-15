@@ -1,3 +1,4 @@
+import hashlib
 from os import getenv
 
 from sqlalchemy import create_engine
@@ -19,5 +20,5 @@ engine = create_engine(db_url, echo=False)
 Session = sessionmaker(bind=engine)
 # the base class for defining our classes in order to produce the appropriate Tables
 Base = declarative_base()
-SALT = getenv("SALT")
+SALT = hashlib.md5(getenv("SALT").encode("utf-8")).hexdigest()
 MAX_LENGTH = getenv("MAX_LENGTH")
