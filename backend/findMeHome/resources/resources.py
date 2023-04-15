@@ -1,10 +1,10 @@
 from os import getenv
-from backend.findMeHome.dl_model.DLModel import breedPredict, model
-from backend.findMeHome.models.main import DBHandler
-from backend.findMeHome.models.shelter import Shelter
-from backend.findMeHome.models.user import User
-from backend.findMeHome.models.dog import Dog
-from backend.findMeHome.models.diseasedog import Diseasedog
+from ..dl_model.DLModel import breedPredict, model
+from ..models.main import DBHandler
+from ..models.shelter import Shelter
+from ..models.user import User
+from ..models.dog import Dog
+from ..models.diseasedog import Diseasedog
 from flask_restful import Resource
 from flask import request, Response, jsonify, make_response
 import random

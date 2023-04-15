@@ -1,5 +1,5 @@
-from backend.findMeHome.resources.resources import SignUpApi, ModelApi, SignInApi, \
-    DogApi, BreedsApi, DiseasesApi, UsersApi, ShelterDogsApi, FeaturedDogsApi, ShelterPage
+from .resources import SignUpApi, ModelApi, SignInApi, DogApi, BreedsApi, DiseasesApi, UsersApi, ShelterDogsApi, \
+    FeaturedDogsApi, ShelterPage
 
 signUpURL = '/api/v0.1/usersignup'
 modelURL = "/api/dog_model"

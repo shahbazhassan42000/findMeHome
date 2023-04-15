@@ -1,14 +1,14 @@
 from sqlalchemy import and_, or_, func
-from backend.findMeHome.models.Base import Base, engine, Session
-from backend.findMeHome.models.breed import Breed
-from backend.findMeHome.models.disease import Disease
-from backend.findMeHome.models.diseasedog import Diseasedog
-from backend.findMeHome.models.shelter import Shelter
-from backend.findMeHome.models.user import User
-from backend.findMeHome.models.dog import Dog
-from backend.findMeHome.models.list import List
-from backend.findMeHome.models.admin import Admin
-from backend.findMeHome.models.blog import Blog
+from ..models.Base import Base, engine, Session
+from ..models.breed import Breed
+from ..models.disease import Disease
+from ..models.diseasedog import Diseasedog
+from ..models.shelter import Shelter
+from ..models.user import User
+from ..models.dog import Dog
+from ..models.list import List
+from ..models.admin import Admin
+from ..models.blog import Blog
 
 
 class DBHandler():
