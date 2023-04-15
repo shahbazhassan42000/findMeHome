@@ -387,7 +387,7 @@ class UsersApi(Resource):
     def post():
         token = request.headers.get('Authorization')
         status, data = common_access(token)
-        if status == False:
+        if not status:
             return data
         id = data['id']
         try:
