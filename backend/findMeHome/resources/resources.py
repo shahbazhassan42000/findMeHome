@@ -310,14 +310,14 @@ class DogApi(Resource):
             return make_response(jsonify('Wrong format 2'), 412)
         try:
             flag, obj = db.getDog(id=data.get('did'))
-            if flag == False:
+            if not flag:
                 return make_response(jsonify('Error fetching dog'), 502)
             obj.dname = data.get('dname')
             obj.age = data.get('age')
             obj.imageURL = data.get('imageURL')
             obj.bid = data.get('bid')
             flag, mess = db.update(obj)
-            if flag == False:
+            if not flag:
                 return make_response(jsonify('Error updating dog'), 502)
             return make_response(jsonify('Successful'), 200)
         except:
@@ -355,7 +355,7 @@ class DiseasesApi(Resource):
     def post():
         token = request.headers.get('Authorization')
         status, data = user_access(token)
-        if status == False:
+        if not status:
             return data
 
         rec = request.get_json()
@@ -469,7 +469,7 @@ class ShelterDogsApi(Resource):
         token = request.headers.get('Authorization')
         print(token)
         status, data = shelter_access(token)
-        print(status,data)
+        print(status, data)
         if not status:
             return data
         id = data['id']
