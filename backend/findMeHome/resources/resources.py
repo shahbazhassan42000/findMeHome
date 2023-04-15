@@ -467,9 +467,7 @@ class ShelterDogsApi(Resource):
     @staticmethod
     def post():
         token = request.headers.get('Authorization')
-        print(token)
         status, data = shelter_access(token)
-        print(status, data)
         if not status:
             return data
         id = data['id']
