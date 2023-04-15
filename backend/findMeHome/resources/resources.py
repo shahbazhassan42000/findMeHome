@@ -82,7 +82,7 @@ def user_access(token):
         return False, make_response(jsonify("UnAuthorized"), 401)
     token = token[1]
     status, auth, error = decode_auth_token(token)
-    if status == False:
+    if not status:
         if error == 0:
             return False, make_response(jsonify(auth), 401)
         if error == 1:
@@ -100,7 +100,7 @@ def shelter_access(token):
         return False, make_response(jsonify("UnAuthorized"), 401)
     token = token[1]
     status, auth, error = decode_auth_token(token)
-    if status == False:
+    if not status:
         if error == 0:
             return False, make_response(jsonify(auth), 401)
         if error == 1:
@@ -118,7 +118,7 @@ def common_access(token):
         return False, make_response(jsonify("UnAuthorized"), 401)
     token = token[1]
     status, auth, error = decode_auth_token(token)
-    if status == False:
+    if not status:
         if error == 0:
             return False, make_response(jsonify(auth), 401)
         if error == 1:
@@ -245,10 +245,10 @@ class DogApi(Resource):
         id = data['id']
         try:
             flag, user = db.getUser(id=id)
-            if flag == False:
+            if not flag:
                 return make_response(jsonify("Error loading user"), 502)
             flag, shelterData = db.getShelter(country=user.country)
-            if flag == False:
+            if not flag:
                 return make_response(jsonify("Error loading shelters"), 502)
             distances = []
             userloc = (user.lat, user.lng)
@@ -273,7 +273,7 @@ class DogApi(Resource):
     def delete():
         token = request.headers.get('Authorization')
         status, data = shelter_access(token)
-        if status == False:
+        if not status:
             return data
         id = data['id']
         data = request.get_json()
@@ -297,7 +297,7 @@ class DogApi(Resource):
     def put():
         token = request.headers.get('Authorization')
         status, data = shelter_access(token)
-        if status == False:
+        if not status:
             return data
         id = data['id']
         data = request.get_json()
@@ -365,7 +365,7 @@ class DiseasesApi(Resource):
             return make_response(jsonify('Wrong format 1'), 412)
         try:
             flag, diseases = db.getDiseasesOfDog(did=rec.get('dog').get('did'))
-            if flag == False:
+            if not flag:
                 return make_response(jsonify('Unable to fetch data'), 502)
             return make_response(jsonify([x.jsonify() for x in diseases]))
         except:
@@ -468,7 +468,7 @@ class ShelterDogsApi(Resource):
     def post():
         token = request.headers.get('Authorization')
         status, data = shelter_access(token)
-        if status == False:
+        if not status:
             return data
         id = data['id']
         try:
@@ -508,24 +508,24 @@ class getDogsFilteredAPI(Resource):
     def post():
         token = request.headers.get('Authorization')
         status, data = user_access(token)
-        if status == False:
+        if not status:
             return data
         id = data['id']
         data = request.get_json()
         try:
             if data.get("breed") is not None and data.get("age") is not None:
                 status, data = db.getDog(breed=data.get('breed'), age=data.get('age'))
-                if status == False:
+                if not status:
                     return make_response(jsonify("Database error"), 502)
                 return make_response(jsonify([x.jsonify() for x in data]), 200)
             elif data.get('breed') is not None:
                 status, data = db.getDog(breed=data.get('breed'))
-                if status == False:
+                if not status:
                     return make_response(jsonify("Database error"), 502)
                 return make_response(jsonify([x.jsonify() for x in data]), 200)
             elif data.get('age') is not None:
                 status, data = db.getDog(age=data.get('age'))
-                if status == False:
+                if not status:
                     return make_response(jsonify("Database error"), 502)
                 return make_response(jsonify([x.jsonify() for x in data]), 200)
             else:
@@ -541,7 +541,7 @@ class ShelterPage(Resource):
         if data.get('sid') is None:
             return make_response(jsonify("Please provide shelter id"), 412)
         flag, data = db.getShelter(id=data.get('sid'))
-        if flag == False:
+        if not flag:
             return make_response(jsonify("Shelter with given id not found"), 412)
         return make_response((jsonify(data.jsonify())), 200)
 
