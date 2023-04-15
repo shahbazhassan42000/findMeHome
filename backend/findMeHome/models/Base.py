@@ -20,5 +20,5 @@ engine = create_engine(db_url, echo=False)
 Session = sessionmaker(bind=engine)
 # the base class for defining our classes in order to produce the appropriate Tables
 Base = declarative_base()
-SALT = hashlib.md5(getenv("SALT").encode("utf-8")).hexdigest()
+SALT=b'$2b$12$3LgU2HvI1hencOzHMD0T4e'
 MAX_LENGTH = getenv("MAX_LENGTH")

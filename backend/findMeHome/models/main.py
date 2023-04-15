@@ -118,17 +118,17 @@ class DBHandler():
         if results is not None:
             return False
         results = session.query(User).filter(User.username == user.username).one_or_none()
-        if results != None:
+        if results is not None:
             return False
         results = session.query(Shelter).filter(Shelter.username == user.username).one_or_none()
-        if results != None:
+        if results is not None:
             return False
         return True
 
     # ---------------------------------------Adder function---------------------------------------
     def add(self, obj):
         flag, session = self.createSession()
-        if flag == False:
+        if not flag:
             return flag, session
         session.expire_on_commit = False
         if isinstance(obj, User) or isinstance(obj, Shelter) or isinstance(obj, Admin):
