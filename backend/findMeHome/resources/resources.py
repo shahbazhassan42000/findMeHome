@@ -31,11 +31,11 @@ def convert_to_lat_long(location):
     result = geocoder.geocode(location)
     lat = result[0]['geometry']['lat']
     lng = result[0]['geometry']['lng']
-    return (lat, lng)
+    return lat, lng
 
 
 def find_distance(A, B):
-    return (geodesic(A, B).kilometers)
+    return geodesic(A, B).kilometers
 
 
 def encode_auth_token(user_id, type):
