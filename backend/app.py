@@ -1,3 +1,5 @@
+import os
+
 from flask_cors import CORS
 from flask import Flask
 from flask_restful import Api
@@ -16,4 +18,5 @@ if __name__ == '__main__':
     cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
     api = Api(app)
     routes.initialize_routes(api)
-    app.run(port=4000)
+    PORT=os.getenv('PORT', 8080)
+    app.run(port=PORT)
